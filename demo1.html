@@ -1,0 +1,179 @@
+<!doctype html>
+
+<!--
+	~ jquery.mb.components
+	~ Copyright (c) 2001-2010. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
+	~ email: mbicocchi@open-lab.com
+	~ site: http://pupunzi.com
+	~
+	~ Licences: MIT, GPL
+	~ http://www.opensource.org/licenses/mit-license.php
+	~ http://www.gnu.org/licenses/gpl.html
+	-->
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>mb.bgndGallery 1.0</title>
+	
+<style type="text/css">
+		body{
+			z-index:0;
+			margin:0;
+			padding:0;
+			font-family:Arial, Helvetica, sans-serif;
+			background: rgb(0, 0, 0)
+		}
+		#wrapper{
+			position:absolute;
+			font-family:Arial, Helvetica, sans-serif;
+			margin-left:10%;
+			width:80%;
+			height:100%;
+			z-index:10;
+			opacity:.9
+
+		}
+		#gallery{
+			position:absolute;
+			width:100%;
+			height:700px;
+			top:0;
+			left:0;
+		}
+		.text{
+			position:absolute;
+			top:40px;
+			right:20px;
+			width:200px;
+			padding:20px;
+			margin-left:20px;
+			background: rgba(0, 0, 0,.5);
+			color:white;
+			-moz-border-radius:10px;
+			-webkit-border-radius:10px;
+			border-radius:10px;
+		}
+
+		.text h1{
+			font-weight:normal;
+			line-height:130%;
+		}
+		.text h2{
+			font-weight:normal;
+			line-height:130%;
+		}
+		#controls div{
+			display:inline-block;
+			padding:5px;
+			margin:1px;
+			color:#000;
+			background:rgba(255,255,255,.5);
+			border:1px solid #fff;
+			-moz-border-radius:4px;
+			-webkit-border-radius:4px;
+			-o-border-radius:4px;
+			border-radius:4px;
+		}
+		#controls div:hover:not(.counter){
+			background:rgba(255,255,255,.9);
+		}
+
+		#controls div:not(.counter){
+			cursor:pointer;
+		}
+
+	#thumbs{
+		position:absolute;
+		bottom:0;
+	}
+	#thumbs img{
+		width:30px;
+		border:2px solid white;
+		margin:1px;
+	}
+
+	</style>
+
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script type="text/javascript" src="inc/jquery.mb.flickr.js"></script>
+	<script type="text/javascript" src="inc/mb.bgndGallery.js"></script>
+
+	<script type="text/javascript">
+		$(function(){
+			if (self.location.href == top.location.href){
+				$("body").css({font:"normal 13px/150% 'trebuchet MS', verdana, sans-serif"});
+				var logo=$("<a href='http://pupunzi.com' style='position:absolute;top:40px;left:10%;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");
+				$("body").prepend(logo);
+				$("#logo").fadeIn();
+			}
+
+			$.mbFlickr.flickr_api_key="f40779ab07dd09e5890f48e3618296b3";
+			$.mbFlickr.defaults.size="surce"; //  medium/surce
+			$.mbFlickr.defaults.per_page=100;
+//			$.mbFlickr.defaults.flickr_user_id="16424076@N00";
+      $.mbFlickr.defaults.flickr_photoset_id='72157600884372818';
+
+			$.mbFlickr.defaults.callback=function(gallery){
+				
+				$(gallery.photos).each(function(i){
+					$.mbBgndGallery.defaults.images.push(this.source);
+					var img=$("<img/>").attr("src",this.square).click(function(){
+						var el=$("body").get(0);
+						el.opt.imageCounter=$(this).attr("i")-1;
+						$.mbBgndGallery.next(el);
+						el.opt.paused=true;
+					}).attr("i",i);
+					$("#thumbs").append(img);
+				});
+
+				$("#loading").hide();
+
+				$.mbBgndGallery.buildGallery({
+					containment:"body",
+					controls:"#controls",
+					timer:3000,
+					effTimer:1000,
+					raster:"inc/raster.png",
+					folderPath:false
+				})
+			};
+
+			$("body").mb_loadFlickrPhotos(1);
+
+		});
+	</script>
+</head>
+<body >
+
+<div id="wrapper">
+
+	<div id="loading"><h1 style="color:white; margin-top:200px">loading photos from Flickr... Wait</h1></div>
+
+	<div class="text">
+		<h1>mb.bgndGallery flickr demo</h1>
+		<h2> Here is the mb.BgndGallery 1.0!</h2>
+		<h2>
+			In this case the gallery is showing images from a set of my Flickr account.
+			<br>
+			<br>
+			This background gallery is applied to the body
+			<br>
+			and uses the default transition (fadeIn/fadeOut).
+			<br>
+			<br>
+			As you can see, resizing the browser window the images will resize and center to always fit the screen.
+		</h2>
+		<div id="controls">
+			<div class="pause">pause</div>
+			<div class="play">play</div>
+			<div class="prev">prev</div>
+			<div class="next">next</div>
+			<div class="counter">loading images from flickr</div>
+		</div>
+	</div>
+<div id="thumbs"></div>
+</div>
+
+</body>
+</html>

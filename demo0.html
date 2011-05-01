@@ -1,0 +1,133 @@
+<!doctype html>
+
+<!--
+	~ jquery.mb.components
+	~ Copyright (c) 2001-2010. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
+	~ email: mbicocchi@open-lab.com
+	~ site: http://pupunzi.com
+	~
+	~ Licences: MIT, GPL
+	~ http://www.opensource.org/licenses/mit-license.php
+	~ http://www.gnu.org/licenses/gpl.html
+	-->
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>mb.bgndGallery 1.0</title>
+	<style type="text/css">
+		body{
+			z-index:0;
+			margin:0;
+			padding:0;
+			font-family:Arial, Helvetica, sans-serif;
+			background: rgb(0, 0, 0)
+		}
+		#wrapper{
+			position:absolute;
+			font-family:Arial, Helvetica, sans-serif;
+			margin-left:10%;
+			width:80%;
+			height:100%;
+			z-index:10;
+			opacity:.9
+
+		}
+		#gallery{
+			position:absolute;
+			width:100%;
+			height:700px;
+			top:0;
+			left:0;
+		}
+		.text{
+			margin-top:150px;
+			padding:20px;
+		/*background: rgba(153, 0, 0,.8);*/
+			color:white;
+		}
+		#controls div{
+			display:inline-block;
+			padding:5px;
+			margin:1px;
+			color:#000;
+			background:rgba(255,255,255,.5);
+			border:1px solid #fff;
+			-moz-border-radius:4px;
+			-webkit-border-radius:4px;
+			-o-border-radius:4px;
+			border-radius:4px;
+		}
+		#controls div:hover:not(.counter){
+			background:rgba(255,255,255,.9);
+		}
+
+		#controls div:not(.counter){
+			cursor:pointer;
+		}
+
+	</style>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script type="text/javascript" src="inc/mb.bgndGallery.js"></script>
+
+	<script type="text/javascript">
+		$(function(){
+			if (self.location.href == top.location.href){
+				$("body").css({font:"normal 13px/16px 'trebuchet MS', verdana, sans-serif"});
+				var logo=$("<a href='http://pupunzi.com' style='position:absolute;top:40px;left:10%;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");
+				$("body").prepend(logo);
+				$("#logo").fadeIn();
+			}
+
+			$.mbBgndGallery.buildGallery({
+				containment:"#wrapper",
+//				containment:"body",
+				effect:{enter:{top:"100%",opacity:1},exit:{top:"-100%",opacity:1}},
+				timer:3000,
+				effTimer:500,
+				controls:"#controls",
+				images:[
+					"elements/1.jpg",
+					"elements/2.jpg",
+					"elements/3.jpg",
+					"elements/4.jpg",
+					"elements/5.jpg",
+					"elements/6.jpg",
+					"elements/7.jpg",
+					"elements/8.jpg",
+					"elements/9.jpg",
+					"elements/10.jpg",
+					"elements/11.jpg",
+					"elements/12.jpg"
+				],
+				autoStart:false,
+				onStart:function(){$("#controls .play").show();$("#controls .pause").hide();},
+				onPause:function(){$("#controls .play").show();$("#controls .pause").hide();},
+				onPlay:function(o){$("#controls .play").hide();$("#controls .pause").show();o.effect={enter:{top:"100%",opacity:1},exit:{top:"-100%",opacity:1}}},
+				onNext:function(o){o.effect={enter:{top:"100%",opacity:1},exit:{top:"-100%",opacity:1}}},
+				onPrev:function(o){o.effect={enter:{top:"-100%",opacity:1},exit:{top:"100%",opacity:1}}}
+			})
+
+		});
+	</script>
+</head>
+<body >
+
+<div id="wrapper">
+
+	<div class="text">
+		<h1>mb.bgndGallery.1.0.demo</h1>
+		<h2> Here is the mb.BgndGallery 1.0!</h2>
+		<div id="controls">
+			<div class="pause">pause</div>
+			<div class="play">play</div>
+			<div class="prev">prev</div>
+			<div class="next">next</div>
+			<div class="counter"></div>
+		</div>
+	</div>
+
+</div>
+
+</body>
+</html>
