@@ -1,4 +1,4 @@
-# mb.menu
+# mb.bgndGallery
 
 __An open source jQuery component to easily build a background gallery.__
 
