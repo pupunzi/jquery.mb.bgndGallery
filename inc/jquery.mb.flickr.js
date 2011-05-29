@@ -43,157 +43,160 @@
 
 
 (function($) {
-  document.flickr=new Object();
-  $.mbFlickr={
-    name:"mb.flickr",
-    author:"Matteo Bicocchi",
-    version:"1.0",
-    //Flickr_API_DATA
-    flickr_api_key:"",
-    flickr_user_name:"",
+	document.flickr=new Object();
+	$.mbFlickr={
+		name:"mb.flickr",
+		author:"Matteo Bicocchi",
+		version:"1.0",
+		//Flickr_API_DATA
+		flickr_api_key:"",
+		flickr_user_name:"",
 
-    defaults:{
-      flickr_user_id:"",
-      flickr_photoset_id:"",
-      page:1,
-      per_page:20,
-      onStart:function(){},
-      callback:function(){}
-    },
+		defaults:{
+			flickr_user_id:"",
+			flickr_photoset_id:"",
+			page:1,
+			per_page:20,
+			onStart:function(){},
+			callback:function(){}
+		},
 
-    //this is the main function
-    loadFlickrPhotos:function(options){
-      var gallery= $(this).get(0);
+		//this is the main function
+		loadFlickrPhotos:function(options){
+			var gallery= $(this).get(0);
 
-      gallery.defaults = {};
-      $.extend(gallery.defaults,$.mbFlickr.defaults, options);
-      document.flickr.photoset=gallery.defaults.flickr_photoset_id;
+			gallery.defaults = {};
+			$.extend(gallery.defaults,$.mbFlickr.defaults, options);
+			document.flickr.photoset=gallery.defaults.flickr_photoset_id;
 
-      if(typeof gallery.isInit!= "undefined" && gallery.isInit == gallery.defaults.flickr_photoset_id){
-        if(gallery.defaults.callBack) gallery.defaults.callBack(gallery);
-        return;
-      }
+			if(typeof gallery.isInit!= "undefined" && gallery.isInit == gallery.defaults.flickr_photoset_id){
+				if(gallery.defaults.callBack)
+					gallery.defaults.callBack(gallery);
+				return;
+			}
 
-      if(gallery.defaults.onStart) gallery.defaults.onStart();
+			if(gallery.defaults.onStart)
+				gallery.defaults.onStart();
 
-      var getSet= gallery.defaults.flickr_photoset_id;
-      if (!$.mbFlickr.defaults.flickr_user_id)
-        $.mbFlickr.getFlickrNSID($.mbFlickr.flickr_api_key,$.mbFlickr.flickr_user_name);
-      if (getSet) {
-        $(gallery).mb_getFlickrSet(gallery.defaults.page,function(){
-          $(gallery).mb_getFlickrPhotoDATA();
-          $(gallery).mb_getFlickrPhotoINFO();
-        });
-      }else{
-        $(gallery).mb_getFlickrPhotos(gallery.defaults.page,function(){
-          $(gallery).mb_getFlickrPhotoDATA();
-          $(gallery).mb_getFlickrPhotoINFO();
-        });
-      }
-    },
-    //get NSID from FLICKR
-    getFlickrNSID:function(key,name){
-      $.getJSON("http://api.flickr.com/services/rest/?method=flickr.urls.lookupUser&api_key="+key+"&url=http%3A%2F%2Fwww.flickr.com%2Fphotos%2F"+name+"%2F&format=json&rnd="+new Date()+"&jsoncallback=?",
-              function(data){
-                if (data.stat!="fail"){
-                  $.mbFlickr.defaults.flickr_user_id=data.user.id;
-                }
-              });
-    },
-    getFlickrSet:function(page, callBack){
-      if (!page) page=1;
-      var gallery= $(this).get(0);
-      var per_page= gallery.defaults.per_page;
-      var key= $.mbFlickr.flickr_api_key;
-      var setID= gallery.defaults.flickr_photoset_id;
-      $.getJSON("http://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key="+key+"&photoset_id="+setID+"&extras=url_sq,url_t,url_s,url_m,url_o&per_page="+per_page+"&page="+page+"&format=json&rnd="+new Date()+"&jsoncallback=?",
-              function(data){
-                if(data.stat=="fail") {
-                  alert(data.message);
-                  return;
-                }
-                gallery.photos = data.photoset.photo;
-                gallery.pages = data.photoset.pages;
-                gallery.page = data.photoset.page;
+			var getSet= gallery.defaults.flickr_photoset_id;
+			if (!$.mbFlickr.defaults.flickr_user_id)
+				$.mbFlickr.getFlickrNSID($.mbFlickr.flickr_api_key,$.mbFlickr.flickr_user_name);
+			if (getSet) {
+				$(gallery).mb_getFlickrSet(gallery.defaults.page,function(){
+					$(gallery).mb_getFlickrPhotoDATA();
+					$(gallery).mb_getFlickrPhotoINFO();
+				});
+			}else{
+				$(gallery).mb_getFlickrPhotos(gallery.defaults.page,function(){
+					$(gallery).mb_getFlickrPhotoDATA();
+					$(gallery).mb_getFlickrPhotoINFO();
+				});
+			}
+		},
+		//get NSID from FLICKR
+		getFlickrNSID:function(key,name){
+			$.getJSON("http://api.flickr.com/services/rest/?method=flickr.urls.lookupUser&api_key="+key+"&url=http%3A%2F%2Fwww.flickr.com%2Fphotos%2F"+name+"%2F&format=json&rnd="+new Date()+"&jsoncallback=?",
+					function(data){
+						if (data.stat!="fail"){
+							$.mbFlickr.defaults.flickr_user_id=data.user.id;
+						}
+					});
+		},
+		getFlickrSet:function(page, callBack){
+			if (!page) page=1;
+			var gallery= $(this).get(0);
+			var per_page= gallery.defaults.per_page;
+			var key= $.mbFlickr.flickr_api_key;
+			var setID= gallery.defaults.flickr_photoset_id;
+			$.getJSON("http://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key="+key+"&photoset_id="+setID+"&extras=url_sq,url_t,url_s,url_m,url_o&per_page="+per_page+"&page="+page+"&format=json&rnd="+new Date().getTime()+"&jsoncallback=?",
+					function(data){
+						if(data.stat=="fail") {
+							alert(data.message);
+							return;
+						}
+						gallery.photos = data.photoset.photo;
+						gallery.pages = data.photoset.pages;
+						gallery.page = data.photoset.page;
 
-                if(callBack) callBack();
-              });
-    },
-    getFlickrPhotos:function(page, callBack){
-      if(!page) page=1;
-      var gallery= $(this).get(0);
-      var per_page= gallery.defaults.per_page;
-      if (per_page=="all")per_page=100;
-      var key= $.mbFlickr.flickr_api_key;
-      var userNSID= $.mbFlickr.defaults.flickr_user_id;
-      $.getJSON("http://api.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&api_key="+key+"&user_id="+userNSID+"&per_page="+per_page+"&page="+page+"&format=json&jsoncallback=?",
-              function(data){
-                gallery.photos = data.photos.photo;
-                gallery.pages = data.photos.pages;
-                gallery.page = data.photos.page;
-                if(callBack) callBack();
-              });
-    },
-    getFlickrPhotoDATA:function(){
-      var gallery= $(this).get(0);
-      var key = $.mbFlickr.flickr_api_key;
+						if(callBack) callBack();
+					});
+		},
+		getFlickrPhotos:function(page, callBack){
+			if(!page) page=1;
+			var gallery= $(this).get(0);
+			var per_page= gallery.defaults.per_page;
+			if (per_page=="all")per_page=100;
+			var key= $.mbFlickr.flickr_api_key;
+			var userNSID= $.mbFlickr.defaults.flickr_user_id;
+			$.getJSON("http://api.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&api_key="+key+"&user_id="+userNSID+"&per_page="+per_page+"&page="+page+"&format=json&jsoncallback=?",
+					function(data){
+						gallery.photos = data.photos.photo;
+						gallery.pages = data.photos.pages;
+						gallery.page = data.photos.page;
+						if(callBack) callBack();
+					});
+		},
+		getFlickrPhotoDATA:function(){
+			var gallery= $(this).get(0);
+			var key = $.mbFlickr.flickr_api_key;
 
-      document.flickr.total= gallery.photos.length;
+			document.flickr.total= gallery.photos.length;
 
-      $(gallery.photos).each(function(i){
-        $.getJSON("http://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key="+key+"&photo_id="+this.id+"&secret="+this.secret+"&format=json&rnd="+new Date()+"&jsoncallback=?",
-                function(data){
+			$(gallery.photos).each(function(i){
+				$.getJSON("http://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key="+key+"&photo_id="+this.id+"&secret="+this.secret+"&format=json&rnd="+new Date()+"&jsoncallback=?",
+						function(data){
 
-                  gallery.photos[i].square= data.sizes.size[0].source;
-                  gallery.photos[i].squareWidth= data.sizes.size[0].width;
-                  gallery.photos[i].squareHeight= data.sizes.size[0].height;
+							gallery.photos[i].square= data.sizes.size[0].source;
+							gallery.photos[i].squareWidth= data.sizes.size[0].width;
+							gallery.photos[i].squareHeight= data.sizes.size[0].height;
 
-                  gallery.photos[i].thumb= data.sizes.size[1].source;
-                  gallery.photos[i].thumbWidth= data.sizes.size[1].width;
-                  gallery.photos[i].thumbHeght= data.sizes.size[1].height;
+							gallery.photos[i].thumb= data.sizes.size[1].source;
+							gallery.photos[i].thumbWidth= data.sizes.size[1].width;
+							gallery.photos[i].thumbHeght= data.sizes.size[1].height;
 
-                  gallery.photos[i].small= data.sizes.size[2].source;
-                  gallery.photos[i].smallWidth= data.sizes.size[2].width;
-                  gallery.photos[i].smallHeigt= data.sizes.size[2].height;
+							gallery.photos[i].small= data.sizes.size[2].source;
+							gallery.photos[i].smallWidth= data.sizes.size[2].width;
+							gallery.photos[i].smallHeigt= data.sizes.size[2].height;
 
-                  gallery.photos[i].medium= data.sizes.size[3].source;
-                  gallery.photos[i].mediumWidth= data.sizes.size[3].width;
-                  gallery.photos[i].mediumHeight= data.sizes.size[3].height;
+							gallery.photos[i].medium= data.sizes.size[3].source;
+							gallery.photos[i].mediumWidth= data.sizes.size[3].width;
+							gallery.photos[i].mediumHeight= data.sizes.size[3].height;
 
-                  gallery.photos[i].source= data.sizes.size[data.sizes.size.length-1].source;
-                  gallery.photos[i].sourceWidth= data.sizes.size[data.sizes.size.length-1].width;
-                  gallery.photos[i].sourceHeight= data.sizes.size[data.sizes.size.length-1].height;
+							gallery.photos[i].source= data.sizes.size[data.sizes.size.length-1].source;
+							gallery.photos[i].sourceWidth= data.sizes.size[data.sizes.size.length-1].width;
+							gallery.photos[i].sourceHeight= data.sizes.size[data.sizes.size.length-1].height;
 
-                  gallery.photos[i].url= data.sizes.size[data.sizes.size.length-1].url;
+							gallery.photos[i].url= data.sizes.size[data.sizes.size.length-1].url;
 
-                  document.flickr.loaded= i+1;
+							document.flickr.loaded= i+1;
 
-                  if (i== gallery.photos.length-1){
-                    setTimeout(function(){
-                      if (gallery.defaults.callback) gallery.defaults.callback(gallery);
-                      gallery.isInit=gallery.defaults.flickr_photoset_id;
-                    },3000);
-                  }
-                });
-      });
-    },
-    getFlickrPhotoINFO:function(){
-      var gallery= $(this).get(0);
-      var key = $.mbFlickr.flickr_api_key;
-      $(gallery.photos).each(function(i){
+							if (i== gallery.photos.length-1){
+								setTimeout(function(){
+									if (gallery.defaults.callback)
+										gallery.defaults.callback(gallery);
+									gallery.isInit=gallery.defaults.flickr_photoset_id;
+								},3000);
+							}
+						});
+			});
+		},
+		getFlickrPhotoINFO:function(){
+			var gallery= $(this).get(0);
+			var key = $.mbFlickr.flickr_api_key;
+			$(gallery.photos).each(function(i){
 
-        $.getJSON("http://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key="+key+"&photo_id="+this.id+"&secret="+this.secret+"&format=json&rnd="+new Date().getMilliseconds()+"&jsoncallback=?",
-                function(data){
-                  gallery.photos[i].description=data.photo.description._content==undefined?"":data.photo.description._content;
-                });
-      });
-    }
-  };
+				$.getJSON("http://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key="+key+"&photo_id="+this.id+"&secret="+this.secret+"&format=json&rnd="+new Date().getMilliseconds()+"&jsoncallback=?",
+						function(data){
+							gallery.photos[i].description=data.photo.description._content==undefined?"":data.photo.description._content;
+						});
+			});
+		}
+	};
 
-  $.fn.mb_getFlickrSet = $.mbFlickr.getFlickrSet;
-  $.fn.mb_getFlickrPhotos = $.mbFlickr.getFlickrPhotos;
-  $.fn.mb_getFlickrPhotoDATA = $.mbFlickr.getFlickrPhotoDATA;
-  $.fn.mb_getFlickrPhotoINFO = $.mbFlickr.getFlickrPhotoINFO;
-  $.fn.mb_loadFlickrPhotos = $.mbFlickr.loadFlickrPhotos;
+	$.fn.mb_getFlickrSet = $.mbFlickr.getFlickrSet;
+	$.fn.mb_getFlickrPhotos = $.mbFlickr.getFlickrPhotos;
+	$.fn.mb_getFlickrPhotoDATA = $.mbFlickr.getFlickrPhotoDATA;
+	$.fn.mb_getFlickrPhotoINFO = $.mbFlickr.getFlickrPhotoINFO;
+	$.fn.mb_loadFlickrPhotos = $.mbFlickr.loadFlickrPhotos;
 
 })(jQuery);

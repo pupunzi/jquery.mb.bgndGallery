@@ -11,7 +11,7 @@
 
 /*
  * Name:jquery.mb.bgndGallery
- * Version: 1.0
+ * Version: 1.1
  *
  */
 
@@ -20,7 +20,7 @@
 	$.mbBgndGallery ={
 		name:"mb.bgndGallery",
 		author:"Matteo Bicocchi",
-		version:"1.0",
+		version:"1.1",
 		defaults:{
 			containment:"body",
 			images:[],
@@ -300,13 +300,16 @@
 							el.opt.paused=true;
 							$.mbBgndGallery.pause(el);
 						}
+						e.preventDefault();
 						break;
 					case 39:
 						$.mbBgndGallery.next(el);
+						e.preventDefault();
 
 						break;
 					case 37:
 						$.mbBgndGallery.prev(el);
+						e.preventDefault();
 
 						break;
 				}
@@ -449,11 +452,13 @@
 
 	$.fn.greyScale = function() {
 		return this.each(function() {
+
 			if ($.browser.msie && $.browser.version<9) {
 				this.style.filter = "progid:DXImageTransform.Microsoft.BasicImage(grayScale=1)";
 			} else {
 				this.src = grayScaleImage(this);
 			}
+
 		})
 	};
 

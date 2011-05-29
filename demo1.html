@@ -15,8 +15,8 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>mb.bgndGallery 1.0</title>
-	
-<style type="text/css">
+
+	<style type="text/css">
 		body{
 			z-index:0;
 			margin:0;
@@ -83,15 +83,15 @@
 			cursor:pointer;
 		}
 
-	#thumbs{
-		position:absolute;
-		bottom:0;
-	}
-	#thumbs img{
-		width:30px;
-		border:2px solid white;
-		margin:1px;
-	}
+		#thumbs{
+			position:absolute;
+			bottom:0;
+		}
+		#thumbs img{
+			width:30px;
+			border:2px solid white;
+			margin:1px;
+		}
 
 	</style>
 
@@ -108,14 +108,16 @@
 				$("#logo").fadeIn();
 			}
 
-			$.mbFlickr.flickr_api_key="f40779ab07dd09e5890f48e3618296b3";
+			//USE YOUR OWN FLICKR API KEY
+			//http://www.flickr.com/services/apps/create/apply/
+
+			$.mbFlickr.flickr_api_key="f40779ab07dd09e5890f48e3618296b3"; //this is my Flickr API key. Create your own
 			$.mbFlickr.defaults.size="surce"; //  medium/surce
 			$.mbFlickr.defaults.per_page=100;
-//			$.mbFlickr.defaults.flickr_user_id="16424076@N00";
-      $.mbFlickr.defaults.flickr_photoset_id='72157600884372818';
+			$.mbFlickr.defaults.flickr_photoset_id='72157600884372818';
 
 			$.mbFlickr.defaults.callback=function(gallery){
-				
+
 				$(gallery.photos).each(function(i){
 					$.mbBgndGallery.defaults.images.push(this.source);
 					var img=$("<img/>").attr("src",this.square).click(function(){
@@ -137,6 +139,22 @@
 					raster:"inc/raster.png",
 					folderPath:false
 				})
+
+				$(".bw").toggle(
+						function(){
+							var el=$("body").get(0);
+							el.opt.grayScale=true;
+							$(this).addClass("sel");
+							el.opt.gallery.find("img:first").greyScale();
+						},
+						function(){
+							var el=$("body").get(0);
+							el.opt.grayScale=false;
+							$(this).removeClass("sel");
+							el.opt.gallery.find("img:first").attr("src",el.opt.images[el.opt.imageCounter]);
+						}
+						)
+
 			};
 
 			$("body").mb_loadFlickrPhotos(1);
@@ -170,9 +188,10 @@
 			<div class="prev">prev</div>
 			<div class="next">next</div>
 			<div class="counter">loading images from flickr</div>
+			<div class="bw">gray scale</div>
 		</div>
 	</div>
-<div id="thumbs"></div>
+	<div id="thumbs"></div>
 </div>
 
 </body>
