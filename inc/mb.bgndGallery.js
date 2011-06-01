@@ -59,7 +59,7 @@
 
 			var containment = el.opt.containment;
 
-			if(containment !="body"){
+			if(containment !="body" && $(containment).text().trim()!=""){
 				var wrapper=$("<div/>").css({"position":"absolute",minHeight:"100%", minWidth:"100%", zIndex:3});
 				$(containment).wrapInner(wrapper);
 				if($(containment).css("position")=="static")
