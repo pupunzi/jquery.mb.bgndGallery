@@ -12,7 +12,7 @@
 /*
  * jQuery.mb.components: jquery.mb.flickr
  * version: 1.5
- * © 2001 - 2009 Matteo Bicocchi (pupunzi), Open Lab
+ * © 2001 - 2011 Matteo Bicocchi (pupunzi), Open Lab
  *
  * to obtain a Flickr API key:
  * http://www.flickr.com/services/apps/create/apply/
