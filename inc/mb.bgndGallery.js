@@ -410,7 +410,7 @@
 			sfx="-moz-";
 			transitionEnd = "transitionend";
 		} else if ($.browser.opera) {
-			sfx="-0-";
+			sfx="-o-";
 			transitionEnd = "oTransitionEnd";
 		}
 
