@@ -1,6 +1,6 @@
 /*******************************************************************************
  jquery.mb.components
- Copyright (c) 2001-2010. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
+ Copyright (c) 2001-2011. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
  email: mbicocchi@open-lab.com
  site: http://pupunzi.com
 
@@ -101,8 +101,6 @@
 				$(opt.gallery).trigger("paused");
 			}
 
-			var counter=$(opt.controls).find(".counter");
-			counter.html(opt.imageCounter+1+" / "+opt.images.length);
 
 			$(opt.gallery).bind("imageReady_"+opt.galleryID,function(){
 				if(opt.paused)
@@ -117,18 +115,19 @@
 
 			var controls = el.opt.controls;
 			if(controls){
+				var counter=$(opt.controls).find(".counter");
+				counter.html(opt.imageCounter+1+" / "+opt.images.length);
+
 				$.mbBgndGallery.buildControls(controls,el);
+				$(opt.containment).bind("paused",function(){
+					$(opt.controls).find(".play").show();
+					$(opt.controls).find(".pause").hide();
+				});
+				$(opt.containment).bind("play",function(){
+					$(opt.controls).find(".play").hide();
+					$(opt.controls).find(".pause").show();
+				});
 			}
-
-			$(opt.containment).bind("paused",function(){
-				$(opt.controls).find(".play").show();
-				$(opt.controls).find(".pause").hide();
-			});
-			$(opt.containment).bind("play",function(){
-				$(opt.controls).find(".play").hide();
-				$(opt.controls).find(".pause").show();
-			});
-
 		},
 
 		preload:function(url,el){
@@ -188,6 +187,8 @@
 				$("#bgndGallery_"+el.opt.galleryID+" img").galleryAnimate(el.opt.effect.exit,el.opt.effTimer,el.opt.effect.exitTiming,function(){$("#bgndGallery_"+el.opt.galleryID+" img:first").remove()});
 				image.css({position:"absolute", width:"100%"});
 				$("#bgndGallery_"+el.opt.galleryID).append(image);
+
+				//todo: add a property to let height for vertical images
 
 				$.mbBgndGallery.checkSize(image, el);
 
@@ -379,7 +380,6 @@
 			});
 			el.opt.imageCounter=0;
 			//$.mbBgndGallery.changePhoto(images[el.opt.imageCounter],el);
-
 		}
 	};
 
