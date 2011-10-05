@@ -146,9 +146,9 @@
 				$(el.opt.gallery).remove();
 				return;
 			}
-
 			var w= image.attr("w");
 			var h= image.attr("h");
+
 			var containment = el.opt.containment == "body"? window : el.opt.containment;
 			var aspectRatio= w/h;
 			var wAspectRatio=$(containment).width()/$(containment).height();
