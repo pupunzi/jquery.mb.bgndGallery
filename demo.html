@@ -89,6 +89,20 @@
 	<script type="text/javascript" src="inc/mb.bgndGallery.js"></script>
 
 	<script type="text/javascript">
+
+		$.shuffle = function(arr) {
+			var newArray = arr.slice();
+			var len = newArray.length;
+			var i = len;
+			while (i--) {
+				var p = parseInt(Math.random()*len);
+				var t = newArray[i];
+				newArray[i] = newArray[p];
+				newArray[p] = t;
+			}
+			return newArray;
+		};
+
 		$(function(){
 			if (self.location.href == top.location.href){
 				$("body").css({font:"normal 13px/22px 'trebuchet MS', verdana, sans-serif"});
@@ -96,6 +110,23 @@
 				$("body").prepend(logo);
 				$("#logo").fadeIn();
 			}
+
+			var imgs=[
+				"elements/1.jpg",
+				"elements/2.jpg",
+				"elements/3.jpg",
+				"elements/4.jpg",
+				"elements/5.jpg",
+				"elements/6.jpg",
+				"elements/7.jpg",
+				"elements/8.jpg",
+				"elements/9.jpg",
+				"elements/10.jpg",
+				"elements/11.jpg",
+				"elements/12.jpg"
+			];
+
+			var shuffleImages= $.shuffle(imgs);
 
 			$.mbBgndGallery.buildGallery({
 //				containment:"#wrapper",
@@ -111,20 +142,7 @@
 				//folderPath:"elements/",
 				// else:
 
-				images:[
-				 "elements/1.jpg",
-				 "elements/2.jpg",
-				 "elements/3.jpg",
-				 "elements/4.jpg",
-				 "elements/5.jpg",
-				 "elements/6.jpg",
-				 "elements/7.jpg",
-				 "elements/8.jpg",
-				 "elements/9.jpg",
-				 "elements/10.jpg",
-				 "elements/11.jpg",
-				 "elements/12.jpg"
-				 ],
+				images:shuffleImages,
 
 				onStart:function(){},
 				onPause:function(){},
@@ -149,7 +167,7 @@
 					}
 			)
 		});
-		
+
 	</script>
 
 </head>
