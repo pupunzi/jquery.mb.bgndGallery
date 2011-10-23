@@ -24,6 +24,7 @@
 		defaults:{
 			containment:"body",
 			images:[],
+			shuffle:false,
 			controls:null,
 			effect:{enter:{left:0,opacity:0},exit:{left:0,opacity:0}, enterTiming:"ease-in", exitTiming:"ease-in"},
 			timer:4000,
@@ -77,6 +78,9 @@
 				opt.images=jQuery.loadFromSystem(el.opt.folderPath);
 
 			var images= opt.images;
+
+			if(opt.shuffle)
+				images= $.shuffle(images);
 
 			var totImg= images.length;
 
@@ -460,6 +464,19 @@
 			}
 
 		})
+	};
+
+	$.shuffle = function(arr) {
+		var newArray = arr.slice();
+		var len = newArray.length;
+		var i = len;
+		while (i--) {
+			var p = parseInt(Math.random()*len);
+			var t = newArray[i];
+			newArray[i] = newArray[p];
+			newArray[p] = t;
+		}
+		return newArray;
 	};
 
 	function grayScaleImage(imgObj){
