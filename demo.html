@@ -126,9 +126,9 @@
 				 "elements/12.jpg"
 				 ],
 
-				onStart:function(){$("#controls .play").hide();$("#controls .pause").show();},
-				onPause:function(){$("#controls .play").show();$("#controls .pause").hide();},
-				onPlay:function(opt){$("#controls .play").hide();$("#controls .pause").show();},
+				onStart:function(){},
+				onPause:function(){},
+				onPlay:function(opt){},
 				onChange:function(idx){}, //idx=the zero based index of the displayed photo
 				onNext:function(opt){},   //opt=the options relatives to this component instance
 				onPrev:function(opt){}   //opt=the options relatives to this component instance
@@ -149,6 +149,7 @@
 					}
 			)
 		});
+		
 	</script>
 
 </head>
