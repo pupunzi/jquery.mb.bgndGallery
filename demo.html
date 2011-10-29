@@ -99,18 +99,20 @@
 			}
 
 			$.mbBgndGallery.buildGallery({
-//				containment:"#wrapper",
+  			//containment:"#wrapper",
 				containment:"body",
 				timer:4000,
 				effTimer:2000,
 				controls:"#controls",
 				grayScale:false,
-				shuffle:true,
+				shuffle:false,
 
 				// If your server allow directory listing you can use:
 				// (however this doesn't work locally on your computer)
 
 				//folderPath:"elements/",
+
+
 				// else:
 
 				images:[
@@ -131,7 +133,7 @@
 				onStart:function(){},
 				onPause:function(){},
 				onPlay:function(opt){},
-				onChange:function(idx){}, //idx=the zero based index of the displayed photo
+				onChange:changePage, //idx=the zero based index of the displayed photo
 				onNext:function(opt){},   //opt=the options relatives to this component instance
 				onPrev:function(opt){}   //opt=the options relatives to this component instance
 			});
