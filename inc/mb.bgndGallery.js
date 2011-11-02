@@ -387,63 +387,61 @@
         }
     };
 
-$.fn.CSSAnimate = function(opt, duration, type, properties, callback) {
-    return this.each(function() {
+    $.fn.CSSAnimate = function(opt, duration, type, properties, callback) {
+        return this.each(function() {
 
-        var el = $(this);
+            var el = $(this);
 
-        if (el.length == 0 || !opt) return;
+            if (el.length === 0 || !opt) {return;}
 
-        if (typeof duration == "function") {
-            callback = duration;
-        }
-        if (typeof type == "function") {
-            callback = type;
-        }
-        if (typeof properties == "function") {
-            callback = properties;
-        }
-        if (!duration) duration = 1000;
-        if (!type) type = "cubic-bezier(0.65,0.03,0.36,0.72)";
-        if (!properties) properties = "all";
+            if (typeof duration == "function") {callback = duration;}
+            if (typeof type == "function") {callback = type;}
+            if (typeof properties == "function") {callback = properties;}
 
-        //http://cssglue.com/cubic
-        //  ease  |  linear | ease-in | ease-out | ease-in-out  |  cubic-bezier(<number>, <number>,  <number>,  <number>)
-        if (!jQuery.support.transition) {
-            el.animate(opt, duration, callback);
-            return;
-        }
+            if (!duration) {duration = 1000;}
+            if (!type) {type = "cubic-bezier(0.65,0.03,0.36,0.72)";}
+            if (!properties) {properties = "all";}
 
-        var sfx = "";
-        var transitionEnd = "TransitionEnd";
-        if ($.browser.webkit) {
-            sfx = "-webkit-";
-            transitionEnd = "webkitTransitionEnd";
-        } else if ($.browser.mozilla) {
-            sfx = "-moz-";
-            transitionEnd = "transitionend";
-        } else if ($.browser.opera) {
-            sfx = "-o-";
-            transitionEnd = "oTransitionEnd";
-        }
+            //http://cssglue.com/cubic
+            //  ease  |  linear | ease-in | ease-out | ease-in-out  |  cubic-bezier(<number>, <number>,  <number>,  <number>)
+            if (!jQuery.support.transition) {
+                el.animate(opt, duration, callback);
+                return;
+            }
 
-        el.css(sfx + "transition-property", properties);
-        el.css(sfx + "transition-duration", duration + "ms");
-        el.css(sfx + "transition-timing-function", type);
+            var sfx = "";
+            var transitionEnd = "TransitionEnd";
+            if ($.browser.webkit) {
+                sfx = "-webkit-";
+                transitionEnd = "webkitTransitionEnd";
+            } else if ($.browser.mozilla) {
+                sfx = "-moz-";
+                transitionEnd = "transitionend";
+            } else if ($.browser.opera) {
+                sfx = "-o-";
+                transitionEnd = "oTransitionEnd";
+            } else if ($.browser.msie) {
+                sfx = "-ms-";
+                transitionEnd = "msTransitionEnd";
+            }
 
-        setTimeout(function() {
-            el.css(opt)
-        }, 100);
+            el.css(sfx + "transition-property", properties);
+            el.css(sfx + "transition-duration", duration + "ms");
+            el.css(sfx + "transition-timing-function", type);
 
-        var endTransition = function() {
-            el.css(sfx + "transition", "");
-            if (typeof callback == "function") callback();
-            el.get(0).removeEventListener(transitionEnd, endTransition, false);
-        };
-        el.get(0).addEventListener(transitionEnd, endTransition, false);
+            setTimeout(function() {
+                el.css(opt)
+            }, 100);
 
-    })
-};
+            var endTransition = function() {
+                el.css(sfx + "transition", "");
+                if (typeof callback == "function") callback();
+                el.get(0).removeEventListener(transitionEnd, endTransition, false);
+            };
+            el.get(0).addEventListener(transitionEnd, endTransition, false);
+
+        })
+    };
     // jQuery.support.transition
     // to verify that CSS3 transition is supported (or any of its browser-specific implementations)
     $.support.transition = (function(){
