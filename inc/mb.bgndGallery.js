@@ -391,7 +391,6 @@
         return this.each(function() {
 
             var el = $(this);
-
             if (el.length === 0 || !opt) {return;}
 
             if (typeof duration == "function") {callback = duration;}
