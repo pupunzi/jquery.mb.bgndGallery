@@ -205,12 +205,12 @@
 				$("#bgndGallery_"+el.opt.galleryID).append(image);
 
 				//todo: add a property to let height for vertical images
+				$.mbBgndGallery.changing=false;
 
 				$.mbBgndGallery.checkSize(image, el);
 
 				image.css(el.opt.effect.enter).show().CSSAnimate({top:0,left:0,opacity:1},el.opt.effTimer,el.opt.effect.enterTiming,"opacity, left, top, width, height",function(){
 					$(el.opt.gallery).trigger("imageReady_"+el.opt.galleryID);
-					$.mbBgndGallery.changing=false;
 				});
 			}).attr("src",url);
 
