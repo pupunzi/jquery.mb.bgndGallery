@@ -23,7 +23,7 @@
  *
  * ex:
  *
- $("#myElementId").mb_loadFlickrPhotos({callBack: logData})
+ $("#myElementId").mb_loadFlickrPhotos({callback: logData})
  function logData(o){
  console.debug(o.page); // actual page
  console.debug(o.pages); // total pages
@@ -39,7 +39,6 @@
  }
  *
  */
-
 
 
 (function($) {
@@ -70,8 +69,8 @@
 			document.flickr.photoset=gallery.defaults.flickr_photoset_id;
 
 			if(typeof gallery.isInit!= "undefined" && gallery.isInit == gallery.defaults.flickr_photoset_id){
-				if(gallery.defaults.callBack)
-					gallery.defaults.callBack(gallery);
+				if(gallery.defaults.callback)
+					gallery.defaults.callback(gallery);
 				return;
 			}
 
@@ -102,7 +101,7 @@
 						}
 					});
 		},
-		getFlickrSet:function(page, callBack){
+		getFlickrSet:function(page, callback){
 			if (!page) page=1;
 			var gallery= $(this).get(0);
 			var per_page= gallery.defaults.per_page;
@@ -118,10 +117,10 @@
 						gallery.pages = data.photoset.pages;
 						gallery.page = data.photoset.page;
 
-						if(callBack) callBack();
+						if(callback) callback();
 					});
 		},
-		getFlickrPhotos:function(page, callBack){
+		getFlickrPhotos:function(page, callback){
 			if(!page) page=1;
 			var gallery= $(this).get(0);
 			var per_page= gallery.defaults.per_page;
@@ -133,7 +132,7 @@
 						gallery.photos = data.photos.photo;
 						gallery.pages = data.photos.pages;
 						gallery.page = data.photos.page;
-						if(callBack) callBack();
+						if(callback) callback();
 					});
 		},
 		getFlickrPhotoDATA:function(){
