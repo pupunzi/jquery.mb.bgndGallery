@@ -87,10 +87,10 @@
 			var loadCounter=0;
 
 			$.mbBgndGallery.preload(images[0],el);
-			$(opt.gallery).bind("imageLoaded_"+opt.galleryID,function(){
+			$(opt.gallery).on("imageLoaded_"+opt.galleryID,function(){
 				loadCounter++;
 				if(loadCounter==totImg){
-					$(opt.gallery).unbind("imageLoaded_"+opt.galleryID);
+					$(opt.gallery).off("imageLoaded_"+opt.galleryID);
 					return;
 				}
 				$.mbBgndGallery.preload(images[loadCounter],el);
@@ -106,13 +106,13 @@
 			}
 
 
-			$(opt.gallery).bind("imageReady_"+opt.galleryID,function(){
+			$(opt.gallery).on("imageReady_"+opt.galleryID,function(){
 				if(opt.paused)
 					return;
 				$.mbBgndGallery.play(el);
 			});
 
-			$(window).bind("resize",function(){
+			$(window).on("resize",function(){
 				var image=$("#bgndGallery_"+el.opt.galleryID+" img");
 				$.mbBgndGallery.checkSize(image,el);
 			});
@@ -123,11 +123,11 @@
 				counter.html(opt.imageCounter+1+" / "+opt.images.length);
 
 				$.mbBgndGallery.buildControls(controls,el);
-				$(opt.containment).bind("paused",function(){
+				$(opt.containment).on("paused",function(){
 					$(opt.controls).find(".play").show();
 					$(opt.controls).find(".pause").hide();
 				});
-				$(opt.containment).bind("play",function(){
+				$(opt.containment).on("play",function(){
 					$(opt.controls).find(".play").hide();
 					$(opt.controls).find(".pause").show();
 				});
@@ -308,7 +308,7 @@
 		},
 
 		keyboard:function(el){
-			$(document).bind("keydown.bgndGallery",function(e){
+			$(document).on("keydown.bgndGallery",function(e){
 				switch(e.keyCode){
 					case 32:
 						if(el.opt.paused){
@@ -342,27 +342,27 @@
 			if(el.opt.autoStart)
 				play.hide();
 
-			pause.bind("click",function(){
+			pause.on("click",function(){
 				$.mbBgndGallery.pause(el);
 				$(this).hide();
 				play.show();
 			});
 
-			play.bind("click",function(){
+			play.on("click",function(){
 				if(!el.opt.paused) return;
 				clearTimeout(el.opt.changing);
 				$.mbBgndGallery.play(el);
 				el.opt.paused=false;
 			});
 
-			next.bind("click",function(){
+			next.on("click",function(){
 				$.mbBgndGallery.next(el);
 				pause.hide();
 				play.show();
 
 			});
 
-			prev.bind("click",function(){
+			prev.on("click",function(){
 				$.mbBgndGallery.prev(el);
 				pause.hide();
 				play.show();
@@ -384,10 +384,10 @@
 			var loadCounter=0;
 
 			$.mbBgndGallery.preload(images[0],el);
-			$(el.opt.gallery).bind("imageLoaded_"+el.opt.galleryID,function(){
+			$(el.opt.gallery).on("imageLoaded_"+el.opt.galleryID,function(){
 				loadCounter++;
 				if(loadCounter==totImg){
-					$(el.opt.gallery).unbind("imageLoaded_"+el.opt.galleryID);
+					$(el.opt.gallery).off("imageLoaded_"+el.opt.galleryID);
 					$(el.gallery).fadeIn();
 					$.mbBgndGallery.play(el);
 					el.opt.paused=false;
@@ -396,7 +396,6 @@
 				$.mbBgndGallery.preload(images[loadCounter],el);
 			});
 			el.opt.imageCounter=0;
-			//$.mbBgndGallery.changePhoto(images[el.opt.imageCounter],el);
 		}
 	};
 
