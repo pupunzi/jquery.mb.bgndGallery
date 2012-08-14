@@ -87,10 +87,10 @@
 			var loadCounter=0;
 
 			$.mbBgndGallery.preload(images[0],el);
-			$(opt.gallery).on("imageLoaded_"+opt.galleryID,function(){
+			$(opt.gallery).bind("imageLoaded_"+opt.galleryID,function(){
 				loadCounter++;
 				if(loadCounter==totImg){
-					$(opt.gallery).off("imageLoaded_"+opt.galleryID);
+					$(opt.gallery).unbind("imageLoaded_"+opt.galleryID);
 					return;
 				}
 				$.mbBgndGallery.preload(images[loadCounter],el);
@@ -100,19 +100,20 @@
 
 			$.mbBgndGallery.changePhoto(images[opt.imageCounter],el);
 
-			if (!opt.autoStart){
+      if (!opt.autoStart){
 				opt.paused=true;
 				$(opt.gallery).trigger("paused");
 			}
 
 
-			$(opt.gallery).on("imageReady_"+opt.galleryID,function(){
+			$(opt.gallery).bind("imageReady_"+opt.galleryID,function(){
+
 				if(opt.paused)
 					return;
 				$.mbBgndGallery.play(el);
 			});
 
-			$(window).on("resize",function(){
+			$(window).bind("resize",function(){
 				var image=$("#bgndGallery_"+el.opt.galleryID+" img");
 				$.mbBgndGallery.checkSize(image,el);
 			});
@@ -123,11 +124,11 @@
 				counter.html(opt.imageCounter+1+" / "+opt.images.length);
 
 				$.mbBgndGallery.buildControls(controls,el);
-				$(opt.containment).on("paused",function(){
+				$(opt.containment).bind("paused",function(){
 					$(opt.controls).find(".play").show();
 					$(opt.controls).find(".pause").hide();
 				});
-				$(opt.containment).on("play",function(){
+				$(opt.containment).bind("play",function(){
 					$(opt.controls).find(".play").hide();
 					$(opt.controls).find(".pause").show();
 				});
@@ -211,7 +212,7 @@
 
 				image.css(el.opt.effect.enter).show().CSSAnimate({top:0,left:0,opacity:1},el.opt.effTimer,el.opt.effect.enterTiming,"opacity, left, top, width, height",function(){
 					$(el.opt.gallery).trigger("imageReady_"+el.opt.galleryID);
-				});
+        });
 			}).attr("src",url);
 
 			if(el.opt.grayScale){
@@ -308,7 +309,7 @@
 		},
 
 		keyboard:function(el){
-			$(document).on("keydown.bgndGallery",function(e){
+			$(document).bind("keydown.bgndGallery",function(e){
 				switch(e.keyCode){
 					case 32:
 						if(el.opt.paused){
@@ -342,27 +343,27 @@
 			if(el.opt.autoStart)
 				play.hide();
 
-			pause.on("click",function(){
+			pause.bind("click",function(){
 				$.mbBgndGallery.pause(el);
 				$(this).hide();
 				play.show();
 			});
 
-			play.on("click",function(){
+			play.bind("click",function(){
 				if(!el.opt.paused) return;
 				clearTimeout(el.opt.changing);
 				$.mbBgndGallery.play(el);
 				el.opt.paused=false;
 			});
 
-			next.on("click",function(){
+			next.bind("click",function(){
 				$.mbBgndGallery.next(el);
 				pause.hide();
 				play.show();
 
 			});
 
-			prev.on("click",function(){
+			prev.bind("click",function(){
 				$.mbBgndGallery.prev(el);
 				pause.hide();
 				play.show();
@@ -384,10 +385,10 @@
 			var loadCounter=0;
 
 			$.mbBgndGallery.preload(images[0],el);
-			$(el.opt.gallery).on("imageLoaded_"+el.opt.galleryID,function(){
+			$(el.opt.gallery).bind("imageLoaded_"+el.opt.galleryID,function(){
 				loadCounter++;
 				if(loadCounter==totImg){
-					$(el.opt.gallery).off("imageLoaded_"+el.opt.galleryID);
+					$(el.opt.gallery).unbind("imageLoaded_"+el.opt.galleryID);
 					$(el.gallery).fadeIn();
 					$.mbBgndGallery.play(el);
 					el.opt.paused=false;
@@ -399,6 +400,11 @@
 		}
 	};
 
+  /*Browser detection patch*/
+  $.browser.mozilla = /mozilla/.test(navigator.userAgent.toLowerCase());
+  $.browser.webkit = /webkit/.test(navigator.userAgent.toLowerCase());
+  $.browser.opera = /opera/.test(navigator.userAgent.toLowerCase());
+  $.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());
 
   $.fn.CSSAnimate = function(opt, duration, delay, ease, properties, callback) {
     return this.each(function() {
@@ -423,7 +429,6 @@
           }
         }
       }
-
 
       //http://cssglue.com/cubic
       //  ease  |  linear | ease-in | ease-out | ease-in-out  |  cubic-bezier(<number>, <number>,  <number>,  <number>)
@@ -475,6 +480,10 @@
         }
       }
 
+      if (properties === "transform")
+        properties = sfx+properties;
+
+
       el.css(sfx + "transition-property", properties);
       el.css(sfx + "transition-duration", duration + "ms");
       el.css(sfx + "transition-delay", delay + "ms");
@@ -485,17 +494,24 @@
         el.css(opt);
       }, 10);
 
+
       var endTransition = function(e) {
         this.removeEventListener(transitionEnd, endTransition, false);
         $(this).css(sfx + "transition", "");
-      $(this).css(sfx + "backface-visibility", "visible");
+//      $(this).css(sfx + "backface-visibility", "visible");
         e.stopPropagation();
 
-        if (typeof callback == "function") callback();
+
+        if (typeof callback == "function"){
+
+          callback();
+        }
 
         return false;
       };
 
+
+      this.addEventListener(transitionEnd, endTransition, false);
       this.addEventListener(transitionEnd, endTransition, false);
     })
   };
