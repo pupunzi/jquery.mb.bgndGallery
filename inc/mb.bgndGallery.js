@@ -400,6 +400,7 @@
 		}
 	};
 
+
   /*Browser detection patch*/
   $.browser.mozilla = /mozilla/.test(navigator.userAgent.toLowerCase());
   $.browser.webkit = /webkit/.test(navigator.userAgent.toLowerCase());
