@@ -11,7 +11,7 @@
 
 /*
  * Name:jquery.mb.bgndGallery
- * Version: 1.1
+ * Version: 1.5
  *
  */
 
@@ -20,7 +20,7 @@
 	$.mbBgndGallery ={
 		name:"mb.bgndGallery",
 		author:"Matteo Bicocchi",
-		version:"1.1",
+		version:"1.5",
 		defaults:{
 			containment:"body",
 			images:[],
@@ -66,7 +66,6 @@
 				if($(containment).css("position")=="static")
 					$(containment).css("position","relative");
 			}
-
 			if(opt.raster){
 				var raster=$("<div/>").css({position:"absolute",top:0,left:0,width:"100%",height:"100%",background:"url("+opt.raster+")",zIndex:1});
 				opt.gallery.append(raster);
@@ -100,7 +99,7 @@
 
 			$.mbBgndGallery.changePhoto(images[opt.imageCounter],el);
 
-      if (!opt.autoStart){
+			if (!opt.autoStart){
 				opt.paused=true;
 				$(opt.gallery).trigger("paused");
 			}
@@ -113,9 +112,9 @@
 				$.mbBgndGallery.play(el);
 			});
 
-			$(window).bind("resize",function(){
-				var image=$("#bgndGallery_"+el.opt.galleryID+" img");
-				$.mbBgndGallery.checkSize(image,el);
+			$(window).on("resize",function(){
+					var image=$("#bgndGallery_"+el.opt.galleryID+" img");
+					$.mbBgndGallery.checkSize(image,el);
 			});
 
 			var controls = el.opt.controls;
@@ -134,7 +133,37 @@
 				});
 			}
 		},
+		normalizeCss:function(opt){
+			var newOpt = jQuery.extend(true, {}, opt);
+			var sfx = "";
+			var transitionEnd = "transitionEnd";
+			if ($.browser.webkit) {
+				sfx = "-webkit-";
+				transitionEnd = "webkitTransitionEnd";
+			} else if ($.browser.mozilla) {
+				sfx = "-moz-";
+				transitionEnd = "transitionend";
+			} else if ($.browser.opera) {
+				sfx = "-o-";
+				transitionEnd = "oTransitionEnd";
+			} else if ($.browser.msie) {
+				sfx = "-ms-";
+				transitionEnd = "msTransitionEnd";
+			}
 
+			for(var o in newOpt){
+				if (o==="transform"){
+					newOpt[sfx+"transform"]=newOpt[o];
+					delete newOpt[o];
+				}
+				if (o==="transform-origin"){
+					newOpt[sfx+"transform-origin"]=opt[o];
+					delete newOpt[o];
+				}
+			}
+//			console.debug (opt, newOpt);
+			return newOpt;
+		},
 		preload:function(url,el){
 			if($.mbBgndGallery.clear){
 				$(el.opt.gallery).remove();
@@ -199,7 +228,13 @@
 				image.attr("h", image.height());
 				tmp.remove();
 
-				$("#bgndGallery_"+el.opt.galleryID+" img").CSSAnimate(el.opt.effect.exit,el.opt.effTimer,el.opt.effect.exitTiming,"opacity, left, top, width, height",function(){
+/*
+				$(el.opt.gallery).off("paused").on("paused",function(){
+					$("#bgndGallery_"+el.opt.galleryID+" img").CSSAnimateStop();
+				});
+*/
+
+				$("#bgndGallery_"+el.opt.galleryID+" img").CSSAnimate(el.opt.effect.exit,el.opt.effTimer,0,el.opt.effect.exitTiming,function(){
 					$("#bgndGallery_"+el.opt.galleryID+" img:first").remove();
 				});
 				image.css({position:"absolute"});
@@ -207,12 +242,11 @@
 
 				//todo: add a property to let height for vertical images
 				$.mbBgndGallery.changing=false;
-
 				$.mbBgndGallery.checkSize(image, el);
 
-				image.css(el.opt.effect.enter).show().CSSAnimate({top:0,left:0,opacity:1},el.opt.effTimer,el.opt.effect.enterTiming,"opacity, left, top, width, height",function(){
+				image.css($.mbBgndGallery.normalizeCss(el.opt.effect.enter)).show().CSSAnimate({top:0,left:0,opacity:1, transform:"scale(1) rotate(0deg)"},el.opt.effTimer,0,el.opt.effect.enterTiming,function(){
 					$(el.opt.gallery).trigger("imageReady_"+el.opt.galleryID);
-        });
+				});
 			}).attr("src",url);
 
 			if(el.opt.grayScale){
@@ -237,6 +271,10 @@
 			el.opt.changing=setTimeout(function(){
 				if(el.opt.paused)
 					return;
+
+				if(el.opt.onNext)
+					el.opt.onNext(el.opt);
+
 				if (el.opt.imageCounter>=el.opt.images.length-1)
 					el.opt.imageCounter=-1;
 
@@ -298,9 +336,6 @@
 			el.opt.imageCounter--;
 
 			$.mbBgndGallery.changePhoto(el.opt.images[el.opt.imageCounter],el);
-			el.opt.paused=true;
-			$(el.opt.gallery).trigger("paused");
-
 		},
 
 		loader:{
@@ -399,148 +434,6 @@
 			el.opt.imageCounter=0;
 		}
 	};
-
-
-  /*Browser detection patch*/
-  $.browser.mozilla = /firefox/.test(navigator.userAgent.toLowerCase());
-  $.browser.webkit = /webkit/.test(navigator.userAgent.toLowerCase());
-  $.browser.opera = /opera/.test(navigator.userAgent.toLowerCase());
-  $.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());
-
-  $.fn.CSSAnimate = function(opt, duration, delay, ease, properties, callback) {
-    return this.each(function() {
-
-      var el = $(this);
-
-      if (el.length === 0 || !opt) {return;}
-
-      if (typeof duration == "function") {callback = duration; duration = $.fx.speeds["_default"];}
-      if (typeof delay == "function") {callback = delay; delay=0}
-      if (typeof ease == "function") {callback = ease; ease = "cubic-bezier(0.65,0.03,0.36,0.72)";}
-      if (typeof properties == "function") {callback = properties; properties = "all";}
-
-
-      if(typeof duration == "string"){
-        for(var d in $.fx.speeds){
-          if(duration==d){
-            duration= $.fx.speeds[d];
-            break;
-          }else{
-            duration=null;
-          }
-        }
-      }
-
-      //http://cssglue.com/cubic
-      //  ease  |  linear | ease-in | ease-out | ease-in-out  |  cubic-bezier(<number>, <number>,  <number>,  <number>)
-
-      if (!jQuery.support.transition) {
-
-        for(var o in opt){
-          if (o==="transform"){
-            delete opt[o];
-          }
-        }
-
-        for(var o in opt){
-          if (opt[o]==="auto"){
-            delete opt[o];
-          }
-        }
-        if(!callback || typeof callback==="string")
-          callback ="linear";
-
-        el.animate(opt, duration, callback);
-        return;
-      }
-
-      console.debug($.browser.mozilla)
-
-      var sfx = "";
-      var transitionEnd = "transitionEnd";
-      if ($.browser.webkit) {
-        sfx = "-webkit-";
-        transitionEnd = "webkitTransitionEnd";
-      } else if ($.browser.mozilla) {
-        sfx = "-moz-";
-        transitionEnd = "transitionend";
-      } else if ($.browser.opera) {
-        sfx = "-o-";
-        transitionEnd = "oTransitionEnd";
-      } else if ($.browser.msie) {
-        sfx = "-ms-";
-        transitionEnd = "msTransitionEnd";
-      }
-
-      for(var o in opt){
-        if (o==="transform"){
-          opt[sfx+"transform"]=opt[o];
-          delete opt[o];
-        }
-        if (o==="transform-origin"){
-          opt[sfx+"transform-origin"]=opt[o];
-          delete opt[o];
-        }
-      }
-
-      if (properties === "transform")
-        properties = sfx+properties;
-
-
-      el.css(sfx + "transition-property", properties);
-      el.css(sfx + "transition-duration", duration + "ms");
-      el.css(sfx + "transition-delay", delay + "ms");
-      el.css(sfx + "transition-timing-function", ease);
-      el.css(sfx + "backface-visibility","hidden");
-
-      setTimeout(function() {
-        el.css(opt);
-      }, 10);
-
-
-      var endTransition = function(e) {
-        this.removeEventListener(transitionEnd, endTransition, false);
-        $(this).css(sfx + "transition", "");
-//      $(this).css(sfx + "backface-visibility", "visible");
-        e.stopPropagation();
-
-
-        if (typeof callback == "function"){
-
-          callback();
-        }
-
-        return false;
-      };
-
-
-      this.addEventListener(transitionEnd, endTransition, false);
-      this.addEventListener(transitionEnd, endTransition, false);
-    })
-  };
-
-  $.fn.CSSAnimateStop=function(){
-    var sfx = "";
-    if ($.browser.webkit) {
-      sfx = "-webkit-";
-    } else if ($.browser.mozilla) {
-      sfx = "-moz-";
-    } else if ($.browser.opera) {
-      sfx = "-o-";
-    } else if ($.browser.msie) {
-      sfx = "-ms-";
-    }
-    $(this).css(sfx + "transition", "");
-  };
-
-// jQuery.support.transition
-// to verify that CSS3 transition is supported (or any of its browser-specific implementations)
-  $.support.transition = (function() {
-    var thisBody = document.body || document.documentElement;
-    var thisStyle = thisBody.style;
-    return thisStyle.transition !== undefined || thisStyle.WebkitTransition !== undefined || thisStyle.MozTransition !== undefined || thisStyle.MsTransition !== undefined || thisStyle.OTransition !== undefined;
-  })();
-
 
 	jQuery.loadFromSystem=function(folderPath, type){
 

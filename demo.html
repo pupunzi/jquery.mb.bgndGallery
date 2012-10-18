@@ -86,6 +86,7 @@
 
 	</style>
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script type="text/javascript" src="inc/jquery.mb.CSSAnimate.js"></script>
 	<script type="text/javascript" src="inc/mb.bgndGallery.js"></script>
 
 	<script type="text/javascript">
@@ -103,11 +104,12 @@
 			$.mbBgndGallery.buildGallery({
   			//containment:"#wrapper",
 				containment:"body",
-				timer:4000,
-				effTimer:4000,
+				timer:1,
+				effTimer:8000,
 				controls:"#controls",
 				grayScale:false,
 				shuffle:false,
+				effect:{enter:{transform:"scale("+(1+ Math.random()*2)+")",opacity:0},exit:{transform:"scale("+(1+ Math.random()*2)+")",opacity:0}},
 
 				// If your server allow directory listing you can use:
 				// (however this doesn't work locally on your computer)
@@ -136,7 +138,9 @@
 				onPause:function(){},
 				onPlay:function(opt){},
 				onChange:function(idx){}, //idx=the zero based index of the displayed photo
-				onNext:function(opt){},   //opt=the options relatives to this component instance
+				onNext:function(opt){
+					opt.effect={enter:{transform:"scale("+(1+ Math.random()*2)+")",opacity:0},exit:{transform:"scale("+(1+ Math.random()*2)+")",opacity:0}};
+				},   //opt=the options relatives to this component instance
 				onPrev:function(opt){}   //opt=the options relatives to this component instance
 			});
 
