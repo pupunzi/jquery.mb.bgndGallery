@@ -235,10 +235,13 @@
 */
 
 				$("#bgndGallery_"+el.opt.galleryID+" img").CSSAnimate(el.opt.effect.exit,el.opt.effTimer,0,el.opt.effect.exitTiming,function(){
-					$("#bgndGallery_"+el.opt.galleryID+" img:first").remove();
+					var imgToRemove = $("#bgndGallery_"+el.opt.galleryID+" img").not(":first");
+					setTimeout(function(){
+						imgToRemove.remove();
+					},3000);
 				});
 				image.css({position:"absolute"});
-				$("#bgndGallery_"+el.opt.galleryID).append(image);
+				$("#bgndGallery_"+el.opt.galleryID).prepend(image);
 
 				//todo: add a property to let height for vertical images
 				$.mbBgndGallery.changing=false;
