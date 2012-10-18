@@ -21,7 +21,7 @@
 			margin:0;
 			padding:0;
 			font-family:Arial, Helvetica, sans-serif;
-			background: #fff; /*rgb(0, 0, 0)*/
+			background: #000; /*rgb(0, 0, 0)*/
 		}
 		#wrapper{
 			position:absolute;
@@ -109,7 +109,7 @@
 				controls:"#controls",
 				grayScale:false,
 				shuffle:false,
-				effect:{enter:{transform:"scale("+(1+ Math.random()*2)+")",opacity:0},exit:{transform:"scale("+(1+ Math.random()*2)+")",opacity:0}},
+				effect:{enter:{transform:"scale("+(1+ Math.random()*2)+")",opacity:0},exit:{transform:"scale("+(Math.random()*2)+")",opacity:0}},
 
 				// If your server allow directory listing you can use:
 				// (however this doesn't work locally on your computer)
@@ -139,7 +139,7 @@
 				onPlay:function(opt){},
 				onChange:function(idx){}, //idx=the zero based index of the displayed photo
 				onNext:function(opt){
-					opt.effect={enter:{transform:"scale("+(1+ Math.random()*2)+")",opacity:0},exit:{transform:"scale("+(1+ Math.random()*2)+")",opacity:0}};
+					opt.effect={enter:{transform:"scale("+(1+ Math.random()*2)+")",opacity:0},exit:{transform:"scale("+(Math.random()*2)+")",opacity:0}};
 				},   //opt=the options relatives to this component instance
 				onPrev:function(opt){}   //opt=the options relatives to this component instance
 			});
