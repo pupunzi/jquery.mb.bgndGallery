@@ -11,7 +11,7 @@
 
 /*
  * Name:jquery.mb.bgndGallery
- * Version: 1.6
+ * Version: 1.6.1
  *
  */
 
@@ -20,7 +20,7 @@
 	$.mbBgndGallery ={
 		name:"mb.bgndGallery",
 		author:"Matteo Bicocchi",
-		version:"1.6",
+		version:"1.6.1",
 		defaults:{
 			containment:"body",
 			images:[],
