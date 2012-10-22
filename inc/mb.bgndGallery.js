@@ -11,7 +11,7 @@
 
 /*
  * Name:jquery.mb.bgndGallery
- * Version: 1.5
+ * Version: 1.6
  *
  */
 
@@ -20,7 +20,7 @@
 	$.mbBgndGallery ={
 		name:"mb.bgndGallery",
 		author:"Matteo Bicocchi",
-		version:"1.5",
+		version:"1.6",
 		defaults:{
 			containment:"body",
 			images:[],
@@ -35,6 +35,7 @@
 			grayScale:false,
 			activateKeyboard:true,
 			preserveTop:false,
+			preserveWidth:false,
 			onStart:function(){},
 			onChange:function(idx){}, //idx=the zero based index of the displayed photo
 			onPause:function(){},
@@ -113,8 +114,8 @@
 			});
 
 			$(window).on("resize",function(){
-					var image=$("#bgndGallery_"+el.opt.galleryID+" img");
-					$.mbBgndGallery.checkSize(image,el);
+				var image=$("#bgndGallery_"+el.opt.galleryID+" img");
+				$.mbBgndGallery.checkSize(image,el);
 			});
 
 			var controls = el.opt.controls;
@@ -204,6 +205,11 @@
 
 				if(!el.opt.preserveTop)
 					image.css("margin-top",(($(containment).height()-image.height())/2));
+
+				if(el.opt.preserveWidth){
+					image.css({width:"100%", height:"auto", left:0, marginLeft:0});
+				}
+				
 			});
 		},
 
@@ -228,11 +234,11 @@
 				image.attr("h", image.height());
 				tmp.remove();
 
-/*
-				$(el.opt.gallery).off("paused").on("paused",function(){
-					$("#bgndGallery_"+el.opt.galleryID+" img").CSSAnimateStop();
-				});
-*/
+				/*
+				 $(el.opt.gallery).off("paused").on("paused",function(){
+				 $("#bgndGallery_"+el.opt.galleryID+" img").CSSAnimateStop();
+				 });
+				 */
 
 				$("#bgndGallery_"+el.opt.galleryID+" img").CSSAnimate(el.opt.effect.exit,el.opt.effTimer,0,el.opt.effect.exitTiming,function(){
 					var imgToRemove = $("#bgndGallery_"+el.opt.galleryID+" img").not(":first");

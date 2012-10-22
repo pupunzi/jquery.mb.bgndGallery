@@ -109,6 +109,7 @@
 				controls:"#controls",
 				grayScale:false,
 				shuffle:false,
+				preserveWidth:true,
 				effect:{enter:{transform:"scale("+(1+ Math.random()*2)+")",opacity:0},exit:{transform:"scale("+(Math.random()*2)+")",opacity:0}},
 
 				// If your server allow directory listing you can use:
@@ -170,10 +171,11 @@
 	<div class="text">
 		<h1>mb.bgndGallery demo</h1>
 
-		<h2>
+		<h2 style="display: none">
 			This background gallery is applied to the body
 			<br>
-			and uses the default transition (fadeIn/fadeOut).
+			and uses a custom transition with the CSS3 transform: rotate() property:<br><br>
+			effect:{enter:{transform:"scale("+(1+ Math.random()*2)+")",opacity:0},exit:{transform:"scale("+(Math.random()*2)+")",opacity:0}}<br>
 			<br>
 			<br>
 			As you can see, resizing the browser window the image will resize and center to always fit the screen.
