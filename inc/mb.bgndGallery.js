@@ -209,7 +209,7 @@
 				if(el.opt.preserveWidth){
 					image.css({width:"100%", height:"auto", left:0, marginLeft:0});
 				}
-				
+
 			});
 		},
 
