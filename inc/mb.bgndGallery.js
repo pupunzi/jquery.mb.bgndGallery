@@ -453,18 +453,23 @@
 		if(!folderPath)
 			return;
 		if(!type)
-			type="jpg" || "jpeg";
+			type= ["jpg","jpeg","png"];
 		var arr=[];
 		$.ajax({
 			url:folderPath,
 			async:false,
 			success:function(response){
 				var tmp=$(response);
-				var els= tmp.find("[href*='."+type+"']");
+				var els= tmp.find("[href]");
+
 				els.each(function(){
-					arr.push(folderPath+$(this).attr("href"));
+					for (var i in type){
+						if ($(this).attr("href").indexOf(type[i])>=0)
+							arr.push(folderPath+$(this).attr("href"));
+					}
 				});
 				tmp.remove();
+				console.debug(arr);
 			}
 		});
 		return arr;
