@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 04/01/13 17.13
+ *  last modified: 16/01/13 22.55
  *  *****************************************************************************
  */
 
@@ -23,7 +23,7 @@
 	$.mbBgndGallery ={
 		name:"mb.bgndGallery",
 		author:"Matteo Bicocchi",
-		version:"1.6.1",
+		version:"1.6.2",
 		defaults:{
 			containment:"body",
 			images:[],
@@ -165,7 +165,6 @@
 					delete newOpt[o];
 				}
 			}
-//			console.debug (opt, newOpt);
 			return newOpt;
 		},
 		preload:function(url,el){
@@ -472,7 +471,6 @@
 					}
 				});
 				tmp.remove();
-				console.debug(arr);
 			}
 		});
 		return arr;
