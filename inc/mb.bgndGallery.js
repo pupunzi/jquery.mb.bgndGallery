@@ -14,16 +14,25 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 16/01/13 22.55
+ *  last modified: 30/01/13 0.33
  *  *****************************************************************************
  */
+
+/*Browser detection patch*/
+(function(){if(!(8>jQuery.fn.jquery.split(".")[1])){jQuery.browser={};jQuery.browser.mozilla=!1;jQuery.browser.webkit=!1;jQuery.browser.opera=!1;jQuery.browser.msie=!1;var a=navigator.userAgent;jQuery.browser.name=navigator.appName;jQuery.browser.fullVersion=""+parseFloat(navigator.appVersion);jQuery.browser.majorVersion=parseInt(navigator.appVersion,10);var c,b;if(-1!=(b=a.indexOf("Opera"))){if(jQuery.browser.opera=!0,jQuery.browser.name="Opera",jQuery.browser.fullVersion=a.substring(b+6),-1!=(b= a.indexOf("Version")))jQuery.browser.fullVersion=a.substring(b+8)}else if(-1!=(b=a.indexOf("MSIE")))jQuery.browser.msie=!0,jQuery.browser.name="Microsoft Internet Explorer",jQuery.browser.fullVersion=a.substring(b+5);else if(-1!=(b=a.indexOf("Chrome")))jQuery.browser.webkit=!0,jQuery.browser.name="Chrome",jQuery.browser.fullVersion=a.substring(b+7);else if(-1!=(b=a.indexOf("Safari"))){if(jQuery.browser.webkit=!0,jQuery.browser.name="Safari",jQuery.browser.fullVersion=a.substring(b+7),-1!=(b=a.indexOf("Version")))jQuery.browser.fullVersion= a.substring(b+8)}else if(-1!=(b=a.indexOf("Firefox")))jQuery.browser.mozilla=!0,jQuery.browser.name="Firefox",jQuery.browser.fullVersion=a.substring(b+8);else if((c=a.lastIndexOf(" ")+1)<(b=a.lastIndexOf("/")))jQuery.browser.name=a.substring(c,b),jQuery.browser.fullVersion=a.substring(b+1),jQuery.browser.name.toLowerCase()==jQuery.browser.name.toUpperCase()&&(jQuery.browser.name=navigator.appName);if(-1!=(a=jQuery.browser.fullVersion.indexOf(";")))jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0, a);if(-1!=(a=jQuery.browser.fullVersion.indexOf(" ")))jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0,a);jQuery.browser.majorVersion=parseInt(""+jQuery.browser.fullVersion,10);isNaN(jQuery.browser.majorVersion)&&(jQuery.browser.fullVersion=""+parseFloat(navigator.appVersion),jQuery.browser.majorVersion=parseInt(navigator.appVersion,10));jQuery.browser.version=jQuery.browser.majorVersion}})(jQuery);
+
+/*
+*   jquery.mb.components
+*  file: jquery.mb.CSSAnimate.js
+*/
+jQuery.fn.CSSAnimate=function(a,b,k,l,f){return this.each(function(){var c=jQuery(this);if(0!==c.length&&a){"function"==typeof b&&(f=b,b=jQuery.fx.speeds._default);"function"==typeof k&&(f=k,k=0);"function"==typeof l&&(f=l,l="cubic-bezier(0.65,0.03,0.36,0.72)");if("string"==typeof b)for(var j in jQuery.fx.speeds)if(b==j){b=jQuery.fx.speeds[j];break}else b=null;if(jQuery.support.transition){var e="",h="transitionEnd";jQuery.browser.webkit?(e="-webkit-",h="webkitTransitionEnd"):jQuery.browser.mozilla? (e="-moz-",h="transitionend"):jQuery.browser.opera?(e="-o-",h="otransitionend"):jQuery.browser.msie&&(e="-ms-",h="msTransitionEnd");j=[];for(d in a){var g=d;"transform"===g&&(g=e+"transform",a[g]=a[d],delete a[d]);"transform-origin"===g&&(g=e+"transform-origin",a[g]=a[d],delete a[d]);j.push(g);c.css(g)||c.css(g,0)}d=j.join(",");c.css(e+"transition-property",d);c.css(e+"transition-duration",b+"ms");c.css(e+"transition-delay",k+"ms");c.css(e+"transition-timing-function",l);c.css(e+"backface-visibility", "hidden");setTimeout(function(){c.css(a)},0);c.on(h,function(a){c.off(h);c.css(e+"transition","");a.stopPropagation();"function"==typeof f&&(c.called=!0,f());return!1})}else{for(var d in a)"transform"===d&&delete a[d],"transform-origin"===d&&delete a[d],"auto"===a[d]&&delete a[d];if(!f||"string"===typeof f)f="linear";c.animate(a,b,f)}}})}; jQuery.fn.CSSAnimateStop=function(){var a="",b="transitionEnd";jQuery.browser.webkit?(a="-webkit-",b="webkitTransitionEnd"):jQuery.browser.mozilla?(a="-moz-",b="transitionend"):jQuery.browser.opera?(a="-o-",b="otransitionend"):jQuery.browser.msie&&(a="-ms-",b="msTransitionEnd");jQuery(this).css(a+"transition","");jQuery(this).off(b)}; jQuery.support.transition=function(){var a=(document.body||document.documentElement).style;return void 0!==a.transition||void 0!==a.WebkitTransition||void 0!==a.MozTransition||void 0!==a.MsTransition||void 0!==a.OTransition}();
 
 (function($){
 
 	$.mbBgndGallery ={
 		name:"mb.bgndGallery",
 		author:"Matteo Bicocchi",
-		version:"1.6.2",
+		version:"1.6.3",
 		defaults:{
 			containment:"body",
 			images:[],
@@ -90,10 +99,10 @@
 			var loadCounter=0;
 
 			$.mbBgndGallery.preload(images[0],el);
-			$(opt.gallery).bind("imageLoaded_"+opt.galleryID,function(){
+			$(opt.gallery).on("imageLoaded_"+opt.galleryID,function(){
 				loadCounter++;
 				if(loadCounter==totImg){
-					$(opt.gallery).unbind("imageLoaded_"+opt.galleryID);
+					$(opt.gallery).off("imageLoaded_"+opt.galleryID);
 					return;
 				}
 				$.mbBgndGallery.preload(images[loadCounter],el);
@@ -109,7 +118,7 @@
 			}
 
 
-			$(opt.gallery).bind("imageReady_"+opt.galleryID,function(){
+			$(opt.gallery).on("imageReady_"+opt.galleryID,function(){
 
 				if(opt.paused)
 					return;
@@ -127,11 +136,11 @@
 				counter.html(opt.imageCounter+1+" / "+opt.images.length);
 
 				$.mbBgndGallery.buildControls(controls,el);
-				$(opt.containment).bind("paused",function(){
+				$(opt.containment).on("paused",function(){
 					$(opt.controls).find(".play").show();
 					$(opt.controls).find(".pause").hide();
 				});
-				$(opt.containment).bind("play",function(){
+				$(opt.containment).on("play",function(){
 					$(opt.controls).find(".play").hide();
 					$(opt.controls).find(".pause").show();
 				});
@@ -355,7 +364,7 @@
 		},
 
 		keyboard:function(el){
-			$(document).bind("keydown.bgndGallery",function(e){
+			$(document).on("keydown.bgndGallery",function(e){
 				switch(e.keyCode){
 					case 32:
 						if(el.opt.paused){
@@ -389,27 +398,27 @@
 			if(el.opt.autoStart)
 				play.hide();
 
-			pause.bind("click",function(){
+			pause.on("click",function(){
 				$.mbBgndGallery.pause(el);
 				$(this).hide();
 				play.show();
 			});
 
-			play.bind("click",function(){
+			play.on("click",function(){
 				if(!el.opt.paused) return;
 				clearTimeout(el.opt.changing);
 				$.mbBgndGallery.play(el);
 				el.opt.paused=false;
 			});
 
-			next.bind("click",function(){
+			next.on("click",function(){
 				$.mbBgndGallery.next(el);
 				pause.hide();
 				play.show();
 
 			});
 
-			prev.bind("click",function(){
+			prev.on("click",function(){
 				$.mbBgndGallery.prev(el);
 				pause.hide();
 				play.show();
@@ -431,10 +440,10 @@
 			var loadCounter=0;
 
 			$.mbBgndGallery.preload(images[0],el);
-			$(el.opt.gallery).bind("imageLoaded_"+el.opt.galleryID,function(){
+			$(el.opt.gallery).on("imageLoaded_"+el.opt.galleryID,function(){
 				loadCounter++;
 				if(loadCounter==totImg){
-					$(el.opt.gallery).unbind("imageLoaded_"+el.opt.galleryID);
+					$(el.opt.gallery).off("imageLoaded_"+el.opt.galleryID);
 					$(el.gallery).fadeIn();
 					$.mbBgndGallery.play(el);
 					el.opt.paused=false;

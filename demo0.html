@@ -16,7 +16,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 04/01/13 17.13
+  ~  last modified: 30/01/13 0.33
   ~  ******************************************************************************/
   -->
 
@@ -77,7 +77,6 @@
 
 	</style>
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-	<script type="text/javascript" src="inc/jquery.mb.CSSAnimate.js"></script>
 	<script type="text/javascript" src="inc/mb.bgndGallery.js"></script>
 
 	<script type="text/javascript">
@@ -92,7 +91,7 @@
 			$.mbBgndGallery.buildGallery({
 //				containment:"#wrapper",
 				containment:"body",
-				effect:{enter:{top:"100%",opacity:1},exit:{top:"-100%",opacity:1}},
+				effect:{enter:{top:"200%",opacity:1},exit:{top:"-200%",opacity:0}},
 				timer:3000,
 				effTimer:1500,
 				controls:"#controls",
@@ -113,9 +112,9 @@
 				autoStart:false,
 				onStart:function(){$("#controls .play").show();$("#controls .pause").hide();},
 				onPause:function(){$("#controls .play").show();$("#controls .pause").hide();},
-				onPlay:function(o){$("#controls .play").hide();$("#controls .pause").show();o.effect={enter:{top:"100%",opacity:1},exit:{top:"-100%",opacity:1}}},
-				onNext:function(o){o.effect={enter:{top:"100%",opacity:1},exit:{top:"-100%",opacity:1}}},
-				onPrev:function(o){o.effect={enter:{top:"-100%",opacity:1},exit:{top:"100%",opacity:1}}}
+				onPlay:function(o){$("#controls .play").hide();$("#controls .pause").show();o.effect={enter:{top:"120%",opacity:1},exit:{top:"-120%",opacity:0}}},
+				onNext:function(o){o.effect={enter:{top:"120%",opacity:1},exit:{top:"-120%",opacity:0}}},
+				onPrev:function(o){o.effect={enter:{top:"-120%",opacity:1},exit:{top:"120%",opacity:0}}}
 			})
 
 		});
