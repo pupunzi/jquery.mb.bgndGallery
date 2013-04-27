@@ -16,7 +16,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 30/01/13 0.33
+  ~  last modified: 26/04/13 16.01
   ~  ******************************************************************************/
   -->
 
@@ -25,73 +25,106 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>mb.bgndGallery 1.0</title>
 	<style type="text/css">
-		body{
-			z-index:0;
-			margin:0;
-			padding:0;
-			font-family:Arial, Helvetica, sans-serif;
-			background: rgb(0, 0, 0)
-		}
-		#wrapper{
-			position:absolute;
-			font-family:Arial, Helvetica, sans-serif;
-			margin-left:10%;
-			width:80%;
-			height:100%;
-			z-index:10;
-			opacity:.9
+        body{
+            margin:0px;
+            background: #284352;
+            z-index:0;
+            margin:0;
+            padding:0;
+            font-family:Arial, Helvetica, sans-serif;
+        }
+        #wrapper{
+            position:absolute;
+            padding:100px 50px;
+            width:500px;
+            height: 100%;
+            margin-left: 0px;
+            top:0;
+            background: rgba(232, 232, 232, .9);
 
-		}
-		#gallery{
-			position:absolute;
-			width:100%;
-			height:700px;
-			top:0;
-			left:0;
-		}
-		.text{
-			margin-top:150px;
-			padding:20px;
-		/*background: rgba(153, 0, 0,.8);*/
-			color:white;
-		}
-		#controls div{
-			display:inline-block;
-			padding:5px;
-			margin:1px;
-			color:#000;
-			background:rgba(255,255,255,.5);
-			border:1px solid #fff;
-			-moz-border-radius:4px;
-			-webkit-border-radius:4px;
-			-o-border-radius:4px;
-			border-radius:4px;
-		}
-		#controls div:hover:not(.counter){
-			background:rgba(255,255,255,.9);
-		}
+            font:normal 16px/20px Lekton, sans-serif;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-shadow: 0 0 10px rgba(0,0,0,0.4);
 
-		#controls div:not(.counter){
-			cursor:pointer;
-		}
+        }
+
+        .text{
+            position:absolute;
+            top:100px;
+            padding-right: 50px;
+        }
+
+        .text h1{
+            font-weight:normal;
+            line-height:130%;
+        }
+
+        .text h2{
+            font-weight:normal;
+            line-height:130%;
+        }
+
+        #controls div{
+            display:inline-block;
+            padding:5px;
+            margin:1px;
+            color:#fff;
+            border:1px solid #fff;
+            -moz-border-radius:4px;
+            -webkit-border-radius:4px;
+            -o-border-radius:4px;
+            border-radius:4px;
+        }
+        #controls div:hover:not(.counter){
+            background:rgba(255,255,255,.9);
+            color:#000;
+        }
+
+        #controls div:not(.counter){
+            background: rgb(190, 41, 16);
+            cursor:pointer;
+        }
+
+        #gallery{
+            position: absolute;
+            width: 80%;
+            height: 80%;
+            left: 10%;
+            top: 10%;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            background: #000;
+        }
 
 	</style>
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 	<script type="text/javascript" src="inc/mb.bgndGallery.js"></script>
 
 	<script type="text/javascript">
 		$(function(){
-			if (self.location.href == top.location.href){
-				$("body").css({font:"normal 13px/16px 'trebuchet MS', verdana, sans-serif"});
-				var logo=$("<a href='http://pupunzi.com' style='position:absolute;top:40px;left:10%;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");
-				$("body").prepend(logo);
-				$("#logo").fadeIn();
-			}
+            if (self.location.href == top.location.href){
+                $("body").css({font:"normal 13px/22px 'trebuchet MS', verdana, sans-serif"});
+                var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:40px;left:10%;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");
+                $("body").prepend(logo);
+                $("#logo").fadeIn();
+            }
+
+
+            setTimeout(function(){
+                $("#wrapper").CSSAnimate({marginLeft:-450, background:"rgba(255, 192, 0, 0.8)"},200)
+            },3000)
+
+            $("#wrapper").on("mouseenter",function(){
+                $(this).CSSAnimate({marginLeft:0, background:"rgba(232, 232, 232, .9)"},200)
+            }).on("mouseleave",function(){
+                        $(this).CSSAnimate({marginLeft:-450, background:"rgba(255, 192, 0, 0.8)"},200)
+                    })
 
 			$.mbBgndGallery.buildGallery({
-//				containment:"#wrapper",
-				containment:"body",
-				effect:{enter:{top:"200%",opacity:1},exit:{top:"-200%",opacity:0}},
+
+				containment:"#gallery",
+				effect:{enter:{left:"100%",opacity:1},exit:{left:"-100%",opacity:0}},
 				timer:3000,
 				effTimer:1500,
 				controls:"#controls",
@@ -109,24 +142,28 @@
 					"elements/11.jpg",
 					"elements/12.jpg"
 				],
-				autoStart:false,
+				autoStart:true,
 				onStart:function(){$("#controls .play").show();$("#controls .pause").hide();},
 				onPause:function(){$("#controls .play").show();$("#controls .pause").hide();},
 				onPlay:function(o){$("#controls .play").hide();$("#controls .pause").show();o.effect={enter:{top:"120%",opacity:1},exit:{top:"-120%",opacity:0}}},
-				onNext:function(o){o.effect={enter:{top:"120%",opacity:1},exit:{top:"-120%",opacity:0}}},
-				onPrev:function(o){o.effect={enter:{top:"-120%",opacity:1},exit:{top:"120%",opacity:0}}}
+				onNext:function(o){o.effect={enter:{left:"100%",opacity:1},exit:{left:"-100%",opacity:0}}},
+				onPrev:function(o){o.effect={enter:{left:"-100%",opacity:1},exit:{left:"100%",opacity:0}}}
 			})
 
 		});
 	</script>
 </head>
 <body >
-
+<div id="gallery"></div>
 <div id="wrapper">
 
-	<div class="text">
+   	<div class="text">
 		<h1>mb.bgndGallery.demo</h1>
-		<h2> Show your preferrd images as background of your site!</h2>
+		<p>
+            This background gallery is applied to A DIV element.
+            <br>
+            You can use the left/right arrow and the space key to navigate the gallery.
+        </p>
 		<div id="controls">
 			<div class="pause">pause</div>
 			<div class="play">play</div>
@@ -134,7 +171,24 @@
 			<div class="next">next</div>
 			<div class="counter"></div>
 		</div>
-	</div>
+
+        <!-- Begin MailChimp Signup Form -->
+        <link href="http://cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+        <style type="text/css">
+            #mc_embed_signup{background:transparent; clear:left; font:14px Helvetica,Arial,sans-serif; margin-top: 50px; width: 250px; }
+                /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+                   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+        </style>
+        <div id="mc_embed_signup" style="">
+            <form action="http://pupunzi.us6.list-manage2.com/subscribe/post?u=4346dc9633&amp;id=91a005172f" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                <label for="mce-EMAIL">Subscribe to my mailing list<br>to stay in touch.</label>
+                <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+                <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+            </form>
+        </div>
+        <!--End mc_embed_signup-->
+
+    </div>
 
 </div>
 

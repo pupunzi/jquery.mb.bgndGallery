@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 03/02/13 18.21
+ *  last modified: 27/04/13 12.48
  *  *****************************************************************************
  */
 
@@ -48,6 +48,7 @@ jQuery.fn.CSSAnimate=function(a,b,k,l,f){return this.each(function(){var c=jQuer
 			activateKeyboard:true,
 			preserveTop:false,
 			preserveWidth:false,
+			placeHolder:"",
 			onStart:function(){},
 			onChange:function(idx){}, //idx=the zero based index of the displayed photo
 			onPause:function(){},
@@ -269,6 +270,11 @@ jQuery.fn.CSSAnimate=function(a,b,k,l,f){return this.each(function(){var c=jQuer
 				});
 			}).attr("src",url);
 
+			image.error(function(){
+				var image=$(this);
+				image.attr("src", el.opt.placeHolder);
+			})
+
 			if(el.opt.grayScale){
 				image.greyScale();
 
@@ -477,6 +483,7 @@ jQuery.fn.CSSAnimate=function(a,b,k,l,f){return this.each(function(){var c=jQuer
 					for (var i in type){
 						if ($(this).attr("href").indexOf(type[i])>=0)
 							arr.push(folderPath+$(this).attr("href"));
+						arr = $.unique(arr);
 					}
 				});
 				tmp.remove();

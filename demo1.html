@@ -16,189 +16,217 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 30/01/13 0.33
+  ~  last modified: 26/04/13 16.03
   ~  ******************************************************************************/
   -->
 
 <html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>mb.bgndGallery 1.0</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>mb.bgndGallery 1.0</title>
 
-  <style type="text/css">
+    <style type="text/css">
 
-    body{
-      z-index:0;
-      margin:0;
-      padding:0;
-      font-family:Arial, Helvetica, sans-serif;
-      background: rgb(0, 0, 0)
-    }
+        body{
+            margin:0px;
+            background: #284352;
+            z-index:0;
+            margin:0;
+            padding:0;
+            font-family:Arial, Helvetica, sans-serif;
+        }
 
-    #wrapper{
-      position:absolute;
-      font-family:Arial, Helvetica, sans-serif;
-      margin-left:10%;
-      width:80%;
-      height:100%;
-      z-index:10;
-      opacity:.9
+        #wrapper{
+            position:absolute;
+            padding:100px 50px;
+            width:500px;
+            height: 100%;
+            margin-left: 0px;
+            top:0;
+            background: rgba(232, 232, 232, .9);
 
-    }
+            z-index: 1;
+            font:normal 16px/20px Lekton, sans-serif;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-shadow: 0 0 10px rgba(0,0,0,0.4);
 
-    .text{
-      position:absolute;
-      top:40px;
-      right:20px;
-      width:200px;
-      padding:20px;
-      margin-left:20px;
-      background: rgba(0, 0, 0,.5);
-      color:white;
-      -moz-border-radius:10px;
-      -webkit-border-radius:10px;
-      border-radius:10px;
-    }
+        }
 
-    .text h1{
-      font-weight:normal;
-      line-height:130%;
-    }
+        .text{
+            position:absolute;
+            top:100px;
+            padding-right: 50px;
+        }
 
-    .text h2{
-      font-weight:normal;
-      line-height:130%;
-    }
+        .text h1{
+            font-weight:normal;
+            line-height:130%;
+        }
 
-    #controls div{
-      display:inline-block;
-      padding:5px;
-      margin:1px;
-      color:#000;
-      background:rgba(255,255,255,.5);
-      border:1px solid #fff;
-      -moz-border-radius:4px;
-      -webkit-border-radius:4px;
-      -o-border-radius:4px;
-      border-radius:4px;
-    }
+        .text h2{
+            font-weight:normal;
+            line-height:130%;
+        }
 
-    #controls div:hover:not(.counter){
-      background:rgba(255,255,255,.9);
-    }
+        #controls div{
+            display:inline-block;
+            padding:5px;
+            margin:1px;
+            color:#fff;
+            border:1px solid #fff;
+            -moz-border-radius:4px;
+            -webkit-border-radius:4px;
+            -o-border-radius:4px;
+            border-radius:4px;
+        }
 
-    #controls div:not(.counter){
-      cursor:pointer;
-    }
+        #controls div:hover:not(.counter){
+            background:rgba(255,255,255,.9);
+            color:#000;
+        }
 
-    #thumbs{
-      position:absolute;
-      bottom:0;
-    }
-    
-    #thumbs img{
-      width:30px;
-      border:2px solid white;
-      margin:1px;
-    }
+        #controls div:not(.counter){
+            background: rgb(190, 41, 16);
+            cursor:pointer;
+        }
 
-  </style>
+        #thumbs{
+            position:absolute;
+            bottom:0;
+            right: 50px;
+            width: 400px;
+        }
 
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-  <script type="text/javascript" src="inc/jquery.mb.flickr.js"></script>
-  <script type="text/javascript" src="inc/mb.bgndGallery.js"></script>
+        #thumbs img{
+            width:30px;
+            border:2px solid white;
+            margin:1px;
+        }
 
-  <script type="text/javascript">
-    $(function(){
-      if (self.location.href == top.location.href){
-        $("body").css({font:"normal 13px/150% 'trebuchet MS', verdana, sans-serif"});
-        var logo=$("<a href='http://pupunzi.com' style='position:absolute;top:40px;left:10%;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");
-        $("body").prepend(logo);
-        $("#logo").fadeIn();
-      }
+    </style>
+    <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
 
-      //USE YOUR OWN FLICKR API KEY
-      //http://www.flickr.com/services/apps/create/apply/
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script type="text/javascript" src="inc/jquery.mb.flickr.js"></script>
+    <script type="text/javascript" src="inc/mb.bgndGallery.js"></script>
 
-      $.mbFlickr.flickr_api_key="f40779ab07dd09e5890f48e3618296b3"; //this is my Flickr API key. Create your own
-      $.mbFlickr.defaults.size="surce"; //  medium / surce
-      $.mbFlickr.defaults.per_page=100;
-      $.mbFlickr.defaults.flickr_photoset_id='72157600884372818';
-
-      $.mbFlickr.defaults.callback=function(gallery){
-
-        $(gallery.photos).each(function(i){
-          $.mbBgndGallery.defaults.images.push(this.source);
-          var img=$("<img/>").attr("src",this.square).click(function(){
-            var el=$("body").get(0);
-            el.opt.imageCounter=$(this).attr("i")-1;
-            $.mbBgndGallery.next(el);
-            el.opt.paused=true;
-          }).attr("i",i);
-          $("#thumbs").append(img);
-        });
-
-        $("#loading").hide();
-
-        $.mbBgndGallery.buildGallery({
-          containment:"body",
-          controls:"#controls",
-          timer:3000,
-          effTimer:1000,
-          raster:"inc/raster.png",
-          folderPath:false
-        });
-
-        $(".bw").toggle(
-            function(){
-              var el=$("body").get(0);
-              el.opt.grayScale=true;
-              $(this).addClass("sel");
-              el.opt.gallery.find("img:first").greyScale();
-            },
-            function(){
-              var el=$("body").get(0);
-              el.opt.grayScale=false;
-              $(this).removeClass("sel");
-              el.opt.gallery.find("img:first").attr("src",el.opt.images[el.opt.imageCounter]);
+    <script type="text/javascript">
+        $(function(){
+            if (self.location.href == top.location.href){
+                $("body").css({font:"normal 13px/22px 'trebuchet MS', verdana, sans-serif"});
+                var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:40px;left:10%;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");
+                $("body").prepend(logo);
+                $("#logo").fadeIn();
             }
-        )
-      };
 
-      $("body").mb_loadFlickrPhotos();
+            setTimeout(function(){
+                $("#wrapper").CSSAnimate({marginLeft:-450, background:"rgba(255, 192, 0, 0.8)"},200)
+            },3000)
 
-    });
-  </script>
+            $("#wrapper").on("mouseenter",function(){
+                $(this).CSSAnimate({marginLeft:0, background:"rgba(232, 232, 232, .9)"},200)
+            }).on("mouseleave",function(){
+                        $(this).CSSAnimate({marginLeft:-450, background:"rgba(255, 192, 0, 0.8)"},200)
+                    })
+
+
+            //USE YOUR OWN FLICKR API KEY
+            //http://www.flickr.com/services/apps/create/apply/
+
+            $.mbFlickr.flickr_api_key="f40779ab07dd09e5890f48e3618296b3"; //this is my Flickr API key. Create your own
+            $.mbFlickr.defaults.size="surce"; //  medium / surce
+            $.mbFlickr.defaults.per_page=100;
+            $.mbFlickr.defaults.flickr_photoset_id='72157600884372818';
+
+            $.mbFlickr.defaults.callback=function(gallery){
+
+                $(gallery.photos).each(function(i){
+                    $.mbBgndGallery.defaults.images.push(this.source);
+                    var img=$("<img/>").attr("src",this.square).click(function(){
+                        var el=$("body").get(0);
+                        el.opt.imageCounter=$(this).attr("i")-1;
+                        $.mbBgndGallery.next(el);
+                        el.opt.paused=true;
+                    }).attr("i",i);
+                    $("#thumbs").append(img);
+                });
+
+                $("#loading").hide();
+
+                $.mbBgndGallery.buildGallery({
+                    containment:"body",
+                    controls:"#controls",
+                    timer:3000,
+                    effTimer:1000,
+                    raster:"inc/raster.png",
+                    folderPath:false
+                });
+
+                $(".bw").toggle(
+                        function(){
+                            var el=$("body").get(0);
+                            el.opt.grayScale=true;
+                            $(this).addClass("sel");
+                            el.opt.gallery.find("img:first").greyScale();
+                        },
+                        function(){
+                            var el=$("body").get(0);
+                            el.opt.grayScale=false;
+                            $(this).removeClass("sel");
+                            el.opt.gallery.find("img:first").attr("src",el.opt.images[el.opt.imageCounter]);
+                        }
+                )
+            };
+
+            $("body").mb_loadFlickrPhotos();
+
+        });
+    </script>
 </head>
 <body >
 
 <div id="wrapper">
 
-  <div id="loading"><h1 style="color:white; margin-top:200px">loading photos from Flickr... Wait</h1></div>
+    <div id="loading"><h1 style="color:white; margin-top:200px; position:fixed; right: 20px">loading photos from Flickr... Wait</h1></div>
 
-  <div class="text">
-    <h1>mb.bgndGallery flickr demo</h1>
-    <h2> Here is the mb.BgndGallery!</h2>
-    <h2>
-      In this case the gallery is showing images from a set of my Flickr account.
-      <br>
-      <br>
-      This background gallery is applied to the body
-      <br>
-      and uses the default transition (fadeIn/fadeOut).
-      <br>
-      <br>
-      As you can see, resizing the browser window the images will resize and center to always fit the screen.
-    </h2>
-    <div id="controls">
-      <div class="pause">pause</div>
-      <div class="play">play</div>
-      <div class="prev">prev</div>
-      <div class="next">next</div>
-      <div class="counter">loading images from flickr</div>
+    <div class="text">
+        <h1>mb.bgndGallery<br>flickr demo</h1>
+        <p>
+            In this case the gallery is showing images from a set of my Flickr account.
+            <br>
+            <br>
+            This background gallery is applied to the body
+            <br>
+            and uses the default transition (fadeIn/fadeOut).
+        </p>
+        <div id="controls">
+            <div class="pause">pause</div>
+            <div class="play">play</div>
+            <div class="prev">prev</div>
+            <div class="next">next</div>
+            <div class="counter">wait...</div>
+        </div>
+
+        <!-- Begin MailChimp Signup Form -->
+        <link href="http://cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+        <style type="text/css">
+            #mc_embed_signup{background:transparent; clear:left; font:14px Helvetica,Arial,sans-serif; margin-top: 50px; width: 250px; }
+                /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+                   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+        </style>
+        <div id="mc_embed_signup" style="">
+            <form action="http://pupunzi.us6.list-manage2.com/subscribe/post?u=4346dc9633&amp;id=91a005172f" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                <label for="mce-EMAIL">Subscribe to my mailing list<br>to stay in touch.</label>
+                <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+                <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+            </form>
+        </div>
+        <!--End mc_embed_signup-->
+
     </div>
-  </div>
-  <div id="thumbs"></div>
+
+    <div id="thumbs"></div>
 </div>
 
 </body>
