@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 27/04/13 12.48
+ *  last modified: 29/04/13 20.45
  *  *****************************************************************************
  */
 
@@ -50,8 +50,8 @@ jQuery.fn.CSSAnimate=function(a,b,k,l,f){return this.each(function(){var c=jQuer
 			preserveWidth:false,
 			placeHolder:"",
 			onStart:function(){},
-			onChange:function(idx){}, //idx=the zero based index of the displayed photo
-			onPause:function(){},
+			onChange:function(opt,idx){}, //idx=the zero based index of the displayed photo
+			onPause:function(opt){},
 			onPlay:function(opt){},
 			onNext:function(opt){},
 			onPrev:function(opt){}
@@ -68,9 +68,9 @@ jQuery.fn.CSSAnimate=function(a,b,k,l,f){return this.each(function(){var c=jQuer
 			if(el.opt.onStart)
 				el.opt.onStart();
 
-			opt.gallery= $("<div/>").attr({id:"bgndGallery_"+el.opt.galleryID}).addClass("mbBgndGallery");
-			var pos= opt.containment=="body"?"fixed":"absolute";
-			opt.gallery.css({position:pos,top:0,let:0,width:"100%",height:"100%",overflow:"hidden"});
+			el.opt.gallery= $("<div/>").attr({id:"bgndGallery_"+el.opt.galleryID}).addClass("mbBgndGallery");
+			var pos= el.opt.containment=="body"?"fixed":"absolute";
+			el.opt.gallery.css({position:pos,top:0,let:0,width:"100%",height:"100%",overflow:"hidden"});
 
 			var containment = el.opt.containment;
 
@@ -88,11 +88,11 @@ jQuery.fn.CSSAnimate=function(a,b,k,l,f){return this.each(function(){var c=jQuer
 			$(containment).prepend(opt.gallery);
 
 			if(el.opt.folderPath && el.opt.images.length==0)
-				opt.images=jQuery.loadFromSystem(el.opt.folderPath);
+				el.opt.images = jQuery.loadFromSystem(el.opt.folderPath);
 
-			var images= opt.images;
+			var images= el.opt.images;
 
-			if(opt.shuffle)
+			if(el.opt.shuffle)
 				images= $.shuffle(images);
 
 			var totImg= images.length;
@@ -100,28 +100,28 @@ jQuery.fn.CSSAnimate=function(a,b,k,l,f){return this.each(function(){var c=jQuer
 			var loadCounter=0;
 
 			$.mbBgndGallery.preload(images[0],el);
-			$(opt.gallery).on("imageLoaded_"+opt.galleryID,function(){
+			$(el.opt.gallery).on("imageLoaded_"+el.opt.galleryID,function(){
 				loadCounter++;
 				if(loadCounter==totImg){
-					$(opt.gallery).off("imageLoaded_"+opt.galleryID);
+					$(el.opt.gallery).off("imageLoaded_"+el.opt.galleryID);
 					return;
 				}
-				$.mbBgndGallery.preload(images[loadCounter],el);
+				$.mbBgndGallery.preload(el.opt.images[loadCounter],el);
 			});
 
-			opt.imageCounter=0;
+			el.opt.imageCounter=0;
 
-			$.mbBgndGallery.changePhoto(images[opt.imageCounter],el);
+			$.mbBgndGallery.changePhoto(el.opt.images[el.opt.imageCounter],el);
 
 			if (!opt.autoStart){
-				opt.paused=true;
-				$(opt.gallery).trigger("paused");
+				el.opt.paused=true;
+				$(el.opt.gallery).trigger("paused");
 			}
 
 
-			$(opt.gallery).on("imageReady_"+opt.galleryID,function(){
+			$(el.opt.gallery).on("imageReady_"+el.opt.galleryID,function(){
 
-				if(opt.paused)
+				if(el.opt.paused)
 					return;
 				$.mbBgndGallery.play(el);
 			});
@@ -133,17 +133,17 @@ jQuery.fn.CSSAnimate=function(a,b,k,l,f){return this.each(function(){var c=jQuer
 
 			var controls = el.opt.controls;
 			if(controls){
-				var counter=$(opt.controls).find(".counter");
-				counter.html(opt.imageCounter+1+" / "+opt.images.length);
+				var counter=$(el.opt.controls).find(".counter");
+				counter.html(el.opt.imageCounter+1+" / "+el.opt.images.length);
 
 				$.mbBgndGallery.buildControls(controls,el);
-				$(opt.containment).on("paused",function(){
-					$(opt.controls).find(".play").show();
-					$(opt.controls).find(".pause").hide();
+				$(el.opt.containment).on("paused",function(){
+					$(el.opt.controls).find(".play").show();
+					$(el.opt.controls).find(".pause").hide();
 				});
-				$(opt.containment).on("play",function(){
-					$(opt.controls).find(".play").hide();
-					$(opt.controls).find(".pause").show();
+				$(el.opt.containment).on("play",function(){
+					$(el.opt.controls).find(".play").hide();
+					$(el.opt.controls).find(".pause").show();
 				});
 			}
 		},
@@ -234,7 +234,7 @@ jQuery.fn.CSSAnimate=function(a,b,k,l,f){return this.each(function(){var c=jQuer
 			$.mbBgndGallery.changing=true;
 
 			if(el.opt.onChange)
-				el.opt.onChange(el.opt.imageCounter);
+				el.opt.onChange(el.opt, el.opt.imageCounter);
 
 			var image=$("<img/>").hide().load(function(){
 				var image=$(this);
@@ -324,7 +324,7 @@ jQuery.fn.CSSAnimate=function(a,b,k,l,f){return this.each(function(){var c=jQuer
 			$(el.opt.gallery).trigger("paused");
 
 			if(el.opt.onPause)
-				el.opt.onPause();
+				el.opt.onPause(el.opt);
 		},
 
 		next:function(el){

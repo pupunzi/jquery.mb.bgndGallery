@@ -16,7 +16,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 27/04/13 13.02
+  ~  last modified: 29/04/13 20.48
   ~  ******************************************************************************/
   -->
 
@@ -151,12 +151,12 @@
                 // If your server allow directory listing you can use:
                 // (however this doesn't work locally on your computer)
 
-               // folderPath:"elements/",
+                folderPath:"testImage/",
 
 
                 // else:
 
-                 images:[
+/*                 images:[
                  "elements/1.jpg",
                  "elements/2.jpg",
                  "elements/3.jpg",
@@ -169,12 +169,16 @@
                  "elements/10.jpg",
                  "elements/11.jpg",
                  "elements/12.jpg"
-                 ],
+                 ],*/
 
                 onStart:function(){},
                 onPause:function(){},
                 onPlay:function(opt){},
-                onChange:function(idx){}, //idx=the zero based index of the displayed photo
+                onChange:function(opt,idx){
+
+                    opt.images = jQuery.loadFromSystem(opt.folderPath);
+
+                }, //idx=the zero based index of the displayed photo
                 onNext:function(opt){
                     opt.effect={enter:{transform:"scale("+(1+ Math.random()*2)+")",opacity:0},exit:{transform:"scale("+(Math.random()*2)+")",opacity:0}};
                 },   //opt=the options relatives to this component instance
