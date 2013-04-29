@@ -3,7 +3,7 @@
 <!--
   ~ /*******************************************************************************
   ~  jquery.mb.components
-  ~  file: demo.html
+  ~  file: demo_lookUp.html
   ~
   ~  Copyright (c) 2001-2013. Matteo Bicocchi (Pupunzi);
   ~  Open lab srl, Firenze - Italy
@@ -16,7 +16,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 29/04/13 21.11
+  ~  last modified: 29/04/13 21.10
   ~  ******************************************************************************/
   -->
 
@@ -47,6 +47,7 @@
             font:normal 16px/20px Lekton, sans-serif;
             -moz-box-sizing: border-box;
             -webkit-box-sizing: border-box;
+            box-sizing: border-box;
             box-shadow: 0 0 10px rgba(0,0,0,0.4);
 
         }
@@ -55,6 +56,10 @@
             position:absolute;
             top:100px;
             padding-right: 50px;
+            width: 90%;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
         }
 
         .text h1{
@@ -151,11 +156,11 @@
                 // If your server allow directory listing you can use:
                 // (however this doesn't work locally on your computer)
 
-                //folderPath:"testImage/",
+                folderPath:"testImage/",
 
                 // else:
 
-                 images:[
+/*                 images:[
                  "elements/1.jpg",
                  "elements/2.jpg",
                  "elements/3.jpg",
@@ -168,12 +173,16 @@
                  "elements/10.jpg",
                  "elements/11.jpg",
                  "elements/12.jpg"
-                 ],
+                 ],*/
 
                 onStart:function(){},
                 onPause:function(){},
                 onPlay:function(opt){},
-                onChange:function(opt,idx){}, //idx=the zero based index of the displayed photo
+                onChange:function(opt,idx){
+
+                    opt.images = jQuery.loadFromSystem(opt.folderPath);
+
+                }, //idx=the zero based index of the displayed photo
                 onNext:function(opt){
                     opt.effect={enter:{transform:"scale("+(1+ Math.random()*2)+")",opacity:0},exit:{transform:"scale("+(Math.random()*2)+")",opacity:0}};
                 },   //opt=the options relatives to this component instance
@@ -207,15 +216,16 @@
         <h1>mb.bgndGallery demo</h1>
 
         <p>
-            This background gallery is applied to the body
+            In this demo file the gallery has been initialized using the "folderPath" options and pointing to a specific folder containing some images.
+            <br> The gallery updates on each "onChange" event the list of images in the folder:
             <br>
-            and uses a custom transition with the CSS3 transform: scale() property:<br><br>
-            effect:{enter:{transform:"scale("+(1+ Math.random()*2)+")",opacity:0},exit:{transform:"scale("+(Math.random()*2)+")",opacity:0}}<br>
-            <br>
-            <br>
-            As you can see, resizing the browser window the image will resize and center to always fit the screen.
-            <br>
-            You can use the left/right arrow and the space key to navigate the gallery.
+            <pre style="overflow: auto; width: 100%; background: #e8e8e8; font-size: 12px"><code>
+onChange:function(opt,idx){
+      opt.images = jQuery.loadFromSystem(opt.folderPath);
+}
+            </code></pre>
+        <br> If you add an image into the folder, the gallery will include that image in the cycle.
+        <br> <b>This page will work only if served by a web server.</b>
         </p>
 
         <div id="controls">
