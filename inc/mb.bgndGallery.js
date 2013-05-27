@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 29/04/13 21.27
+ *  last modified: 27/05/13 21.45
  *  *****************************************************************************
  */
 
@@ -90,16 +90,15 @@ jQuery.fn.CSSAnimate=function(a,b,k,l,f){return this.each(function(){var c=jQuer
 			if(el.opt.folderPath && el.opt.images.length==0)
 				el.opt.images = jQuery.loadFromSystem(el.opt.folderPath);
 
-			var images= el.opt.images;
 
 			if(el.opt.shuffle)
-				images= $.shuffle(images);
+				el.opt.images= $.shuffle(el.opt.images);
 
-			var totImg= images.length;
+			var totImg= el.opt.images.length;
 
 			var loadCounter=0;
 
-			$.mbBgndGallery.preload(images[0],el);
+			$.mbBgndGallery.preload(el.opt.images[0],el);
 			$(el.opt.gallery).on("imageLoaded_"+el.opt.galleryID,function(){
 				loadCounter++;
 				if(loadCounter==totImg){

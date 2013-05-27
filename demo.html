@@ -16,7 +16,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 29/04/13 21.23
+  ~  last modified: 27/05/13 21.42
   ~  ******************************************************************************/
   -->
 
@@ -138,13 +138,12 @@
                     })
 
             $.mbBgndGallery.buildGallery({
-                //containment:"#wrapper",
                 containment:"body",
                 timer:1000,
                 effTimer:8000,
                 controls:"#controls",
                 grayScale:false,
-                shuffle:false,
+                shuffle:true,
                 preserveWidth:false,
                 effect:{enter:{transform:"scale("+(1+ Math.random()*2)+")",opacity:0},exit:{transform:"scale("+(Math.random()*2)+")",opacity:0}},
 
