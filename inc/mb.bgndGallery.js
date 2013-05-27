@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 27/05/13 21.45
+ *  last modified: 27/05/13 22.19
  *  *****************************************************************************
  */
 
@@ -32,7 +32,7 @@ jQuery.fn.CSSAnimate=function(a,b,k,l,f){return this.each(function(){var c=jQuer
 	$.mbBgndGallery ={
 		name:"mb.bgndGallery",
 		author:"Matteo Bicocchi",
-		version:"1.6.5",
+		version:"1.6.6",
 		defaults:{
 			containment:"body",
 			images:[],

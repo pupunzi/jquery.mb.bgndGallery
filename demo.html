@@ -16,7 +16,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 27/05/13 21.42
+  ~  last modified: 27/05/13 21.57
   ~  ******************************************************************************/
   -->
 
@@ -174,7 +174,7 @@
                 onPlay:function(opt){},
                 onChange:function(opt,idx){}, //idx=the zero based index of the displayed photo
                 onNext:function(opt){
-                    opt.effect={enter:{transform:"scale("+(1+ Math.random()*2)+")",opacity:0},exit:{transform:"scale("+(Math.random()*2)+")",opacity:0}};
+                    opt.effect={enter:{transform:"scale("+(1 + Math.random()*2)+")",opacity:0},exit:{transform:"scale("+(1 + Math.random()*2)+")",opacity:0}};
                 },   //opt=the options relatives to this component instance
                 onPrev:function(opt){}   //opt=the options relatives to this component instance
             });
