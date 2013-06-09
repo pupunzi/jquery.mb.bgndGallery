@@ -16,7 +16,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 27/05/13 21.57
+  ~  last modified: 09/06/13 14.58
   ~  ******************************************************************************/
   -->
 
@@ -45,8 +45,11 @@
             background: rgba(232, 232, 232, .9);
 
             font:normal 16px/20px Lekton, sans-serif;
+
             -moz-box-sizing: border-box;
             -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+
             box-shadow: 0 0 10px rgba(0,0,0,0.4);
 
         }
@@ -172,7 +175,8 @@
                 onStart:function(){},
                 onPause:function(){},
                 onPlay:function(opt){},
-                onChange:function(opt,idx){}, //idx=the zero based index of the displayed photo
+                onChange:function(opt,idx){
+                }, //idx=the zero based index of the displayed photo
                 onNext:function(opt){
                     opt.effect={enter:{transform:"scale("+(1 + Math.random()*2)+")",opacity:0},exit:{transform:"scale("+(1 + Math.random()*2)+")",opacity:0}};
                 },   //opt=the options relatives to this component instance

@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 27/05/13 22.19
+ *  last modified: 09/06/13 15.04
  *  *****************************************************************************
  */
 
@@ -25,14 +25,15 @@
 *   jquery.mb.components
 *  file: jquery.mb.CSSAnimate.js
 */
-jQuery.fn.CSSAnimate=function(a,b,k,l,f){return this.each(function(){var c=jQuery(this);if(0!==c.length&&a){"function"==typeof b&&(f=b,b=jQuery.fx.speeds._default);"function"==typeof k&&(f=k,k=0);"function"==typeof l&&(f=l,l="cubic-bezier(0.65,0.03,0.36,0.72)");if("string"==typeof b)for(var j in jQuery.fx.speeds)if(b==j){b=jQuery.fx.speeds[j];break}else b=null;if(jQuery.support.transition){var e="",h="transitionEnd";jQuery.browser.webkit?(e="-webkit-",h="webkitTransitionEnd"):jQuery.browser.mozilla? (e="-moz-",h="transitionend"):jQuery.browser.opera?(e="-o-",h="otransitionend"):jQuery.browser.msie&&(e="-ms-",h="msTransitionEnd");j=[];for(d in a){var g=d;"transform"===g&&(g=e+"transform",a[g]=a[d],delete a[d]);"transform-origin"===g&&(g=e+"transform-origin",a[g]=a[d],delete a[d]);j.push(g);c.css(g)||c.css(g,0)}d=j.join(",");c.css(e+"transition-property",d);c.css(e+"transition-duration",b+"ms");c.css(e+"transition-delay",k+"ms");c.css(e+"transition-timing-function",l);c.css(e+"backface-visibility", "hidden");setTimeout(function(){c.css(a)},0);c.on(h,function(a){c.off(h);c.css(e+"transition","");a.stopPropagation();"function"==typeof f&&(c.called=!0,f());return!1})}else{for(var d in a)"transform"===d&&delete a[d],"transform-origin"===d&&delete a[d],"auto"===a[d]&&delete a[d];if(!f||"string"===typeof f)f="linear";c.animate(a,b,f)}}})}; jQuery.fn.CSSAnimateStop=function(){var a="",b="transitionEnd";jQuery.browser.webkit?(a="-webkit-",b="webkitTransitionEnd"):jQuery.browser.mozilla?(a="-moz-",b="transitionend"):jQuery.browser.opera?(a="-o-",b="otransitionend"):jQuery.browser.msie&&(a="-ms-",b="msTransitionEnd");jQuery(this).css(a+"transition","");jQuery(this).off(b)}; jQuery.support.transition=function(){var a=(document.body||document.documentElement).style;return void 0!==a.transition||void 0!==a.WebkitTransition||void 0!==a.MozTransition||void 0!==a.MsTransition||void 0!==a.OTransition}();
+
+jQuery.fn.CSSAnimate=function(a,c,j,l,f){return this.each(function(){var b=jQuery(this);this.id=this.id||"CSSA_"+(new Date).getTime();if(0!==b.length&&a){"function"==typeof c&&(f=c,c=jQuery.fx.speeds._default);"function"==typeof j&&(f=j,j=0);"function"==typeof l&&(f=l,l="cubic-bezier(0.65,0.03,0.36,0.72)");if("string"==typeof c)for(var k in jQuery.fx.speeds)if(c==k){c=jQuery.fx.speeds[k];break}else c=null;if(jQuery.support.transition){var d="",g="transitionEnd";jQuery.browser.webkit?(d="-webkit-", g="webkitTransitionEnd"):jQuery.browser.mozilla?(d="-moz-",g="transitionend"):jQuery.browser.opera?(d="-o-",g="otransitionend"):jQuery.browser.msie&&(d="-ms-",g="msTransitionEnd");k=[];for(e in a){var h=e;"transform"===h&&(h=d+"transform",a[h]=a[e],delete a[e]);"transform-origin"===h&&(h=d+"transform-origin",a[h]=a[e],delete a[e]);k.push(h)}var n=k.join(",");setTimeout(function(){b.css(a);b.css(d+"transition-property",n);b.css(d+"transition-duration",c+"ms");b.css(d+"transition-delay",j+"ms");b.css(d+ "transition-timing-function",l);b.css(d+"backface-visibility","hidden");b.on(g+"."+b.get(0).id,m)},1);var m=function(){b.off(g+"."+b.get(0).id);clearTimeout(b.get(0).timeout);b.css(d+"transition","");"function"==typeof f&&(b.called=!0,f())};b.on(g+"."+this.id,m);this.timeout=setTimeout(function(){jQuery.browser.mozilla||(b.css(d+"transition",""),b.called||!f?b.called=!1:f())},c+j+20)}else{for(var e in a)"transform"===e&&delete a[e],"transform-origin"===e&&delete a[e],"auto"===a[e]&&delete a[e];if(!f|| "string"===typeof f)f="linear";b.animate(a,c,f)}}})};jQuery.fn.CSSAnimateStop=function(){var a="",c="transitionEnd";jQuery.browser.webkit?(a="-webkit-",c="webkitTransitionEnd"):jQuery.browser.mozilla?(a="-moz-",c="transitionend"):jQuery.browser.opera?(a="-o-",c="otransitionend"):jQuery.browser.msie&&(a="-ms-",c="msTransitionEnd");jQuery(this).css(a+"transition","");jQuery(this).off(c)}; jQuery.support.transition=function(){var a=(document.body||document.documentElement).style;return void 0!==a.transition||void 0!==a.WebkitTransition||void 0!==a.MozTransition||void 0!==a.MsTransition||void 0!==a.OTransition}();
 
 (function($){
 
 	$.mbBgndGallery ={
 		name:"mb.bgndGallery",
 		author:"Matteo Bicocchi",
-		version:"1.6.6",
+		version:"1.7.0",
 		defaults:{
 			containment:"body",
 			images:[],
