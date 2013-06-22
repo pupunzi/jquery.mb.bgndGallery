@@ -16,7 +16,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 09/06/13 14.58
+  ~  last modified: 22/06/13 18.38
   ~  ******************************************************************************/
   -->
 
@@ -122,7 +122,6 @@
 
     <script type="text/javascript">
 
-
         $(function(){
             if (self.location.href == top.location.href){
                 var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:40px;left:50px;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");
@@ -142,13 +141,14 @@
 
             $.mbBgndGallery.buildGallery({
                 containment:"body",
-                timer:1000,
-                effTimer:8000,
+                timer:2000,
+                effTimer:6000,
                 controls:"#controls",
                 grayScale:false,
                 shuffle:true,
                 preserveWidth:false,
-                effect:{enter:{transform:"scale("+(1+ Math.random()*2)+")",opacity:0},exit:{transform:"scale("+(Math.random()*2)+")",opacity:0}},
+                effect:"zoom",
+//              effect:{enter:{transform:"scale("+(1+ Math.random()*2)+")",opacity:0},exit:{transform:"scale("+(Math.random()*2)+")",opacity:0}},
 
                 // If your server allow directory listing you can use:
                 // (however this doesn't work locally on your computer)
@@ -175,12 +175,9 @@
                 onStart:function(){},
                 onPause:function(){},
                 onPlay:function(opt){},
-                onChange:function(opt,idx){
-                }, //idx=the zero based index of the displayed photo
-                onNext:function(opt){
-                    opt.effect={enter:{transform:"scale("+(1 + Math.random()*2)+")",opacity:0},exit:{transform:"scale("+(1 + Math.random()*2)+")",opacity:0}};
-                },   //opt=the options relatives to this component instance
-                onPrev:function(opt){}   //opt=the options relatives to this component instance
+                onChange:function(opt,idx){},
+                onNext:function(opt){},
+                onPrev:function(opt){}
             });
 
             $(".bw").toggle(

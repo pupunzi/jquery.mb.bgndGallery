@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 09/06/13 17.00
+ *  last modified: 22/06/13 18.39
  *  *****************************************************************************
  */
 
@@ -33,16 +33,16 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 	$.mbBgndGallery ={
 		name:"mb.bgndGallery",
 		author:"Matteo Bicocchi",
-		version:"1.7.1",
+		version:"1.7.5",
 		defaults:{
 			containment:"body",
 			images:[],
 			shuffle:false,
 			controls:null,
-			effect:{enter:{left:0,opacity:0},exit:{left:0,opacity:0}, enterTiming:"ease-in", exitTiming:"ease-in"},
+			effect:"fade",
 			timer:4000,
-			raster:false, //"inc/raster.png"
 			effTimer:3000,
+			raster:false, //"inc/raster.png"
 			folderPath:false,
 			autoStart:true,
 			grayScale:false,
@@ -50,14 +50,34 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 			preserveTop:false,
 			preserveWidth:false,
 			placeHolder:"",
+
+			// idx = the zero based index of the displayed photo
+			// opt=the options relatives to this component instance you can manipulate on the specific event
+
+			// for example, if you want to reverse the enter/exit effect once the previous button is clicked:
+			// you can change the opt.effect onPrev event : opt.effect = "slideRight"
+			// onNext:function(opt){opt.effect = "slideLeft"}
+			// onPrev:function(opt){opt.effect = "slideRight"}
+
 			onStart:function(){},
-			onChange:function(opt,idx){}, //idx=the zero based index of the displayed photo
+			onChange:function(opt,idx){},
 			onPause:function(opt){},
 			onPlay:function(opt){},
 			onNext:function(opt){},
 			onPrev:function(opt){}
 		},
 		clear:false,
+
+		// ENTER/EXIT EFFECTS
+
+		effects:{
+			fade:{enter:{left:0,opacity:0},exit:{left:0,opacity:0}, enterTiming:"ease-in", exitTiming:"ease-in"},
+			slideUp:{enter:{top:"100%",opacity:1},exit:{top:0,opacity:0}, enterTiming:"ease-in", exitTiming:"ease-in"},
+			slideDown:{enter:{top:"-100%",opacity:1},exit:{top:0,opacity:0}, enterTiming:"ease-in", exitTiming:"ease-in"},
+			slideLeft:{enter:{left:"100%",opacity:1},exit:{left:0,opacity:0}, enterTiming:"ease-in", exitTiming:"ease-in"},
+			slideRight:{enter:{left:"-100%",opacity:1},exit:{left:0,opacity:0}, enterTiming:"ease-in", exitTiming:"ease-in"},
+			zoom:{enter:{transform:"scale("+(1+ Math.random()*5)+")",opacity:0},exit:{transform:"scale("+(1 + Math.random()*5)+")",opacity:0}, enterTiming:"cubic-bezier(0.19, 1, 0.22, 1)", exitTiming:"cubic-bezier(0.19, 1, 0.22, 1)"}
+		},
 
 		buildGallery:function(options){
 			var opt = {};
@@ -246,20 +266,18 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 				image.attr("h", image.height());
 				tmp.remove();
 
-				/*
-				 $(el.opt.gallery).off("paused").on("paused",function(){
-				 $("#bgndGallery_"+el.opt.galleryID+" img").CSSAnimateStop();
-				 });
-				 */
+				el.opt.effect = typeof el.opt.effect == "object" ? el.opt.effect : $.mbBgndGallery.effects[el.opt.effect];
+
 
 				$("#bgndGallery_"+el.opt.galleryID+" img").CSSAnimate(el.opt.effect.exit,el.opt.effTimer,0,el.opt.effect.exitTiming,function(){
-					var imgToRemove = $("#bgndGallery_"+el.opt.galleryID+" img").not(":first");
+					var imgToRemove = $("#bgndGallery_"+el.opt.galleryID+" img").not(":last");
+					console.debug(el.opt.effTimer)
 					setTimeout(function(){
 						imgToRemove.remove();
-					},3000);
+					},el.opt.effTimer);
 				});
 				image.css({position:"absolute"});
-				$("#bgndGallery_"+el.opt.galleryID).prepend(image);
+				$("#bgndGallery_"+el.opt.galleryID).append(image);
 
 				//todo: add a property to let height for vertical images
 				$.mbBgndGallery.changing=false;
