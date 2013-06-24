@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 24/06/13 20.00
+ *  last modified: 24/06/13 23.42
  *  *****************************************************************************
  */
 
@@ -468,7 +468,7 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 			var prev=$(controls).find(".prev");
 			var fullScreen =  $(controls).find(".fullscreen");
 
-			if(($.browser.msie || $.browser.opera)){
+			if(($.browser.msie || $.browser.opera || 'ontouchstart' in window)){
 				fullScreen.remove();
 			}
 
