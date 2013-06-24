@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 24/06/13 18.06
+ *  last modified: 24/06/13 20.00
  *  *****************************************************************************
  */
 
@@ -558,12 +558,25 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 			function launchFullscreen(element) {
 				RunPrefixMethod(element, "RequestFullScreen");
 				setTimeout(function(){
+
 					var fullscreenchange = $.browser.mozilla ? "mozfullscreenchange" : $.browser.webkit ? "webkitfullscreenchange" : $.browser.msie ? "msfullscreenchange" :  $.browser.opera ? "ofullscreenchange" : "fullscreenchange";
 					$(document).one(fullscreenchange, function(e) {
 						var isFullScreen = RunPrefixMethod(document, "IsFullScreen") || RunPrefixMethod(document, "FullScreen");
 						if (!isFullScreen) {
 							el.isFullscreen = false;
 							$(".fullScreen_controls").remove();
+							//$(el.opt.containment).removeClass("fullScreen");
+							$(el.opt.containment).css({
+								width: el.width,
+								height: el.height,
+								top: el.top,
+								left: el.left,
+								position: el.position
+							});
+							$(gallery).css({background:"transparent"})
+							var image=$("#bgndGallery_"+el.opt.galleryID+" img");
+							$.mbBgndGallery.checkSize(image,el);
+
 						}
 					});
 				},1000);
@@ -576,16 +589,49 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 			}
 
 			if(el.isFullscreen){
+
 				cancelFullscreen();
 				el.isFullscreen = false;
 				$(".fullScreen_controls").remove();
+
+				$(el.opt.containment).CSSAnimate({
+					width: el.width,
+					height: el.height,
+					top: el.top,
+					left: el.left,
+					position: el.position
+				});
+
+				$(gallery).css({background:"transparent"})
+				$.mbBgndGallery.checkSize(image,el);
+
 			}else{
+
 				el.isFullscreen = true;
+
+				el.width = $(el.opt.containment).css("width");
+				el.height = $(el.opt.containment).css("height");
+				el.top = $(el.opt.containment).css("top");
+				el.left = $(el.opt.containment).css("left");
+				el.position = $(el.opt.containment).css("position");
+
 				var controls = $(el.opt.controls).clone(true).addClass("fullScreen_controls").css({position:"absolute", zIndex:1000, bottom: 20, right:20});
 				controls.find(".fullscreen").html("exit");
-				$(gallery).append(controls);
-				$(gallery).addClass("fullScreen");
+				$(gallery).append(controls).css({background:"#000"});
+
+				//$(el.opt.containment).addClass("fullScreen");
+
+				$(el.opt.containment).CSSAnimate({
+					width:"100%",
+					height: "100%",
+					top:0,
+					left:0,
+					position:"absolute"
+				});
+
 				launchFullscreen(gallery);
+
+
 			}
 		}
 

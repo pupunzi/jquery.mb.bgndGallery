@@ -16,7 +16,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 09/06/13 15.04
+  ~  last modified: 24/06/13 19.58
   ~  ******************************************************************************/
   -->
 
@@ -98,6 +98,15 @@
             background: #000;
         }
 
+        #gallery.fullScreen{
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            background: #000 !important;
+        }
+
+
 	</style>
     <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
@@ -171,7 +180,8 @@
 			<div class="prev">prev</div>
 			<div class="next">next</div>
 			<div class="counter"></div>
-		</div>
+            <div class="fullscreen">fullscreen</div>
+        </div>
 
         <!-- Begin MailChimp Signup Form -->
         <link href="http://cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
