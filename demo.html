@@ -16,7 +16,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 22/06/13 18.38
+  ~  last modified: 24/06/13 16.57
   ~  ******************************************************************************/
   -->
 
@@ -97,6 +97,16 @@
 
         #controls div:not(.counter){
             background: rgb(190, 41, 16);
+            cursor:pointer;
+        }
+
+        #controls.fullScreen_controls div:hover:not(.counter){
+            background:rgba(255,255,255,.9);
+            color:#000;
+        }
+
+        #controls.fullScreen_controls div:not(.counter){
+            background: rgba(0, 0, 0, 0.82);
             cursor:pointer;
         }
 
@@ -225,9 +235,9 @@
             <div class="next">next</div>
             <div class="counter"></div>
             <div class="bw">gray scale</div>
+            <div class="fullscreen">fullscreen</div>
         </div>
         <div id="thumbs"></div>
-
 
         <!-- Begin MailChimp Signup Form -->
         <link href="http://cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">

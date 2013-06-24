@@ -7,9 +7,10 @@
 		"gallery",
 		"background",
 		"CSS3",
-		"effects"
+		"effects",
+		"HTML5"
 	],
-	"version": "1.7.5",
+	"version": "1.8.0",
 	"author": {
 		"name": "Pupunzi (Matteo Bicocchi)",
 		"email": "matteo@open-lab.com",
@@ -22,6 +23,7 @@
 			"url": "http://pupunzi.open-lab.com"
 		}
 	],
+
 	"licenses": [
 		{
 			"type": "MIT",
@@ -32,6 +34,7 @@
 			"url": "https://github.com/pupunzi/jquery.mb.bgndGallery/blob/master/licenses/GPL-LICENSE.txt"
 		}
 	],
+
 	"bugs": "https://github.com/pupunzi/jquery.mb.bgndGallery/issues",
 	"homepage": "http://pupunzi.open-lab.com/mb-jquery-components/jquery-mb-bgndgallery/",
 	"demo": "http://pupunzi.com/#mb.components/mb.bgndGallery/bgndGallery.html",

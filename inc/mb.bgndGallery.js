@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 22/06/13 18.39
+ *  last modified: 24/06/13 18.06
  *  *****************************************************************************
  */
 
@@ -22,18 +22,58 @@
 (function(){if(!(8>jQuery.fn.jquery.split(".")[1])){jQuery.browser={};jQuery.browser.mozilla=!1;jQuery.browser.webkit=!1;jQuery.browser.opera=!1;jQuery.browser.msie=!1;var a=navigator.userAgent;jQuery.browser.name=navigator.appName;jQuery.browser.fullVersion=""+parseFloat(navigator.appVersion);jQuery.browser.majorVersion=parseInt(navigator.appVersion,10);var c,b;if(-1!=(b=a.indexOf("Opera"))){if(jQuery.browser.opera=!0,jQuery.browser.name="Opera",jQuery.browser.fullVersion=a.substring(b+6),-1!=(b= a.indexOf("Version")))jQuery.browser.fullVersion=a.substring(b+8)}else if(-1!=(b=a.indexOf("MSIE")))jQuery.browser.msie=!0,jQuery.browser.name="Microsoft Internet Explorer",jQuery.browser.fullVersion=a.substring(b+5);else if(-1!=(b=a.indexOf("Chrome")))jQuery.browser.webkit=!0,jQuery.browser.name="Chrome",jQuery.browser.fullVersion=a.substring(b+7);else if(-1!=(b=a.indexOf("Safari"))){if(jQuery.browser.webkit=!0,jQuery.browser.name="Safari",jQuery.browser.fullVersion=a.substring(b+7),-1!=(b=a.indexOf("Version")))jQuery.browser.fullVersion= a.substring(b+8)}else if(-1!=(b=a.indexOf("Firefox")))jQuery.browser.mozilla=!0,jQuery.browser.name="Firefox",jQuery.browser.fullVersion=a.substring(b+8);else if((c=a.lastIndexOf(" ")+1)<(b=a.lastIndexOf("/")))jQuery.browser.name=a.substring(c,b),jQuery.browser.fullVersion=a.substring(b+1),jQuery.browser.name.toLowerCase()==jQuery.browser.name.toUpperCase()&&(jQuery.browser.name=navigator.appName);if(-1!=(a=jQuery.browser.fullVersion.indexOf(";")))jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0, a);if(-1!=(a=jQuery.browser.fullVersion.indexOf(" ")))jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0,a);jQuery.browser.majorVersion=parseInt(""+jQuery.browser.fullVersion,10);isNaN(jQuery.browser.majorVersion)&&(jQuery.browser.fullVersion=""+parseFloat(navigator.appVersion),jQuery.browser.majorVersion=parseInt(navigator.appVersion,10));jQuery.browser.version=jQuery.browser.majorVersion}})(jQuery);
 
 /*
-*   jquery.mb.components
-*  file: jquery.mb.CSSAnimate.js
-*/
+ *   jquery.mb.components
+ *  file: jquery.mb.CSSAnimate.js
+ */
 
-jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuery(this);this.id=this.id||"CSSA_"+(new Date).getTime();if(0!==b.length&&a){"function"==typeof f&&(e=f,f=jQuery.fx.speeds._default);"function"==typeof k&&(e=k,k=0);"function"==typeof m&&(e=m,m="cubic-bezier(0.65,0.03,0.36,0.72)");if("string"==typeof f)for(var l in jQuery.fx.speeds)if(f==l){f=jQuery.fx.speeds[l];break}else f=null;if(jQuery.support.transition){var d="",j="transitionEnd";jQuery.browser.webkit?(d="-webkit-", j="webkitTransitionEnd"):jQuery.browser.mozilla?(d="-moz-",j="transitionend"):jQuery.browser.opera?(d="-o-",j="otransitionend"):jQuery.browser.msie&&(d="-ms-",j="msTransitionEnd");l=[];for(c in a){var g=c;"transform"===g&&(g=d+"transform",a[g]=a[c],delete a[c]);"transform-origin"===g&&(g=d+"transform-origin",a[g]=a[c],delete a[c]);l.push(g)}var c=l.join(","),n=function(){b.off(j+"."+b.get(0).id);clearTimeout(b.get(0).timeout);b.css(d+"transition","");"function"==typeof e&&(b.called=!0,e())},h={}; $.extend(h,a);h[d+"transition-property"]=c;h[d+"transition-duration"]=f+"ms";h[d+"transition-delay"]=k+"ms";h[d+"transition-timing-function"]=m;h[d+"backface-visibility"]="hidden";setTimeout(function(){b.css(h);b.one(j+"."+b.get(0).id,n)},1);b.get(0).timeout=setTimeout(function(){b.called||!e?b.called=!1:(b.css(d+"transition",""),e())},f+k+100)}else{for(var c in a)"transform"===c&&delete a[c],"transform-origin"===c&&delete a[c],"auto"===a[c]&&delete a[c];if(!e||"string"===typeof e)e="linear";b.animate(a, f,e)}}})};jQuery.support.transition=function(){var a=(document.body||document.documentElement).style;return void 0!==a.transition||void 0!==a.WebkitTransition||void 0!==a.MozTransition||void 0!==a.MsTransition||void 0!==a.OTransition}();
+/*
+ * ******************************************************************************
+ *  jquery.mb.components
+ *  file: jquery.mb.CSSAnimate.js
+ *
+ *  Copyright (c) 2001-2013. Matteo Bicocchi (Pupunzi);
+ *  Open lab srl, Firenze - Italy
+ *  email: matteo@open-lab.com
+ *  site: 	http://pupunzi.com
+ *  blog:	http://pupunzi.open-lab.com
+ * 	http://open-lab.com
+ *
+ *  Licences: MIT, GPL
+ *  http://www.opensource.org/licenses/mit-license.php
+ *  http://www.gnu.org/licenses/gpl.html
+ *
+ *  last modified: 09/06/13 17.08
+ *  *****************************************************************************
+ */
+
+/*
+ * version: 1.6.1
+ *  params:
+
+ @opt        -> the CSS object (ex: {top:300, left:400, ...})
+ @duration   -> an int for the animation duration in milliseconds
+ @delay      -> an int for the animation delay in milliseconds
+ @ease       -> ease  ||  linear || ease-in || ease-out || ease-in-out  ||  cubic-bezier(<number>, <number>,  <number>,  <number>)
+ @callback   -> a callback function called once the transition end
+
+ example:
+
+ jQuery(this).CSSAnimate({top:t, left:l, width:w, height:h, transform: 'rotate(50deg) scale(.8)'}, 2000, 100, "ease-out", callback;})
+ */
+
+
+/*Browser detection patch*/
+(function(){if(!(8>jQuery.fn.jquery.split(".")[1])){jQuery.browser={};jQuery.browser.mozilla=!1;jQuery.browser.webkit=!1;jQuery.browser.opera=!1;jQuery.browser.msie=!1;var a=navigator.userAgent;jQuery.browser.name=navigator.appName;jQuery.browser.fullVersion=""+parseFloat(navigator.appVersion);jQuery.browser.majorVersion=parseInt(navigator.appVersion,10);var c,b;if(-1!=(b=a.indexOf("Opera"))){if(jQuery.browser.opera=!0,jQuery.browser.name="Opera",jQuery.browser.fullVersion=a.substring(b+6),-1!=(b= a.indexOf("Version")))jQuery.browser.fullVersion=a.substring(b+8)}else if(-1!=(b=a.indexOf("MSIE")))jQuery.browser.msie=!0,jQuery.browser.name="Microsoft Internet Explorer",jQuery.browser.fullVersion=a.substring(b+5);else if(-1!=(b=a.indexOf("Chrome")))jQuery.browser.webkit=!0,jQuery.browser.name="Chrome",jQuery.browser.fullVersion=a.substring(b+7);else if(-1!=(b=a.indexOf("Safari"))){if(jQuery.browser.webkit=!0,jQuery.browser.name="Safari",jQuery.browser.fullVersion=a.substring(b+7),-1!=(b=a.indexOf("Version")))jQuery.browser.fullVersion= a.substring(b+8)}else if(-1!=(b=a.indexOf("Firefox")))jQuery.browser.mozilla=!0,jQuery.browser.name="Firefox",jQuery.browser.fullVersion=a.substring(b+8);else if((c=a.lastIndexOf(" ")+1)<(b=a.lastIndexOf("/")))jQuery.browser.name=a.substring(c,b),jQuery.browser.fullVersion=a.substring(b+1),jQuery.browser.name.toLowerCase()==jQuery.browser.name.toUpperCase()&&(jQuery.browser.name=navigator.appName);if(-1!=(a=jQuery.browser.fullVersion.indexOf(";")))jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0, a);if(-1!=(a=jQuery.browser.fullVersion.indexOf(" ")))jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0,a);jQuery.browser.majorVersion=parseInt(""+jQuery.browser.fullVersion,10);isNaN(jQuery.browser.majorVersion)&&(jQuery.browser.fullVersion=""+parseFloat(navigator.appVersion),jQuery.browser.majorVersion=parseInt(navigator.appVersion,10));jQuery.browser.version=jQuery.browser.majorVersion}})(jQuery);
+
+/*CSSAnimate*/
+jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuery(this);this.id=this.id||"CSSA_"+(new Date).getTime();if(0!==b.length&&a){"function"==typeof f&&(e=f,f=jQuery.fx.speeds._default);"function"==typeof k&&(e=k,k=0);"function"==typeof m&&(e=m,m="cubic-bezier(0.65,0.03,0.36,0.72)");if("string"==typeof f)for(var l in jQuery.fx.speeds)if(f==l){f=jQuery.fx.speeds[l];break}else f=null;if(jQuery.support.transition){var d="",j="transitionEnd";jQuery.browser.webkit?(d="-webkit-", j="webkitTransitionEnd"):jQuery.browser.mozilla?(d="-moz-",j="transitionend"):jQuery.browser.opera?(d="-o-",j="otransitionend"):jQuery.browser.msie&&(d="-ms-",j="msTransitionEnd");l=[];for(c in a){var g=c;"transform"===g&&(g=d+"transform",a[g]=a[c],delete a[c]);"transform-origin"===g&&(g=d+"transform-origin",a[g]=a[c],delete a[c]);l.push(g)}var c=l.join(","),n=function(){b.off(j+"_"+b.get(0).id);clearTimeout(b.get(0).timeout);b.css(d+"transition","");"function"==typeof e&&(b.called=!0,e(b))},h={}; $.extend(h,a);h[d+"transition-property"]=c;h[d+"transition-duration"]=f+"ms";h[d+"transition-delay"]=k+"ms";h[d+"transition-timing-function"]=m;h[d+"backface-visibility"]="hidden";setTimeout(function(){b.css(h);b.one(j+"_"+b.get(0).id,n)},1);b.get(0).timeout=setTimeout(function(){b.called||!e?b.called=!1:(b.css(d+"transition",""),e(b))},f+k+100)}else{for(var c in a)"transform"===c&&delete a[c],"transform-origin"===c&&delete a[c],"auto"===a[c]&&delete a[c];if(!e||"string"===typeof e)e="linear";b.animate(a, f,e)}}})};jQuery.support.transition=function(){var a=(document.body||document.documentElement).style;return void 0!==a.transition||void 0!==a.WebkitTransition||void 0!==a.MozTransition||void 0!==a.MsTransition||void 0!==a.OTransition}();
 
 (function($){
 
 	$.mbBgndGallery ={
 		name:"mb.bgndGallery",
 		author:"Matteo Bicocchi",
-		version:"1.7.5",
+		version:"1.8.0",
 		defaults:{
 			containment:"body",
 			images:[],
@@ -120,10 +160,10 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 			var loadCounter=0;
 
 			$.mbBgndGallery.preload(el.opt.images[0],el);
-			$(el.opt.gallery).on("imageLoaded_"+el.opt.galleryID,function(){
+			$(el.opt.gallery).on("imageLoaded."+el.opt.galleryID,function(){
 				loadCounter++;
 				if(loadCounter==totImg){
-					$(el.opt.gallery).off("imageLoaded_"+el.opt.galleryID);
+					$(el.opt.gallery).off("imageLoaded."+el.opt.galleryID);
 					return;
 				}
 				$.mbBgndGallery.preload(el.opt.images[loadCounter],el);
@@ -138,11 +178,13 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 				$(el.opt.gallery).trigger("paused");
 			}
 
-
-			$(el.opt.gallery).on("imageReady_"+el.opt.galleryID,function(){
+			$(el.opt.gallery).on("imageReady."+el.opt.galleryID,function(){
 
 				if(el.opt.paused)
 					return;
+
+				clearTimeout(el.opt.changing);
+
 				$.mbBgndGallery.play(el);
 			});
 
@@ -204,7 +246,7 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 			}
 
 			var img= $("<img/>").load(function(){
-				$(el.opt.gallery).trigger("imageLoaded_"+el.opt.galleryID);
+				$(el.opt.gallery).trigger("imageLoaded."+el.opt.galleryID);
 			}).attr("src",url);
 		},
 
@@ -246,6 +288,7 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 		},
 
 		changePhoto:function(url,el){
+
 			if($.mbBgndGallery.clear){
 				$(el.opt.gallery).remove();
 				return;
@@ -269,22 +312,18 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 				el.opt.effect = typeof el.opt.effect == "object" ? el.opt.effect : $.mbBgndGallery.effects[el.opt.effect];
 
 
-				$("#bgndGallery_"+el.opt.galleryID+" img").CSSAnimate(el.opt.effect.exit,el.opt.effTimer,0,el.opt.effect.exitTiming,function(){
-					var imgToRemove = $("#bgndGallery_"+el.opt.galleryID+" img").not(":last");
-					console.debug(el.opt.effTimer)
-					setTimeout(function(){
-						imgToRemove.remove();
-					},el.opt.effTimer);
+				$("#bgndGallery_"+el.opt.galleryID+" img").CSSAnimate(el.opt.effect.exit,el.opt.effTimer,0,el.opt.effect.exitTiming,function(el){
+					el.remove();
 				});
 				image.css({position:"absolute"});
 				$("#bgndGallery_"+el.opt.galleryID).append(image);
 
-				//todo: add a property to let height for vertical images
+				//todo: add a property to let height for vertica  l images
 				$.mbBgndGallery.changing=false;
 				$.mbBgndGallery.checkSize(image, el);
 
 				image.css($.mbBgndGallery.normalizeCss(el.opt.effect.enter)).show().CSSAnimate({top:0,left:0,opacity:1, transform:"scale(1) rotate(0deg)"},el.opt.effTimer,0,el.opt.effect.enterTiming,function(){
-					$(el.opt.gallery).trigger("imageReady_"+el.opt.galleryID);
+					$(el.opt.gallery).trigger("imageReady."+el.opt.galleryID);
 				});
 			}).attr("src",url);
 
@@ -295,7 +334,6 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 
 			if(el.opt.grayScale){
 				image.greyScale();
-
 			}
 
 			var counter=$(el.opt.controls).find(".counter");
@@ -304,6 +342,13 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 		},
 
 		play:function(el){
+
+			clearTimeout(el.opt.changing);
+
+			var imgToRemove = $("#bgndGallery_"+el.opt.galleryID+" img").not(":last");
+			imgToRemove.remove();
+
+
 			if($.mbBgndGallery.clear){
 				$(el.opt.gallery).remove();
 				return;
@@ -353,14 +398,15 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 
 			if(el.opt.onNext)
 				el.opt.onNext(el.opt);
+
 			$.mbBgndGallery.pause(el);
-			clearTimeout(el.opt.changing);
 			if (el.opt.imageCounter==el.opt.images.length-1)
 				el.opt.imageCounter=-1;
 
 			el.opt.imageCounter++;
 
 			$.mbBgndGallery.changePhoto(el.opt.images[el.opt.imageCounter],el);
+			clearTimeout(el.opt.changing);
 		},
 
 		prev:function(el){
@@ -373,6 +419,7 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 				el.opt.onPrev(el.opt);
 
 			$.mbBgndGallery.pause(el);
+
 			clearTimeout(el.opt.changing);
 			if (el.opt.imageCounter==0)
 				el.opt.imageCounter=el.opt.images.length;
@@ -419,6 +466,12 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 			var play=$(controls).find(".play");
 			var next=$(controls).find(".next");
 			var prev=$(controls).find(".prev");
+			var fullScreen =  $(controls).find(".fullscreen");
+
+			if(($.browser.msie || $.browser.opera)){
+				fullScreen.remove();
+			}
+
 			if(el.opt.autoStart)
 				play.hide();
 
@@ -448,6 +501,11 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 				play.show();
 			});
 
+			fullScreen.on("click",function(){
+				var gallery = $("#bgndGallery_"+el.opt.galleryID).get(0)
+				$.mbBgndGallery.runFullscreen(gallery, el);
+			});
+
 			if(el.opt.activateKeyboard)
 				$.mbBgndGallery.keyboard(el);
 		},
@@ -464,10 +522,10 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 			var loadCounter=0;
 
 			$.mbBgndGallery.preload(images[0],el);
-			$(el.opt.gallery).on("imageLoaded_"+el.opt.galleryID,function(){
+			$(el.opt.gallery).on("imageLoaded."+el.opt.galleryID,function(){
 				loadCounter++;
 				if(loadCounter==totImg){
-					$(el.opt.gallery).off("imageLoaded_"+el.opt.galleryID);
+					$(el.opt.gallery).off("imageLoaded."+el.opt.galleryID);
 					$(el.gallery).fadeIn();
 					$.mbBgndGallery.play(el);
 					el.opt.paused=false;
@@ -476,7 +534,61 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 				$.mbBgndGallery.preload(images[loadCounter],el);
 			});
 			el.opt.imageCounter=0;
+		},
+
+		runFullscreen: function(gallery, el){
+			function RunPrefixMethod(obj, method) {
+				var pfx = ["webkit", "moz", "ms", "o", ""];
+				var p = 0, m, t;
+				while (p < pfx.length && !obj[m]) {
+					m = method;
+					if (pfx[p] == "") {
+						m = m.substr(0,1).toLowerCase() + m.substr(1);
+					}
+					m = pfx[p] + m;
+					t = typeof obj[m];
+					if (t != "undefined") {
+						pfx = [pfx[p]];
+						return (t == "function" ? obj[m]() : obj[m]);
+					}
+					p++;
+				}
+			}
+
+			function launchFullscreen(element) {
+				RunPrefixMethod(element, "RequestFullScreen");
+				setTimeout(function(){
+					var fullscreenchange = $.browser.mozilla ? "mozfullscreenchange" : $.browser.webkit ? "webkitfullscreenchange" : $.browser.msie ? "msfullscreenchange" :  $.browser.opera ? "ofullscreenchange" : "fullscreenchange";
+					$(document).one(fullscreenchange, function(e) {
+						var isFullScreen = RunPrefixMethod(document, "IsFullScreen") || RunPrefixMethod(document, "FullScreen");
+						if (!isFullScreen) {
+							el.isFullscreen = false;
+							$(".fullScreen_controls").remove();
+						}
+					});
+				},1000);
+			}
+
+			function cancelFullscreen() {
+				if (RunPrefixMethod(document, "FullScreen") || RunPrefixMethod(document, "IsFullScreen")) {
+					RunPrefixMethod(document, "CancelFullScreen");
+				}
+			}
+
+			if(el.isFullscreen){
+				cancelFullscreen();
+				el.isFullscreen = false;
+				$(".fullScreen_controls").remove();
+			}else{
+				el.isFullscreen = true;
+				var controls = $(el.opt.controls).clone(true).addClass("fullScreen_controls").css({position:"absolute", zIndex:1000, bottom: 20, right:20});
+				controls.find(".fullscreen").html("exit");
+				$(gallery).append(controls);
+				$(gallery).addClass("fullScreen");
+				launchFullscreen(gallery);
+			}
 		}
+
 	};
 
 	jQuery.loadFromSystem=function(folderPath, type){
