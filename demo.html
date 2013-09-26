@@ -16,7 +16,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 24/06/13 16.57
+  ~  last modified: 27/06/13 0.13
   ~  ******************************************************************************/
   -->
 
@@ -33,6 +33,7 @@
             margin:0;
             padding:0;
             font:normal 16px/20px Lekton, sans-serif;
+            /*-webkit-filter: blur(3px)*/
         }
 
         #wrapper{
@@ -70,14 +71,6 @@
             line-height:130%;
         }
 
-        #gallery{
-            position:absolute;
-            width:100%;
-            height:700px;
-            top:0;
-            left:0;
-        }
-
         #controls div{
             display:inline-block;
             padding:5px;
@@ -88,6 +81,25 @@
             -webkit-border-radius:4px;
             -o-border-radius:4px;
             border-radius:4px;
+        }
+
+        button{
+            display:inline-block;
+            padding:5px;
+            margin:1px;
+            color:#fff;
+            border:1px solid #fff;
+            -moz-border-radius:4px;
+            -webkit-border-radius:4px;
+            -o-border-radius:4px;
+            border-radius:4px;
+            background: rgba(0, 0, 0, 0.72);
+            cursor: pointer;
+        }
+
+        button:hover{
+            background:rgba(255,255,255,.9);
+            color:#000;
         }
 
         #controls div:hover:not(.counter){
@@ -113,22 +125,18 @@
         #controls div.sel{
             background:rgba(255,255,255,.9);
         }
+            /*
 
-
-        .imgContainer{
-            width:100px;
-            height:100px;
-            overflow:hidden;
-            display:inline-block;
-        }
-        .imgContainer img{
-            width:160px;
-        }
+                    .mbBgndGallery{
+                        filter: url(#sepia);
+                    }
+            */
 
     </style>
     <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script type="text/javascript" src="inc/mb.bgndGallery.js"></script>
+    <script type="text/javascript" src="inc/mb.bgndGallery.effects.js"></script>
 
     <script type="text/javascript">
 
@@ -152,12 +160,12 @@
             $.mbBgndGallery.buildGallery({
                 containment:"body",
                 timer:2000,
-                effTimer:6000,
+                effTimer:2000,
                 controls:"#controls",
                 grayScale:false,
                 shuffle:true,
                 preserveWidth:false,
-                effect:"zoom",
+                effect:"blur",
 //              effect:{enter:{transform:"scale("+(1+ Math.random()*2)+")",opacity:0},exit:{transform:"scale("+(Math.random()*2)+")",opacity:0}},
 
                 // If your server allow directory listing you can use:
@@ -167,20 +175,20 @@
 
                 // else:
 
-                 images:[
-                 "elements/1.jpg",
-                 "elements/2.jpg",
-                 "elements/3.jpg",
-                 "elements/4.jpg",
-                 "elements/5.jpg",
-                 "elements/6.jpg",
-                 "elements/7.jpg",
-                 "elements/8.jpg",
-                 "elements/9.jpg",
-                 "elements/10.jpg",
-                 "elements/11.jpg",
-                 "elements/12.jpg"
-                 ],
+                images:[
+                    "elements/1.jpg",
+                    "elements/2.jpg",
+                    "elements/3.jpg",
+                    "elements/4.jpg",
+                    "elements/5.jpg",
+                    "elements/6.jpg",
+                    "elements/7.jpg",
+                    "elements/8.jpg",
+                    "elements/9.jpg",
+                    "elements/10.jpg",
+                    "elements/11.jpg",
+                    "elements/12.jpg"
+                ],
 
                 onStart:function(){},
                 onPause:function(){},
@@ -190,20 +198,6 @@
                 onPrev:function(opt){}
             });
 
-            $(".bw").toggle(
-                    function(){
-                        var el=$("body").get(0);
-                        el.opt.grayScale=true;
-                        $(this).addClass("sel");
-                        el.opt.gallery.find("img:first").greyScale();
-                    },
-                    function(){
-                        var el=$("body").get(0);
-                        el.opt.grayScale=false;
-                        $(this).removeClass("sel");
-                        el.opt.gallery.find("img:first").attr("src",el.opt.images[el.opt.imageCounter]);
-                    }
-            )
         });
 
     </script>
@@ -234,9 +228,14 @@
             <div class="prev">prev</div>
             <div class="next">next</div>
             <div class="counter"></div>
-            <div class="bw">gray scale</div>
             <div class="fullscreen">fullscreen</div>
+            <!--<div class="bw">gray scale</div>-->
         </div>
+        <br>
+        <br>
+        <button onclick="$.mbBgndGallery.changeEffect('slideLeft')">effect slideLeft</button>
+        <button onclick="$.mbBgndGallery.changeEffect('blur')">effect blur</button>
+        <button onclick="$.mbBgndGallery.changeEffect('zoomBlur')">effect zoomBlur</button>
         <div id="thumbs"></div>
 
         <!-- Begin MailChimp Signup Form -->
@@ -256,8 +255,6 @@
         <!--End mc_embed_signup-->
 
     </div>
-
 </div>
-
 </body>
 </html>

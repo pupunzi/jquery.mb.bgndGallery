@@ -16,7 +16,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 24/06/13 19.58
+  ~  last modified: 26/06/13 23.52
   ~  ******************************************************************************/
   -->
 
@@ -78,6 +78,7 @@
             -o-border-radius:4px;
             border-radius:4px;
         }
+
         #controls div:hover:not(.counter){
             background:rgba(255,255,255,.9);
             color:#000;
@@ -85,6 +86,16 @@
 
         #controls div:not(.counter){
             background: rgb(190, 41, 16);
+            cursor:pointer;
+        }
+
+        #controls.fullScreen_controls div:hover:not(.counter){
+            background:rgba(255,255,255,.9);
+            color:#000;
+        }
+
+        #controls.fullScreen_controls div:not(.counter){
+            background: rgba(0, 0, 0, 0.82);
             cursor:pointer;
         }
 
@@ -111,6 +122,7 @@
     <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 	<script type="text/javascript" src="inc/mb.bgndGallery.js"></script>
+    <script type="text/javascript" src="inc/mb.bgndGallery.effects.js"></script>
 
 	<script type="text/javascript">
 		$(function(){
@@ -134,7 +146,7 @@
 			$.mbBgndGallery.buildGallery({
 
 				containment:"#gallery",
-				effect:{enter:{left:"100%",opacity:1},exit:{left:"-100%",opacity:0}},
+				effect:"slideLeft",
 				timer:3000,
 				effTimer:1500,
 				controls:"#controls",
@@ -155,16 +167,18 @@
 				autoStart:true,
 				onStart:function(){$("#controls .play").show();$("#controls .pause").hide();},
 				onPause:function(){$("#controls .play").show();$("#controls .pause").hide();},
-				onPlay:function(o){$("#controls .play").hide();$("#controls .pause").show();o.effect={enter:{top:"120%",opacity:1},exit:{top:"-120%",opacity:0}}},
-				onNext:function(o){o.effect={enter:{left:"100%",opacity:1},exit:{left:"-100%",opacity:0}}},
-				onPrev:function(o){o.effect={enter:{left:"-100%",opacity:1},exit:{left:"100%",opacity:0}}}
+				onPlay:function(o){$("#controls .play").hide();$("#controls .pause").show();},
+				onNext:function(o){o.effect="slideLeft"},
+				onPrev:function(o){o.effect="slideRight"}
 			})
 
 		});
 	</script>
 </head>
 <body >
+
 <div id="gallery"></div>
+
 <div id="wrapper">
 
    	<div class="text">
