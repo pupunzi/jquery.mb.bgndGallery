@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 27/06/13 0.59
+ *  last modified: 24/10/13 22.44
  *  *****************************************************************************
  */
 
@@ -90,6 +90,12 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 			preserveWidth:false,
 			placeHolder:"",
 
+			onStart:function(){},
+			onChange:function(opt,idx){},
+			onPause:function(opt){},
+			onPlay:function(opt){},
+			onNext:function(opt){},
+			onPrev:function(opt){}
 			// idx = the zero based index of the displayed photo
 			// opt=the options relatives to this component instance you can manipulate on the specific event
 
@@ -98,12 +104,6 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 			// onNext:function(opt){opt.effect = "slideLeft"}
 			// onPrev:function(opt){opt.effect = "slideRight"}
 
-			onStart:function(){},
-			onChange:function(opt,idx){},
-			onPause:function(opt){},
-			onPlay:function(opt){},
-			onNext:function(opt){},
-			onPrev:function(opt){}
 		},
 		clear:false,
 
@@ -279,7 +279,6 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 				if(el.opt.preserveWidth){
 					image.css({width:"100%", height:"auto", left:0, marginLeft:0});
 				}
-
 			});
 		},
 
@@ -307,9 +306,9 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 
 				el.opt.effect = typeof el.opt.effect == "object" ? el.opt.effect : $.mbBgndGallery.effects[el.opt.effect];
 
-
 				$("img", el.opt.gallery).CSSAnimate(el.opt.effect.exit,el.opt.effTimer,0,el.opt.effect.exitTiming,function(el){
-					el.remove();
+					if(el.length)
+						el.remove();
 				});
 				image.css({position:"absolute"});
 				el.opt.gallery.append(image);
