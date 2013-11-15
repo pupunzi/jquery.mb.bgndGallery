@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 02/10/13 22.42
+ *  last modified: 14/11/13 22.04
  *  *****************************************************************************
  */
 
@@ -72,6 +72,7 @@
 
 			gallery.defaults = {};
 			$.extend(gallery.defaults,$.mbFlickr.defaults, options);
+
 			document.flickr.photoset=gallery.defaults.flickr_photoset_id;
 
 			if(typeof gallery.isInit!= "undefined" && gallery.isInit == gallery.defaults.flickr_photoset_id){
@@ -107,6 +108,7 @@
 						}
 					});
 		},
+
 		getFlickrSet:function(page, callback){
 			if (!page) page=1;
 			var gallery= $(this).get(0);
@@ -126,6 +128,7 @@
 						if(callback) callback();
 					});
 		},
+
 		getFlickrPhotos:function(page, callback){
 			if(!page) page=1;
 			var gallery= $(this).get(0);
@@ -141,6 +144,7 @@
 						if(callback) callback();
 					});
 		},
+
 		getFlickrPhotoDATA:function(){
 			var gallery= $(this).get(0);
 			var key = $.mbFlickr.flickr_api_key;
@@ -185,6 +189,7 @@
 						});
 			});
 		},
+
 		getFlickrPhotoINFO:function(){
 			var gallery= $(this).get(0);
 			var key = $.mbFlickr.flickr_api_key;

@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 24/10/13 22.44
+ *  last modified: 15/11/13 22.29
  *  *****************************************************************************
  */
 
@@ -72,7 +72,7 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 	$.mbBgndGallery ={
 		name:"mb.bgndGallery",
 		author:"Matteo Bicocchi",
-		version:"1.8.0",
+		version:"1.8.5",
 		defaults:{
 			containment:"body",
 			images:[],
@@ -89,6 +89,10 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 			preserveTop:false,
 			preserveWidth:false,
 			placeHolder:"",
+
+			//Path to the folder containing the thumbnails and ID of the DOM element that should contains them.
+			// Thumbnail should have the same name of the corresponding image
+			thumbs:{folderPath:"", placeholder:""},
 
 			onStart:function(){},
 			onChange:function(opt,idx){},
@@ -113,6 +117,9 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 			opt.galleryID= new Date().getTime();
 			var el= $(opt.containment).get(0);
 			el.opt= opt;
+
+			console.debug(el.opt)
+
 			$.mbBgndGallery.el = el;
 			if(el.opt.onStart)
 				el.opt.onStart();
@@ -196,7 +203,18 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 					$(el.opt.controls).find(".pause").show();
 				});
 			}
+
+			console.debug(el.opt.thumbs)
+			if(el.opt.thumbs.folderPath.trim().length > 0 && el.opt.thumbs.placeholder.trim().length > 0)
+				$.mbBgndGallery.buildThumbs(el);
+
+			if(el.opt.thumbs.folderPath.trim().length > 0 && el.opt.thumbs.placeholder.trim().length > 0){
+				$(".sel", $(el.opt.thumbs.placeholder)).removeClass("sel");
+				$("#mbBgImg_"+el.opt.imageCounter).addClass("sel");
+			}
+
 		},
+
 		normalizeCss:function(opt){
 			var newOpt = jQuery.extend(true, {}, opt);
 			var sfx = "";
@@ -233,6 +251,7 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 			}
 			return newOpt;
 		},
+
 		preload:function(url,el){
 			if($.mbBgndGallery.clear){
 				el.opt.gallery.remove();
@@ -287,6 +306,11 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 			if($.mbBgndGallery.clear){
 				el.opt.gallery.remove();
 				return;
+			}
+
+			if(el.opt.thumbs.folderPath.trim().length > 0 && el.opt.thumbs.placeholder.trim().length > 0){
+				$(".sel", $(el.opt.thumbs.placeholder)).removeClass("sel");
+				$("#mbBgImg_"+el.opt.imageCounter).addClass("sel");
 			}
 
 			$.mbBgndGallery.changing=true;
@@ -621,6 +645,26 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 				if (RunPrefixMethod(document, "FullScreen") || RunPrefixMethod(document, "IsFullScreen")) {
 					RunPrefixMethod(document, "CancelFullScreen");
 				}
+			}
+		},
+
+		buildThumbs: function(el){
+
+			function getImageName(path){
+				return path.split("/").pop();
+			}
+
+			for (var i = 0; i < el.opt.images.length; i++){
+
+				var imgSrc = el.opt.thumbs.folderPath + getImageName(el.opt.images[i]);
+
+				var img=$("<img/>").attr({"src":imgSrc, id: "mbBgImg_"+i}).click(function(){
+					el.opt.imageCounter = $(this).attr("i")-1;
+					$.mbBgndGallery.next(el);
+					el.opt.paused=true;
+				}).attr("i",i);
+
+				$(el.opt.thumbs.placeholder).append(img);
 			}
 		}
 

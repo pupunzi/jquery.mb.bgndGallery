@@ -16,7 +16,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 04/10/13 23.24
+  ~  last modified: 15/11/13 22.36
   ~  ******************************************************************************/
   -->
 
@@ -125,12 +125,33 @@
         #controls div.sel{
             background:rgba(255,255,255,.9);
         }
-            /*
 
-                    .mbBgndGallery{
-                        filter: url(#sepia);
-                    }
-            */
+        #thumbnails{
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,.4);
+            line-height: 0;
+            font-size: 0;
+            padding: 4px;
+        }
+
+        #thumbnails img{
+            margin: 2px;
+            width: 40px;
+            cursor: pointer;
+            display: inline-block;
+            border: 3px solid transparent;
+        }
+
+        #thumbnails img.sel{
+            margin: 2px;
+            width: 40px;
+            cursor: pointer;
+            display: inline-block;
+            border: 3px solid white;
+        }
+
 
     </style>
     <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
@@ -166,6 +187,8 @@
                 shuffle:true,
                 preserveWidth:false,
                 effect:"blur",
+                thumbs:{folderPath:"thumbs/", placeholder:"#thumbnails"},
+
 //              effect:{enter:{transform:"scale("+(1+ Math.random()*2)+")",opacity:0},exit:{transform:"scale("+(Math.random()*2)+")",opacity:0}},
 
                 // If your server allow directory listing you can use:
@@ -252,8 +275,11 @@
             </form>
         </div>
         <!--End mc_embed_signup-->
-
+        <p style="font-size: 12px; line-height: 12px">All the Photos are right reserved. <br>© 2013 - ∞ Matteo Bicocchi</p>
     </div>
+
 </div>
+<div id="thumbnails"></div>
+
 </body>
 </html>
