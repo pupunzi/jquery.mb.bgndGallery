@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 27/01/14 20.02
+ *  last modified: 01/02/14 14.41
  *  *****************************************************************************
  */
 
@@ -78,7 +78,7 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 	$.mbBgndGallery ={
 		name:"mb.bgndGallery",
 		author:"Matteo Bicocchi",
-		version:"1.8.5",
+		version:"1.8.7",
 		defaults:{
 			containment:"body",
 			images:[],
@@ -129,7 +129,17 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 
 			el.opt.gallery= $("<div/>").attr({id:"bgndGallery_"+el.opt.galleryID}).addClass("mbBgndGallery");
 			var pos= el.opt.containment=="body"?"fixed":"absolute";
-			el.opt.gallery.css({position:pos,top:0,let:0,width:"100%",height:"100%",overflow:"hidden"});
+			el.opt.gallery.css({
+				position: pos,
+				top: 0, let: 0,
+				width: "100%",
+				height: "100%",
+				overflow: "hidden",
+				backfaceVisibility:"hidden",
+				webkitBackfaceVisibility:"hidden",
+				mozBackfaceVisibility:"hidden",
+				msBackfaceVisibility:"hidden"
+			});
 
 			var containment = el.opt.containment;
 
@@ -207,8 +217,8 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 				});
 			}
 
-		//	if(el.opt.thumbs.folderPath.trim().length > 0 && el.opt.thumbs.placeholder.trim().length > 0)
-				$.mbBgndGallery.buildThumbs(el);
+			//	if(el.opt.thumbs.folderPath.trim().length > 0 && el.opt.thumbs.placeholder.trim().length > 0)
+			$.mbBgndGallery.buildThumbs(el);
 
 			return $(el);
 
@@ -559,7 +569,7 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 			el.opt.imageCounter=0;
 
 			//if(el.opt.thumbs.folderPath.trim().length > 0 && el.opt.thumbs.placeholder.trim().length > 0)
-				$.mbBgndGallery.buildThumbs(el);
+			$.mbBgndGallery.buildThumbs(el);
 
 		},
 
@@ -654,30 +664,36 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 		buildThumbs: function(el){
 
 			if(el.opt.thumbs.folderPath.trim().length == 0 && el.opt.thumbs.placeholder.trim().length == 0)
-			return;
+				return;
 
-				function getImageName(path){
+			function getImageName(path){
 				return path.split("/").pop();
 			}
-			$(el.opt.thumbs.placeholder).empty()
-			for (var i = 0; i < el.opt.images.length; i++){
 
-				var imgSrc = el.opt.thumbs.folderPath + getImageName(el.opt.images[i]);
+			var thumbNumber = $(el.opt.thumbs.placeholder).children().length || 0;
 
-				var img=$("<img/>").attr({"src":imgSrc, id: "mbBgImg_"+i}).click(function(){
-					el.opt.imageCounter = $(this).attr("i")-1;
-					$.mbBgndGallery.next(el);
-					el.opt.paused=true;
-				}).attr("i",i);
 
-				$(el.opt.thumbs.placeholder).append(img);
+			if(thumbNumber != el.opt.images.length){
+
+				$(el.opt.thumbs.placeholder).empty()
+				for (var i = 0; i < el.opt.images.length; i++){
+
+					var imgSrc = el.opt.thumbs.folderPath + getImageName(el.opt.images[i]);
+
+					var img=$("<img/>").attr({"src":imgSrc, id: "mbBgImg_"+i}).click(function(){
+						el.opt.imageCounter = $(this).attr("i")-1;
+						$.mbBgndGallery.next(el);
+						el.opt.paused=true;
+					}).attr("i",i);
+
+					$(el.opt.thumbs.placeholder).append(img);
+				}
+
+				if(el.opt.thumbs.folderPath.trim().length > 0 && el.opt.thumbs.placeholder.trim().length > 0){
+					$(".sel", $(el.opt.thumbs.placeholder)).removeClass("sel");
+					$("#mbBgImg_"+el.opt.imageCounter).addClass("sel");
+				}
 			}
-
-			if(el.opt.thumbs.folderPath.trim().length > 0 && el.opt.thumbs.placeholder.trim().length > 0){
-				$(".sel", $(el.opt.thumbs.placeholder)).removeClass("sel");
-				$("#mbBgImg_"+el.opt.imageCounter).addClass("sel");
-			}
-
 		},
 
 		addImages: function(images){
@@ -686,7 +702,6 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 			for (var i in arguments){
 				el.opt.images.push(arguments[i]);
 			}
-
 			$.mbBgndGallery.buildThumbs(el);
 		}
 	};
