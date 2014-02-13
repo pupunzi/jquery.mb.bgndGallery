@@ -341,9 +341,11 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 
 				el.opt.effect = typeof el.opt.effect == "object" ? el.opt.effect : $.mbBgndGallery.effects[el.opt.effect];
 
-				$("img", el.opt.gallery).CSSAnimate(el.opt.effect.exit,el.opt.effTimer,0,el.opt.effect.exitTiming,function(el){
-					if(el.length)
+				$("img", el.opt.gallery).CSSAnimate(el.opt.effect.exit,el.opt.effTimer,0,el.opt.effect.exitTiming, function(el){
+
+					if(typeof el != "undefined" && el.length)
 						el.remove();
+
 				});
 				image.css({position:"absolute"});
 				el.opt.gallery.append(image);
