@@ -16,7 +16,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 31/01/14 21.19
+  ~  last modified: 09/02/14 18.26
   ~  ******************************************************************************/
   -->
 
@@ -161,6 +161,8 @@
 
 <script type="text/javascript">
 
+    var myGallery;
+
     $(function(){
         if (self.location.href == top.location.href){
             var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:40px;left:50px;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");
@@ -181,7 +183,7 @@
                     $("body").css({overflow:"hidden"})
                 })
 
-       var myGallery = new mbBgndGallery({
+        myGallery = new mbBgndGallery({
             containment:"body",
             timer:2000,
             effTimer:2000,
@@ -191,8 +193,6 @@
             preserveWidth:false,
             effect:"blur",
             thumbs:{folderPath:"thumbs/", placeholder:"#thumbnails"},
-
-//              effect:{enter:{transform:"scale("+(1+ Math.random()*2)+")",opacity:0},exit:{transform:"scale("+(Math.random()*2)+")",opacity:0}},
 
             // If your server allow directory listing you can use:
             // (however this doesn't work locally on your computer)
@@ -229,6 +229,21 @@
 
     });
 
+    var newGallery = [
+        "elements/1.jpg",
+        "elements/4.jpg",
+        "elements/3.jpg",
+        "elements/2.jpg",
+        "elements/7.jpg",
+        "elements/6.jpg",
+        "elements/9.jpg",
+        "elements/11.jpg",
+        "elements/5.jpg",
+        "elements/8.jpg",
+        "elements/10.jpg",
+        "elements/12.jpg"
+    ];
+
 </script>
 
 </head>
@@ -259,6 +274,7 @@
             <div class="next">next</div>
             <div class="counter"></div>
             <div class="fullscreen">fullscreen</div>
+            <div class="changeGallery" onclick="myGallery.changeGallery(newGallery)">change gallery</div>
         </div>
         <br>
         <br>
