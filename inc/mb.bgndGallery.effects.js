@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 07/01/14 22.50
+ *  last modified: 15/03/14 22.12
  *  *****************************************************************************
  */
 
@@ -50,12 +50,14 @@ $.mbBgndGallery.effects={
 		exitTiming:"ease-in"
 	},
 	slideLeft:{
-		enter:{left:"100%",opacity:1},
-		exit:{left:"-100%",opacity:0}
+		enter:{x:"100%",opacity:0},
+		exit:{x:"-100%",opacity:0},
+		enterTiming:"easeOutQuad",
+		exitTiming:"easeOutQuad"
 	},
 	slideRight:{
-		enter:{left:"-100%",opacity:1},
-		exit:{left:"100%",opacity:0}
+		enter:{x:"-100%",opacity:1},
+		exit:{y:"100%",opacity:0}
 	},
 	zoom:{
 		enter:{transform:"scale("+(1+ Math.random()*5)+")",opacity:0},
