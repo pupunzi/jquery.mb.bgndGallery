@@ -706,14 +706,22 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 			}
 		},
 
-		addImages: function(images){
+		addImages: function(images, goto){
 
 			var el = this.get(0);
-			for (var i in arguments){
-				el.opt.images.push(arguments[i]);
+			var startIdx = el.opt.images.length;
+			for (var i in images){
+				el.opt.images.push(images[i]);
 			}
 			jQuery.mbBgndGallery.buildThumbs(el);
+
+			if(goto){
+				el.opt.imageCounter = startIdx;
+				jQuery.mbBgndGallery.changePhoto(el.opt.images[el.opt.imageCounter],el);
+			}
+
 		}
+
 	};
 
 	jQuery.fn.addImages = jQuery.mbBgndGallery.addImages;
