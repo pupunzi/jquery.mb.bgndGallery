@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 13/04/14 17.00
+ *  last modified: 13/04/14 20.09
  *  *****************************************************************************
  */
 
@@ -86,7 +86,7 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 	jQuery.mbBgndGallery ={
 		name:"mb.bgndGallery",
 		author:"Matteo Bicocchi",
-		version:"1.8.8",
+		version:"1.8.9",
 		defaults:{
 			containment:"body",
 			images:[],
@@ -159,11 +159,11 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 				height: "100%",
 				overflow: "hidden"
 				/*,
-				backfaceVisibility:"hidden",
-				webkitBackfaceVisibility:"hidden",
-				mozBackfaceVisibility:"hidden",
-				msBackfaceVisibility:"hidden"
-				*/
+				 backfaceVisibility:"hidden",
+				 webkitBackfaceVisibility:"hidden",
+				 mozBackfaceVisibility:"hidden",
+				 msBackfaceVisibility:"hidden"
+				 */
 			});
 
 			var containment = el.opt.containment;
@@ -725,7 +725,9 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 				jQuery.mbBgndGallery.keyboard(el);
 		},
 
-		changeGallery:function(el,array){
+		changeGallery:function(array){
+
+			var el = this;
 
 			if(typeof el == "object"){
 				array = el;
@@ -761,8 +763,8 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 				loadCounter++;
 			});
 
-		if(el.opt.thumbs.folderPath.trim().length > 0 && el.opt.thumbs.placeholder.trim().length > 0)
-			jQuery.mbBgndGallery.buildThumbs(el);
+			if(el.opt.thumbs.folderPath.trim().length > 0 && el.opt.thumbs.placeholder.trim().length > 0)
+				jQuery.mbBgndGallery.buildThumbs(el);
 
 		},
 
@@ -911,6 +913,17 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 			jQuery.mbBgndGallery.changePhoto(el.opt.images[el.opt.imageCounter],el);
 			jQuery.mbBgndGallery.buildThumbs(el);
 
+		},
+		removeImages: function(images){
+
+			var el = this.get(0);
+			for (var i in images){
+				var index = el.opt.images.indexOf(images[i]);
+				if (index > -1)
+					el.opt.images.splice(index, 1);
+			}
+			jQuery.mbBgndGallery.changePhoto(el.opt.images[el.opt.imageCounter],el);
+			jQuery.mbBgndGallery.buildThumbs(el);
 		},
 
 		applyFilter: function(filter){
