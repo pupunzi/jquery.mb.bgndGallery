@@ -16,7 +16,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 09/02/14 18.26
+  ~  last modified: 12/04/14 15.25
   ~  ******************************************************************************/
   -->
 
@@ -33,6 +33,25 @@
         margin:0;
         padding:0;
         font:normal 16px/20px Lekton, sans-serif;
+    }
+
+    button{
+        display:inline-block;
+        padding:5px;
+        margin:1px;
+        color:#fff;
+        border:1px solid #fff;
+        -moz-border-radius:4px;
+        -webkit-border-radius:4px;
+        -o-border-radius:4px;
+        border-radius:4px;
+        background: rgba(0, 0, 0, 0.72);
+        cursor: pointer;
+    }
+
+    button:hover{
+        background:rgba(255,255,255,.9);
+        color:#000;
     }
 
     #wrapper{
@@ -70,91 +89,11 @@
         line-height:130%;
     }
 
-    #controls div{
-        display:inline-block;
-        padding:5px;
-        margin:1px;
-        color:#fff;
-        border:1px solid #fff;
-        -moz-border-radius:4px;
-        -webkit-border-radius:4px;
-        -o-border-radius:4px;
-        border-radius:4px;
-    }
-
-    button{
-        display:inline-block;
-        padding:5px;
-        margin:1px;
-        color:#fff;
-        border:1px solid #fff;
-        -moz-border-radius:4px;
-        -webkit-border-radius:4px;
-        -o-border-radius:4px;
-        border-radius:4px;
-        background: rgba(0, 0, 0, 0.72);
-        cursor: pointer;
-    }
-
-    button:hover{
-        background:rgba(255,255,255,.9);
-        color:#000;
-    }
-
-    #controls div:hover:not(.counter){
-        background:rgba(255,255,255,.9);
-        color:#000;
-    }
-
-    #controls div:not(.counter){
-        background: rgb(190, 41, 16);
-        cursor:pointer;
-    }
-
-    #controls.fullScreen_controls div:hover:not(.counter){
-        background:rgba(255,255,255,.9);
-        color:#000;
-    }
-
-    #controls.fullScreen_controls div:not(.counter){
-        background: rgba(0, 0, 0, 0.82);
-        cursor:pointer;
-    }
-
-    #controls div.sel{
-        background:rgba(255,255,255,.9);
-    }
-
-    #thumbnails{
-        position: fixed;
-        right: 0;
-        bottom: 0;
-        background: rgba(255,255,255,.4);
-        line-height: 0;
-        font-size: 0;
-        padding: 4px;
-    }
-
-    #thumbnails img{
-        margin: 2px;
-        width: 40px;
-        height:auto;
-        cursor: pointer;
-        display: inline-block;
-        border: 3px solid transparent;
-    }
-
-    #thumbnails img.sel{
-        margin: 2px;
-        width: 40px;
-        cursor: pointer;
-        display: inline-block;
-        border: 3px solid white;
-    }
-
 
 </style>
+
 <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
+<link href='css/bgndGallery.css' rel='stylesheet' type='text/css'>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script type="text/javascript" src="inc/mb.bgndGallery.js"></script>
 <script type="text/javascript" src="inc/mb.bgndGallery.effects.js"></script>
@@ -224,7 +163,7 @@
             onPrev:function(opt){}
         });
 
-        myGallery.addImages(["elements/13.jpg", "elements/14.jpg", "elements/15.jpg"], true)
+        myGallery.addImages(["elements/13.jpg", "elements/14.jpg", "elements/15.jpg"], true, true)
 
     });
 
