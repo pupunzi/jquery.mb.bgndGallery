@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 13/04/14 20.09
+ *  last modified: 07/05/14 22.40
  *  *****************************************************************************
  */
 
@@ -86,7 +86,7 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 	jQuery.mbBgndGallery ={
 		name:"mb.bgndGallery",
 		author:"Matteo Bicocchi",
-		version:"1.8.9",
+		version:"1.9.0",
 		defaults:{
 			containment:"body",
 			images:[],
@@ -727,12 +727,7 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 
 		changeGallery:function(array){
 
-			var el = this;
-
-			if(typeof el == "object"){
-				array = el;
-				el = this.get(0);
-			}
+			var el = this.get(0);
 
 			clearTimeout(el.opt.changing);
 			el.opt.gallery.off("imageLoaded."+el.opt.galleryID);
@@ -935,7 +930,6 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 				el.style.filter = filterObj["msie"];
 			} else if(jQuery.browser.webkit){
 				el.style["-webkit-filter"] = filterObj["webkit"];
-				//$(this).css("-webkit-filter", filterObj["webkit"]);
 			} else {
 				el.style.filter = filterObj["moz"];
 			}
@@ -943,12 +937,13 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 
 	};
 
-	jQuery.fn.addImages = jQuery.mbBgndGallery.addImages;
 	jQuery.fn.mbBgndGalleryPlay = jQuery.mbBgndGallery.play;
 	jQuery.fn.mbBgndGalleryPause = jQuery.mbBgndGallery.pause;
 	jQuery.fn.mbBgndGalleryPrev = jQuery.mbBgndGallery.prev;
 	jQuery.fn.mbBgndGalleryNext = jQuery.mbBgndGallery.next;
 	jQuery.fn.changeGallery = jQuery.mbBgndGallery.changeGallery;
+	jQuery.fn.addImages = jQuery.mbBgndGallery.addImages;
+	jQuery.fn.removeImages = jQuery.mbBgndGallery.removeImages;
 	jQuery.fn.applyFilter = jQuery.mbBgndGallery.applyFilter;
 
 	jQuery.loadFromSystem=function(folderPath, type){
