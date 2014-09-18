@@ -16,7 +16,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 07/01/14 22.50
+  ~  last modified: 10/04/14 21.51
   ~  ******************************************************************************/
   -->
 
@@ -33,6 +33,26 @@
             padding:0;
             font-family:Arial, Helvetica, sans-serif;
         }
+
+        button{
+            display:inline-block;
+            padding:5px;
+            margin:1px;
+            color:#fff;
+            border:1px solid #fff;
+            -moz-border-radius:4px;
+            -webkit-border-radius:4px;
+            -o-border-radius:4px;
+            border-radius:4px;
+            background: rgba(0, 0, 0, 0.72);
+            cursor: pointer;
+        }
+
+        button:hover{
+            background:rgba(255,255,255,.9);
+            color:#000;
+        }
+
         #wrapper{
             position:absolute;
             padding:100px 50px;
@@ -67,59 +87,10 @@
             line-height:130%;
         }
 
-        #controls div{
-            display:inline-block;
-            padding:5px;
-            margin:1px;
-            color:#fff;
-            border:1px solid #fff;
-            -moz-border-radius:4px;
-            -webkit-border-radius:4px;
-            -o-border-radius:4px;
-            border-radius:4px;
-        }
-
-        #controls div:hover:not(.counter){
-            background:rgba(255,255,255,.9);
-            color:#000;
-        }
-
-        #controls div:not(.counter){
-            background: rgb(190, 41, 16);
-            cursor:pointer;
-        }
-
-        #controls.fullScreen_controls div:hover:not(.counter){
-            background:rgba(255,255,255,.9);
-            color:#000;
-        }
-
-        #controls.fullScreen_controls div:not(.counter){
-            background: rgba(0, 0, 0, 0.82);
-            cursor:pointer;
-        }
-
-        #gallery{
-            position: absolute;
-            width: 80%;
-            height: 80%;
-            left: 10%;
-            top: 10%;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
-            background: #000;
-        }
-
-        #gallery.fullScreen{
-            width: 100%;
-            height: 100%;
-            left: 0;
-            top: 0;
-            background: #000 !important;
-        }
-
-
 	</style>
     <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
+    <link href='css/bgndGallery.css' rel='stylesheet' type='text/css'>
+
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 	<script type="text/javascript" src="inc/mb.bgndGallery.js"></script>
     <script type="text/javascript" src="inc/mb.bgndGallery.effects.js"></script>

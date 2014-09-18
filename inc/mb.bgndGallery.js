@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 26/03/14 21.39
+ *  last modified: 07/05/14 22.40
  *  *****************************************************************************
  */
 
@@ -86,13 +86,14 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 	jQuery.mbBgndGallery ={
 		name:"mb.bgndGallery",
 		author:"Matteo Bicocchi",
-		version:"1.8.8",
+		version:"1.9.0",
 		defaults:{
 			containment:"body",
 			images:[],
 			shuffle:false,
 			controls:null,
 			effect:"fade",
+			filter: null,
 			timer:4000,
 			effTimer:3000,
 			raster:false, //"inc/raster.png"
@@ -123,6 +124,20 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 			// onPrev:function(opt){opt.effect = "slideRight"}
 
 		},
+
+		filters:{
+			gray:{
+				moz: 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale")',
+				webkit: 'grayscale(100%)',
+				msie: 'gray'
+			},
+			halfGray:{
+				moz: 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'saturate\' values=\'0.5\'/></filter></svg>#grayscale")',
+				webkit: 'grayscale(50%)',
+				msie: 'gray alpha(opacity=50)'
+			}
+		},
+
 		clear:false,
 
 		buildGallery:function(options){
@@ -144,11 +159,11 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 				height: "100%",
 				overflow: "hidden"
 				/*,
-				backfaceVisibility:"hidden",
-				webkitBackfaceVisibility:"hidden",
-				mozBackfaceVisibility:"hidden",
-				msBackfaceVisibility:"hidden"
-				*/
+				 backfaceVisibility:"hidden",
+				 webkitBackfaceVisibility:"hidden",
+				 mozBackfaceVisibility:"hidden",
+				 msBackfaceVisibility:"hidden"
+				 */
 			});
 
 			var containment = el.opt.containment;
@@ -167,7 +182,7 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 			jQuery(containment).prepend(opt.gallery);
 
 			if(el.opt.folderPath && el.opt.images.length==0)
-				el.opt.images = jQuery.loadFromSystem(el.opt.folderPath);
+				el.opt.images = jQuery.loadFromSystem(el.opt.folderPath) ;
 
 
 			if(el.opt.shuffle)
@@ -213,6 +228,8 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 
 			var controls = el.opt.controls;
 			if(controls){
+				$(controls).addClass("controls");
+
 				var counter=jQuery(el.opt.controls).find(".counter");
 				counter.html(el.opt.imageCounter+1+" / "+el.opt.images.length);
 
@@ -512,11 +529,12 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 			image.error(function(){
 				var image=jQuery(this);
 				image.attr("src", el.opt.placeHolder);
-			})
+			});
 
 			if(el.opt.grayScale){
 				image.greyScale(el);
-
+//				image.applyFilter("gray");
+//				el.opt.gallery.applyFilter("gray");
 			}
 
 			var counter=jQuery(el.opt.controls).find(".counter");
@@ -707,12 +725,9 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 				jQuery.mbBgndGallery.keyboard(el);
 		},
 
-		changeGallery:function(el,array){
+		changeGallery:function(array){
 
-			if(typeof el == "object"){
-				array = el;
-				el = this.get(0);
-			}
+			var el = this.get(0);
 
 			clearTimeout(el.opt.changing);
 			el.opt.gallery.off("imageLoaded."+el.opt.galleryID);
@@ -743,8 +758,8 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 				loadCounter++;
 			});
 
-			//if(el.opt.thumbs.folderPath.trim().length > 0 && el.opt.thumbs.placeholder.trim().length > 0)
-			jQuery.mbBgndGallery.buildThumbs(el);
+			if(el.opt.thumbs.folderPath.trim().length > 0 && el.opt.thumbs.placeholder.trim().length > 0)
+				jQuery.mbBgndGallery.buildThumbs(el);
 
 		},
 
@@ -845,16 +860,17 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 			if(el.opt.thumbs.folderPath.trim().length == 0 && el.opt.thumbs.placeholder.trim().length == 0)
 				return;
 
+			jQuery(el.opt.thumbs.placeholder).addClass("thumbnailsContainer");
+
 			function getImageName(path){
 				return path.split("/").pop();
 			}
 
 			var thumbNumber = jQuery(el.opt.thumbs.placeholder).children().length || 0;
 
-
 			if(thumbNumber != el.opt.images.length){
 
-				jQuery(el.opt.thumbs.placeholder).empty()
+				jQuery(el.opt.thumbs.placeholder).empty();
 				for (var i = 0; i < el.opt.images.length; i++){
 
 					var imgSrc = el.opt.thumbs.folderPath + getImageName(el.opt.images[i]);
@@ -863,7 +879,9 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 						el.opt.imageCounter = jQuery(this).attr("i")-1;
 						jQuery.mbBgndGallery.next(el);
 						el.opt.paused=true;
-					}).attr("i",i);
+					}).attr("i",i).css({opacity:0}).on("load",function(){
+						$(this).fadeTo(1000,1);
+					});
 
 					jQuery(el.opt.thumbs.placeholder).append(img);
 				}
@@ -875,28 +893,58 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 			}
 		},
 
-		addImages: function(images, goto){
+		addImages: function(images, goto, shuffle){
+
 			var el = this.get(0);
-			var startIdx = el.opt.images.length;
 			for (var i in images){
 				el.opt.images.push(images[i]);
 			}
+			if(shuffle)
+				el.opt.images = jQuery.shuffle(el.opt.images);
+
+			if(goto)
+				el.opt.imageCounter = el.opt.images.indexOf(images[0]);
+
+			jQuery.mbBgndGallery.changePhoto(el.opt.images[el.opt.imageCounter],el);
 			jQuery.mbBgndGallery.buildThumbs(el);
 
-			if(goto){
-				el.opt.imageCounter = startIdx;
-				jQuery.mbBgndGallery.changePhoto(el.opt.images[el.opt.imageCounter],el);
+		},
+		removeImages: function(images){
+
+			var el = this.get(0);
+			for (var i in images){
+				var index = el.opt.images.indexOf(images[i]);
+				if (index > -1)
+					el.opt.images.splice(index, 1);
+			}
+			jQuery.mbBgndGallery.changePhoto(el.opt.images[el.opt.imageCounter],el);
+			jQuery.mbBgndGallery.buildThumbs(el);
+		},
+
+		applyFilter: function(filter){
+
+			var filterObj = jQuery.mbBgndGallery.filters[filter];
+			var el = this.get(0);
+
+			if (jQuery.browser.msie && jQuery.browser.version<9) {
+				el.style.filter = filterObj["msie"];
+			} else if(jQuery.browser.webkit){
+				el.style["-webkit-filter"] = filterObj["webkit"];
+			} else {
+				el.style.filter = filterObj["moz"];
 			}
 		}
 
 	};
 
-	jQuery.fn.addImages = jQuery.mbBgndGallery.addImages;
 	jQuery.fn.mbBgndGalleryPlay = jQuery.mbBgndGallery.play;
 	jQuery.fn.mbBgndGalleryPause = jQuery.mbBgndGallery.pause;
 	jQuery.fn.mbBgndGalleryPrev = jQuery.mbBgndGallery.prev;
 	jQuery.fn.mbBgndGalleryNext = jQuery.mbBgndGallery.next;
 	jQuery.fn.changeGallery = jQuery.mbBgndGallery.changeGallery;
+	jQuery.fn.addImages = jQuery.mbBgndGallery.addImages;
+	jQuery.fn.removeImages = jQuery.mbBgndGallery.removeImages;
+	jQuery.fn.applyFilter = jQuery.mbBgndGallery.applyFilter;
 
 	jQuery.loadFromSystem=function(folderPath, type){
 
@@ -926,7 +974,7 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 				tmp.remove();
 			}
 		});
-		return arr;
+		return arr.length != 0 ? arr : false;
 	};
 
 	jQuery.fn.greyScale = function(el) {
@@ -938,7 +986,6 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 			} else {
 				this.src = grayScaleImage(this);
 			}
-
 		})
 	};
 
