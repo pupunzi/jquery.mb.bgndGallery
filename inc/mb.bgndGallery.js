@@ -876,7 +876,6 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 		},
 
 		addImages: function(images, goto){
-
 			var el = this.get(0);
 			var startIdx = el.opt.images.length;
 			for (var i in images){
@@ -888,7 +887,6 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 				el.opt.imageCounter = startIdx;
 				jQuery.mbBgndGallery.changePhoto(el.opt.images[el.opt.imageCounter],el);
 			}
-
 		}
 
 	};

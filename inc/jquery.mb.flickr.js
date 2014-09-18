@@ -101,7 +101,7 @@
 		},
 		//get NSID from FLICKR
 		getFlickrNSID:function(key,name){
-			$.getJSON("http://api.flickr.com/services/rest/?method=flickr.urls.lookupUser&api_key="+key+"&url=http%3A%2F%2Fwww.flickr.com%2Fphotos%2F"+name+"%2F&format=json&rnd="+new Date()+"&jsoncallback=?",
+			$.getJSON("https://api.flickr.com/services/rest/?method=flickr.urls.lookupUser&api_key="+key+"&url=http%3A%2F%2Fwww.flickr.com%2Fphotos%2F"+name+"%2F&format=json&rnd="+new Date()+"&jsoncallback=?",
 					function(data){
 						if (data.stat!="fail"){
 							$.mbFlickr.defaults.flickr_user_id=data.user.id;
