@@ -23,16 +23,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>mb.bgndGallery 1.0</title>
+<title>mb.bgndGallery</title>
 <style type="text/css">
 
     body{
-        margin:0px;
         background: #284352;
         z-index:0;
         margin:0;
         padding:0;
         font:normal 16px/20px Lekton, sans-serif;
+/*
+        -webkit-transform-style: preserve-3d;
+        -webkit-backface-visibility: hidden;
+*/
     }
 
     button{
@@ -41,9 +44,6 @@
         margin:1px;
         color:#fff;
         border:1px solid #fff;
-        -moz-border-radius:4px;
-        -webkit-border-radius:4px;
-        -o-border-radius:4px;
         border-radius:4px;
         background: rgba(0, 0, 0, 0.72);
         cursor: pointer;
@@ -59,16 +59,11 @@
         padding:100px 50px;
         width:500px;
         min-height: 100%;
-        margin-left: 0px;
+        margin-left: 0;
         top:0;
         background: rgba(232, 232, 232, .9);
-
         font:normal 16px/20px Lekton, sans-serif;
-
-        -moz-box-sizing: border-box;
-        -webkit-box-sizing: border-box;
         box-sizing: border-box;
-
         box-shadow: 0 0 10px rgba(0,0,0,0.4);
 
     }
@@ -111,7 +106,7 @@
         }
 
         setTimeout(function(){
-            $("#wrapper").CSSAnimate({marginLeft:-450, background:"rgba(255, 192, 0, 0.8)"},200)
+            $("#wrapper").CSSAnimate({marginLeft:-450, background:"rgba(255, 192, 0, 0.8)"},200);
             $("body").css({overflow:"hidden"})
         },3000)
 
@@ -121,7 +116,9 @@
         }).on("mouseleave",function(){
                     $(this).CSSAnimate({marginLeft:-450, background:"rgba(255, 192, 0, 0.8)"},200);
                     $("body").css({overflow:"hidden"})
-                })
+                });
+
+
 
         myGallery = new mbBgndGallery({
             containment:"body",
@@ -131,7 +128,7 @@
             grayScale:false,
             shuffle:true,
             preserveWidth:false,
-            effect:"blur",
+            effect:"zoom",
             thumbs:{folderPath:"thumbs/", placeholder:"#thumbnails"},
 
             // If your server allow directory listing you can use:
@@ -158,16 +155,14 @@
             onPrev:function(opt){}
         });
 
-        myGallery.addImages(["elements/13.jpg", "elements/14.jpg", "elements/15.jpg"], true, true)
 
     });
 
-    var newGallery = [
+    //Images used for the changeGallery example
+    var newGallery = ["elements/8.jpg", "elements/10.jpg", "elements/12.jpg"];
 
-        "elements/8.jpg",
-        "elements/10.jpg",
-        "elements/12.jpg"
-    ];
+    //Images used for the addImages example
+    var newImages = ["elements/13.jpg", "elements/14.jpg", "elements/15.jpg"];
 
 </script>
 
@@ -200,6 +195,7 @@
             <div class="counter"></div>
             <div class="fullscreen">fullscreen</div>
             <div class="changeGallery" onclick="myGallery.changeGallery(newGallery)">change gallery</div>
+            <div class="addImages" onclick=" myGallery.addImages(newImages, false, false); this.style.display='none'">add images</div>
         </div>
         <br>
         <br>

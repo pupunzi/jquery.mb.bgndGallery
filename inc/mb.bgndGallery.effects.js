@@ -27,9 +27,6 @@
  ******************************************************************************/
 
 
-
-// ENTER/EXIT EFFECTS
-
 $.mbBgndGallery.effects={
 	fade:{
 		enter:{left:0,opacity:0},
@@ -67,15 +64,15 @@ $.mbBgndGallery.effects={
 	},
 
 	zoomBlur:{ //the blur effect only works on webkit browsers.
-		enter:{opacity:0, filter:"blur(30px)", transform: "scale(2)"},
-		exit:{opacity:0, filter:"blur(30px)", transform: "scale(2)"},
+		enter:{opacity:0, filter:"blur(10px)", transform: "scale(2)"},
+		exit:{opacity:0, filter:"blur(10px)", transform: "scale(2)"},
 		enterTiming:"cubic-bezier(0.19, 1, 0.22, 1)",
 		exitTiming:"cubic-bezier(0.19, 1, 0.22, 1)"
 	},
 
 	blur:{ //the blur effect only works on webkit browsers.
-		enter:{opacity:0, filter:"blur(30px)"},
-		exit:{opacity:0, filter:"blur(30px)"},
+		enter:{opacity:0, filter:"blur(10px)"},
+		exit:{opacity:0, filter:"blur(10px)"},
 		enterTiming:"cubic-bezier(0.19, 1, 0.22, 1)",
 		exitTiming:"cubic-bezier(0.19, 1, 0.22, 1)"
 	}

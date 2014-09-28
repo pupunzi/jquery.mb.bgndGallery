@@ -32,6 +32,10 @@
 
 @charset "UTF-8";
 
+img {
+    -webkit-backface-visibility: hidden;
+    -webkit-transform-style: preserve-3d;
+}
 
 .controls div{
   display:inline-block;
@@ -39,12 +43,8 @@
   margin:1px;
   color:#fff;
   border:1px solid #fff;
-  -moz-border-radius:4px;
-  -webkit-border-radius:4px;
-  -o-border-radius:4px;
   border-radius:4px;
 }
-
 
 .controls div:hover:not(.counter){
   background:rgba(255,255,255,.9);
