@@ -1,24 +1,18 @@
-/*
- * ******************************************************************************
- *  jquery.mb.components
- *  file: jquery.mb.flickr.js
- *
- *  Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi);
- *  Open lab srl, Firenze - Italy
- *  email: matteo@open-lab.com
- *  site: 	http://pupunzi.com
- *  blog:	http://pupunzi.open-lab.com
- * 	http://open-lab.com
- *
- *  Licences: MIT, GPL
- *  http://www.opensource.org/licenses/mit-license.php
- *  http://www.gnu.org/licenses/gpl.html
- *
- *  last modified: 07/01/14 22.50
- *  *****************************************************************************
- */
+/*******************************************************************************
+ jquery.mb.components
+ Copyright (c) 2001-2010. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
+ email: mbicocchi@open-lab.com
+ site: http://pupunzi.com
+
+ Licences: MIT, GPL
+ http://www.opensource.org/licenses/mit-license.php
+ http://www.gnu.org/licenses/gpl.html
+ ******************************************************************************/
 
 /*
+ * jQuery.mb.components: jquery.mb.flickr
+ * version: 1.5
+ * © 2001 - 2009 Matteo Bicocchi (pupunzi), Open Lab
  *
  * to obtain a Flickr API key:
  * http://www.flickr.com/services/apps/create/apply/
@@ -29,7 +23,7 @@
  *
  * ex:
  *
- $("#myElementId").mb_loadFlickrPhotos({callback: logData})
+ $("#myElementId").mb_loadFlickrPhotos({callBack: logData})
  function logData(o){
  console.debug(o.page); // actual page
  console.debug(o.pages); // total pages
@@ -45,6 +39,7 @@
  }
  *
  */
+
 
 
 (function($) {
@@ -72,23 +67,21 @@
 
 			gallery.defaults = {};
 			$.extend(gallery.defaults,$.mbFlickr.defaults, options);
-
 			document.flickr.photoset=gallery.defaults.flickr_photoset_id;
 
 			if(typeof gallery.isInit!= "undefined" && gallery.isInit == gallery.defaults.flickr_photoset_id){
-				if(gallery.defaults.callback)
-					gallery.defaults.callback(gallery);
+				if(gallery.defaults.callBack) gallery.defaults.callBack(gallery);
 				return;
 			}
 
-			if(gallery.defaults.onStart)
-				gallery.defaults.onStart();
+			if(gallery.defaults.onStart) gallery.defaults.onStart();
 
 			var getSet= gallery.defaults.flickr_photoset_id;
 			if (!$.mbFlickr.defaults.flickr_user_id)
 				$.mbFlickr.getFlickrNSID($.mbFlickr.flickr_api_key,$.mbFlickr.flickr_user_name);
 			if (getSet) {
 				$(gallery).mb_getFlickrSet(gallery.defaults.page,function(){
+
 					$(gallery).mb_getFlickrPhotoDATA();
 					$(gallery).mb_getFlickrPhotoINFO();
 				});
@@ -108,14 +101,15 @@
 						}
 					});
 		},
+		getFlickrSet:function(page, callBack){
 
-		getFlickrSet:function(page, callback){
 			if (!page) page=1;
 			var gallery= $(this).get(0);
 			var per_page= gallery.defaults.per_page;
 			var key= $.mbFlickr.flickr_api_key;
 			var setID= gallery.defaults.flickr_photoset_id;
-			$.getJSON("http://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key="+key+"&photoset_id="+setID+"&extras=url_sq,url_t,url_s,url_m,url_o&per_page="+per_page+"&page="+page+"&format=json&rnd="+new Date().getTime()+"&jsoncallback=?",
+
+			$.getJSON("https://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key="+key+"&photoset_id="+setID+"&extras=url_sq,url_t,url_s,url_m,url_o&per_page="+per_page+"&page="+page+"&format=json&rnd="+new Date().getTime()+"&jsoncallback=?",
 					function(data){
 						if(data.stat=="fail") {
 							alert(data.message);
@@ -125,26 +119,24 @@
 						gallery.pages = data.photoset.pages;
 						gallery.page = data.photoset.page;
 
-						if(callback) callback();
+						if(callBack) callBack();
 					});
 		},
-
-		getFlickrPhotos:function(page, callback){
+		getFlickrPhotos:function(page, callBack){
 			if(!page) page=1;
 			var gallery= $(this).get(0);
 			var per_page= gallery.defaults.per_page;
 			if (per_page=="all")per_page=100;
 			var key= $.mbFlickr.flickr_api_key;
 			var userNSID= $.mbFlickr.defaults.flickr_user_id;
-			$.getJSON("http://api.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&api_key="+key+"&user_id="+userNSID+"&per_page="+per_page+"&page="+page+"&format=json&jsoncallback=?",
+			$.getJSON("https://api.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&api_key="+key+"&user_id="+userNSID+"&per_page="+per_page+"&page="+page+"&format=json&jsoncallback=?",
 					function(data){
 						gallery.photos = data.photos.photo;
 						gallery.pages = data.photos.pages;
 						gallery.page = data.photos.page;
-						if(callback) callback();
+						if(callBack) callBack();
 					});
 		},
-
 		getFlickrPhotoDATA:function(){
 			var gallery= $(this).get(0);
 			var key = $.mbFlickr.flickr_api_key;
@@ -152,7 +144,7 @@
 			document.flickr.total= gallery.photos.length;
 
 			$(gallery.photos).each(function(i){
-				$.getJSON("http://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key="+key+"&photo_id="+this.id+"&secret="+this.secret+"&format=json&rnd="+new Date()+"&jsoncallback=?",
+				$.getJSON("https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key="+key+"&photo_id="+this.id+"&secret="+this.secret+"&format=json&rnd="+new Date()+"&jsoncallback=?",
 						function(data){
 
 							gallery.photos[i].square= data.sizes.size[0].source;
@@ -181,21 +173,19 @@
 
 							if (i== gallery.photos.length-1){
 								setTimeout(function(){
-									if (gallery.defaults.callback)
-										gallery.defaults.callback(gallery);
+									if (gallery.defaults.callback) gallery.defaults.callback(gallery);
 									gallery.isInit=gallery.defaults.flickr_photoset_id;
 								},3000);
 							}
 						});
 			});
 		},
-
 		getFlickrPhotoINFO:function(){
 			var gallery= $(this).get(0);
 			var key = $.mbFlickr.flickr_api_key;
 			$(gallery.photos).each(function(i){
 
-				$.getJSON("http://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key="+key+"&photo_id="+this.id+"&secret="+this.secret+"&format=json&rnd="+new Date().getMilliseconds()+"&jsoncallback=?",
+				$.getJSON("https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key="+key+"&photo_id="+this.id+"&secret="+this.secret+"&format=json&rnd="+new Date().getMilliseconds()+"&jsoncallback=?",
 						function(data){
 							gallery.photos[i].description=data.photo.description._content==undefined?"":data.photo.description._content;
 						});
