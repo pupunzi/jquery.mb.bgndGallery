@@ -3,7 +3,7 @@
  *  jquery.mb.components
  *  file: bgndGallery.css
  *
- *  Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi); 
+ *  Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi);
  *  Open lab srl, Firenze - Italy
  *  email: matteo@open-lab.com
  *  site: 	http://pupunzi.com
@@ -19,7 +19,7 @@
  */
 
 /*******************************************************************************
- * 
+ *
  * jQuery.mb.components: bgndGallery
  * version: 1.0
  * Author: pupunzi
@@ -70,10 +70,11 @@ img {
   background:rgba(255,255,255,.9);
 }
 
-.thumbnailsContainer{
+.thumbnailsContainer,
+.navContainer{
   position: fixed;
   right: 0;
-  bottom: 0;
+  bottom: 200px;
   background: rgba(255,255,255,.4);
   line-height: 0;
   font-size: 0;
@@ -90,9 +91,21 @@ img {
 }
 
 .thumbnailsContainer img.sel{
-  margin: 2px;
-  width: 40px;
-  cursor: pointer;
-  display: inline-block;
+  cursor: default;
   border: 3px solid white;
+}
+
+.navContainer div {
+    margin: 2px;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    display: inline-block;
+    background: rgba(255,255,255,0.7);
+    border: 3px solid transparent;
+}
+
+.navContainer div.sel{
+    cursor: default;
+    border: 3px solid white;
 }
