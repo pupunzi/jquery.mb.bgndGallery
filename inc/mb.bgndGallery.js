@@ -105,6 +105,7 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 			//Path to the folder containing the thumbnails and ID of the DOM element that should contains them.
 			// Thumbnail should have the same name of the corresponding image
 			thumbs:{folderPath:"", placeholder:""},
+			nav:{placeholder:""},
 
 			onStart:function(){},
 			onChange:function(opt,idx){},
@@ -245,6 +246,7 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 
 			//	if(el.opt.thumbs.folderPath.trim().length > 0 && el.opt.thumbs.placeholder.trim().length > 0)
 			jQuery.mbBgndGallery.buildThumbs(el);
+			jQuery.mbBgndGallery.buildNav(el);
 
 			return jQuery(el);
 
@@ -489,9 +491,14 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 			}
 
 			jQuery.mbBgndGallery.buildThumbs(el);
-
 			if(el.opt.thumbs.folderPath.trim().length > 0 && el.opt.thumbs.placeholder.trim().length > 0){
 				jQuery(".sel", jQuery(el.opt.thumbs.placeholder)).removeClass("sel");
+				jQuery("#mbBgImg_"+el.opt.imageCounter).addClass("sel");
+			}
+
+			jQuery.mbBgndGallery.buildNav(el);
+			if(el.opt.nav.placeholder.trim().length > 0){
+				jQuery(".sel", jQuery(el.opt.nav.placeholder)).removeClass("sel");
 				jQuery("#mbBgImg_"+el.opt.imageCounter).addClass("sel");
 			}
 
@@ -777,6 +784,8 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 
 			if(el.opt.thumbs.folderPath.trim().length > 0 && el.opt.thumbs.placeholder.trim().length > 0)
 				jQuery.mbBgndGallery.buildThumbs(el);
+			if(el.opt.nav.placeholder.trim().length > 0)
+				jQuery.mbBgndGallery.buildNav(el);
 
 		},
 
@@ -893,9 +902,12 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 					var imgSrc = el.opt.thumbs.folderPath + getImageName(el.opt.images[i]);
 
 					var img=jQuery("<img/>").attr({"src":imgSrc, id: "mbBgImg_"+i}).click(function(){
-						el.opt.imageCounter = jQuery(this).attr("i")-1;
-						jQuery.mbBgndGallery.next(el);
-						el.opt.paused=true;
+						var $this = $(this);
+						if(!$this.is('.sel')) {
+							el.opt.imageCounter = $this.attr("i")-1;
+							jQuery.mbBgndGallery.next(el);
+							el.opt.paused=true;
+						}
 					}).attr("i",i).css({opacity:0}).on("load",function(){
 						$(this).fadeTo(1000,1);
 					});
@@ -905,6 +917,39 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 
 				if(el.opt.thumbs.folderPath.trim().length > 0 && el.opt.thumbs.placeholder.trim().length > 0){
 					jQuery(".sel", jQuery(el.opt.thumbs.placeholder)).removeClass("sel");
+					jQuery("#mbBgImg_"+el.opt.imageCounter).addClass("sel");
+				}
+			}
+		},
+
+		buildNav: function(el){
+
+			if(el.opt.nav.placeholder.trim().length == 0)
+			return;
+
+			jQuery(el.opt.nav.placeholder).addClass("navContainer");
+
+			var navNumber = jQuery(el.opt.nav.placeholder).children().length || 0;
+
+			if(navNumber != el.opt.images.length){
+
+				jQuery(el.opt.nav.placeholder).empty();
+				for (var i = 0; i < el.opt.images.length; i++){
+
+					var item=jQuery("<div/>").attr({id: "mbBgImg_"+i}).click(function(){
+						var $this = $(this);
+						if(!$this.is('.sel')) {
+							el.opt.imageCounter = $this.attr("i")-1;
+							jQuery.mbBgndGallery.next(el);
+							el.opt.paused=true;
+						}
+					}).attr("i",i);
+
+					jQuery(el.opt.nav.placeholder).append(item);
+				}
+
+				if(el.opt.nav.placeholder.trim().length > 0){
+					jQuery(".sel", jQuery(el.opt.nav.placeholder)).removeClass("sel");
 					jQuery("#mbBgImg_"+el.opt.imageCounter).addClass("sel");
 				}
 			}
@@ -924,6 +969,7 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 
 			jQuery.mbBgndGallery.changePhoto(el.opt.images[el.opt.imageCounter],el);
 			jQuery.mbBgndGallery.buildThumbs(el);
+			jQuery.mbBgndGallery.buildNav(el);
 
 		},
 		removeImages: function(images){
@@ -936,6 +982,7 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 			}
 			jQuery.mbBgndGallery.changePhoto(el.opt.images[el.opt.imageCounter],el);
 			jQuery.mbBgndGallery.buildThumbs(el);
+			jQuery.mbBgndGallery.buildNav(el);
 		},
 
 		applyFilter: function(filter){
