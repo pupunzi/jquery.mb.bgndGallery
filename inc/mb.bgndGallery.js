@@ -92,7 +92,7 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 			effect:"fade",
 			filter: null,
 			timer:4000,
-			effTimer:3000,
+			k:5000,
 			raster:false, //"inc/raster.png"
 			folderPath:false,
 			autoStart:true,
@@ -669,6 +669,10 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 
 		keyboard:function(el){
 			jQuery(document).on("keydown.bgndGallery",function(e){
+
+				if(jQuery(e.target).is("textarea") || jQuery(e.target).is("input") || jQuery(e.target).is("[contenteditable]"))
+					return;
+
 				switch(e.keyCode){
 					case 32:
 						if(el.opt.paused){
@@ -680,16 +684,17 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 						}
 						e.preventDefault();
 						break;
+
 					case 39:
 						jQuery.mbBgndGallery.next(el);
 						e.preventDefault();
-
 						break;
+					
 					case 37:
 						jQuery.mbBgndGallery.prev(el);
 						e.preventDefault();
-
 						break;
+					
 				}
 			})
 		},
@@ -807,7 +812,7 @@ jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])
 							left: el.left,
 							position: el.position
 						});
-					el.opt.gallery.css({background:"transparent"})
+					el.opt.gallery.css({background:"transparent"});
 					var image=jQuery("#bgndGallery_"+el.opt.galleryID+" img:first");
 
 				}

@@ -89,7 +89,7 @@
 
 <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
 <link href='css/bgndGallery.css' rel='stylesheet' type='text/css'>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
 <script type="text/javascript" src="inc/mb.bgndGallery.js"></script>
 <script type="text/javascript" src="inc/mb.bgndGallery.effects.js"></script>
 
@@ -108,7 +108,7 @@
         setTimeout(function(){
             $("#wrapper").CSSAnimate({marginLeft:-450, background:"rgba(255, 192, 0, 0.8)"},200);
             $("body").css({overflow:"hidden"})
-        },3000)
+        },3000);
 
         $("#wrapper").on("mouseenter",function(){
             $(this).CSSAnimate({marginLeft:0, background:"rgba(232, 232, 232, .9)"},200);
@@ -118,12 +118,18 @@
                     $("body").css({overflow:"hidden"})
                 });
 
-
+        //Redefining the "zoom" effect
+        $.mbBgndGallery.effects.zoom = {
+            enter:{transform:"scale("+(1+ Math.random()*2)+")",opacity:0},
+            exit:{transform:"scale("+(1 + Math.random()*2)+")",opacity:0},
+            enterTiming:"ease-out",
+            exitTiming:"ease-in"
+        };
 
         myGallery = new mbBgndGallery({
             containment:"body",
-            timer:2000,
-            effTimer:2000,
+            timer:1000,
+            effTimer:6000,
             controls:"#controls",
             grayScale:false,
             shuffle:true,
