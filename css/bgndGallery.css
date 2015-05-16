@@ -32,67 +32,16 @@
 
 @charset "UTF-8";
 
-img {
-    -webkit-backface-visibility: hidden;
-    -webkit-transform-style: preserve-3d;
+.mbBgndGallery img {
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -webkit-transform: translateZ(0.1px);
+  -moz-transform: translateZ(0.1px);
 }
 
-.controls div{
-  display:inline-block;
-  padding:5px;
-  margin:1px;
-  color:#fff;
-  border:1px solid #fff;
-  border-radius:4px;
-}
-
-.controls div:hover:not(.counter){
-  background:rgba(255,255,255,.9);
-  color:#000;
-}
-
-.controls div:not(.counter){
-  background: rgb(190, 41, 16);
-  cursor:pointer;
-}
-
-.controls.fullScreen_controls div:hover:not(.counter){
-  background:rgba(255,255,255,.9);
-  color:#000;
-}
-
-.controls.fullScreen_controls div:not(.counter){
-  background: rgba(0, 0, 0, 0.82);
-  cursor:pointer;
-}
-
-.controls div.sel{
-  background:rgba(255,255,255,.9);
-}
-
-.thumbnailsContainer{
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  background: rgba(255,255,255,.4);
-  line-height: 0;
-  font-size: 0;
-  padding: 4px;
-}
-
-.thumbnailsContainer img{
-  margin: 2px;
-  width: 40px;
-  height:auto;
-  cursor: pointer;
-  display: inline-block;
-  border: 3px solid transparent;
-}
-
-.thumbnailsContainer img.sel{
-  margin: 2px;
-  width: 40px;
-  cursor: pointer;
-  display: inline-block;
-  border: 3px solid white;
+.bgg_raster{
+  background: url("raster.png");
 }

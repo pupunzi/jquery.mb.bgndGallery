@@ -22,155 +22,212 @@
 
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>mb.bgndGallery</title>
-<style type="text/css">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>mb.bgndGallery</title>
+    <style type="text/css">
 
-    body{
-        background: #284352;
-        z-index:0;
-        margin:0;
-        padding:0;
-        font:normal 16px/20px Lekton, sans-serif;
-/*
-        -webkit-transform-style: preserve-3d;
-        -webkit-backface-visibility: hidden;
-*/
-    }
-
-    button{
-        display:inline-block;
-        padding:5px;
-        margin:1px;
-        color:#fff;
-        border:1px solid #fff;
-        border-radius:4px;
-        background: rgba(0, 0, 0, 0.72);
-        cursor: pointer;
-    }
-
-    button:hover{
-        background:rgba(255,255,255,.9);
-        color:#000;
-    }
-
-    #wrapper{
-        position:absolute;
-        padding:100px 50px;
-        width:500px;
-        min-height: 100%;
-        margin-left: 0;
-        top:0;
-        background: rgba(232, 232, 232, .9);
-        font:normal 16px/20px Lekton, sans-serif;
-        box-sizing: border-box;
-        box-shadow: 0 0 10px rgba(0,0,0,0.4);
-
-    }
-
-    .text{
-        position: relative;
-        top:40px;
-        padding-right: 50px;
-    }
-
-    .text h1{
-        font-weight:normal;
-        line-height:130%;
-    }
-
-    .text h2{
-        font-weight:normal;
-        line-height:130%;
-    }
-
-
-</style>
-
-<link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
-<link href='css/bgndGallery.css' rel='stylesheet' type='text/css'>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
-<script type="text/javascript" src="inc/mb.bgndGallery.js"></script>
-<script type="text/javascript" src="inc/mb.bgndGallery.effects.js"></script>
-
-<script type="text/javascript">
-
-    var myGallery;
-
-    $(function(){
-
-        if (self.location.href == top.location.href){
-            var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:40px;left:50px;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");
-            $("body").prepend(logo);
-            $("#logo").fadeIn();
+        body{
+            background: #284352;
+            z-index:0;
+            margin:0;
+            padding:0;
+            font:normal 16px/20px Lekton, sans-serif;
+            /*
+                    -webkit-transform-style: preserve-3d;
+                    -webkit-backface-visibility: hidden;
+            */
         }
 
-        setTimeout(function(){
-            $("#wrapper").CSSAnimate({marginLeft:-450, background:"rgba(255, 192, 0, 0.8)"},200);
-            $("body").css({overflow:"hidden"})
-        },3000);
+        button{
+            display:inline-block;
+            padding:5px;
+            margin:1px;
+            color:#fff;
+            border:1px solid #fff;
+            border-radius:4px;
+            background: rgba(0, 0, 0, 0.72);
+            cursor: pointer;
+        }
 
-        $("#wrapper").on("mouseenter",function(){
-            $(this).CSSAnimate({marginLeft:0, background:"rgba(232, 232, 232, .9)"},200);
-            $("body").css({overflow:"auto"})
-        }).on("mouseleave",function(){
-                    $(this).CSSAnimate({marginLeft:-450, background:"rgba(255, 192, 0, 0.8)"},200);
-                    $("body").css({overflow:"hidden"})
-                });
+        button:hover{
+            background:rgba(255,255,255,.9);
+            color:#000;
+        }
 
-        //Redefining the "zoom" effect
-        $.mbBgndGallery.effects.zoom = {
-            enter:{transform:"scale("+(1+ Math.random()*2)+")",opacity:0},
-            exit:{transform:"scale("+(1 + Math.random()*2)+")",opacity:0},
-            enterTiming:"ease-out",
-            exitTiming:"ease-in"
-        };
+        #wrapper{
+            position:absolute;
+            padding:100px 50px;
+            width:500px;
+            min-height: 100%;
+            margin-left: 0;
+            top:0;
+            background: rgba(232, 232, 232, .9);
+            font:normal 16px/20px Lekton, sans-serif;
+            box-sizing: border-box;
+            box-shadow: 0 0 10px rgba(0,0,0,0.4);
 
-        myGallery = new mbBgndGallery({
-            containment:"body",
-            timer:1000,
-            effTimer:6000,
-            controls:"#controls",
-            grayScale:false,
-            shuffle:true,
-            preserveWidth:false,
-            effect:"zoom",
-            thumbs:{folderPath:"thumbs/", placeholder:"#thumbnails"},
+        }
 
-            // If your server allow directory listing you can use:
-            // (however this doesn't work locally on your computer)
+        .text{
+            position: relative;
+            top:40px;
+            padding-right: 50px;
+        }
 
-            //folderPath:"testImage/",
+        .text h1{
+            font-weight:normal;
+            line-height:130%;
+        }
 
-            // else:
+        .text h2{
+            font-weight:normal;
+            line-height:130%;
+        }
 
-            images:[
-                "elements/1.jpg",
-                "elements/2.jpg",
-                "elements/3.jpg",
-                "elements/4.jpg",
-                "elements/5.jpg",
-                "elements/6.jpg"
-            ],
+        .controls div{
+            display:inline-block;
+            padding:5px;
+            margin:1px;
+            color:#fff;
+            border:1px solid #fff;
+            border-radius:4px;
+        }
 
-            onStart:function(){},
-            onPause:function(){},
-            onPlay:function(opt){},
-            onChange:function(opt,idx){},
-            onNext:function(opt){},
-            onPrev:function(opt){}
+        .controls div:hover:not(.counter){
+            background:rgba(255,255,255,.9);
+            color:#000;
+        }
+
+        .controls div:not(.counter){
+            background: rgb(190, 41, 16);
+            cursor:pointer;
+        }
+
+        .controls.fullScreen_controls div:hover:not(.counter){
+            background:rgba(255,255,255,.9);
+            color:#000;
+        }
+
+        .controls.fullScreen_controls div:not(.counter){
+            background: rgba(0, 0, 0, 0.82);
+            cursor:pointer;
+        }
+
+        .controls div.sel{
+            background:rgba(255,255,255,.9);
+        }
+
+
+        #thumbnails{
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,.4);
+            line-height: 0;
+            font-size: 0;
+            padding: 4px;
+        }
+
+        #thumbnails img{
+            margin: 2px;
+            width: 40px;
+            height:auto;
+            cursor: pointer;
+            display: inline-block;
+            border: 3px solid transparent;
+        }
+
+        #thumbnails img.sel{
+            margin: 2px;
+            width: 40px;
+            cursor: pointer;
+            display: inline-block;
+            border: 3px solid white;
+        }
+
+
+    </style>
+
+    <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
+    <link href='css/bgndGallery.css' rel='stylesheet' type='text/css'>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
+    <!--<script type="text/javascript" src="inc/jquery.mb.CSSAnimate.js"></script>-->
+    <script type="text/javascript" src="inc/mb.bgndGallery.js"></script>
+    <script type="text/javascript" src="inc/mb.bgndGallery.effects.js"></script>
+
+    <script type="text/javascript">
+
+        var myGallery;
+
+        $(function(){
+
+            if (self.location.href == top.location.href){
+                var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:40px;left:50px;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");
+                $("body").prepend(logo);
+                $("#logo").fadeIn();
+            }
+
+            setTimeout(function(){
+                $("#wrapper").CSSAnimate({marginLeft:-450, background:"rgba(255, 192, 0, 0.8)"},200);
+                $("body").css({overflow:"hidden"})
+            },3000);
+
+            $("#wrapper").on("mouseenter",function(){
+                $(this).CSSAnimate({marginLeft:0, background:"rgba(232, 232, 232, .9)"},200);
+                $("body").css({overflow:"auto"})
+            }).on("mouseleave",function(){
+                $(this).CSSAnimate({marginLeft:-450, background:"rgba(255, 192, 0, 0.8)"},200);
+                $("body").css({overflow:"hidden"})
+            });
+
+            //Redefining the "zoom" effect
+            $.mbBgndGallery.effects.zoom = {
+                enter:{scale:(1+ Math.random()*2),opacity:0},
+                exit:{scale:(1 + Math.random()*2),opacity:0},
+                enterTiming:"ease-out",
+                exitTiming:"ease-in"
+            };
+
+            myGallery = new mbBgndGallery({
+                containment:"body",
+                timer:5000,
+                effTimer:6000,
+                controls:"#controls",
+                grayScale:false,
+                shuffle:true,
+                preserveWidth:false,
+                filter: {grayscale: 100},
+                effect:"zoom",
+                thumbs:{folderPath:"thumbs/", placeholder:"#thumbnails"},
+                images:[
+                    "elements/1.jpg",
+                    "elements/2.jpg",
+                    "elements/3.jpg",
+                    "elements/4.jpg",
+                    "elements/5.jpg",
+                    "elements/6.jpg"
+                ],
+
+                onStart:function(){},
+                onPause:function(){},
+                onPlay:function(opt){},
+                onChange:function(opt,idx){},
+                onNext:function(opt){},
+                onPrev:function(opt){}
+            });
+
+//            myGallery.applyFilter("sepia", 100);
+
         });
 
 
-    });
+        //Images used for the changeGallery example
+        var newGallery = ["elements/8.jpg", "elements/10.jpg", "elements/12.jpg"];
 
-    //Images used for the changeGallery example
-    var newGallery = ["elements/8.jpg", "elements/10.jpg", "elements/12.jpg"];
+        //Images used for the addImages example
+        var newImages = ["elements/13.jpg", "elements/14.jpg", "elements/15.jpg"];
 
-    //Images used for the addImages example
-    var newImages = ["elements/13.jpg", "elements/14.jpg", "elements/15.jpg"];
-
-</script>
+    </script>
 
 </head>
 <body>
@@ -214,8 +271,8 @@
         <link href="http://cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
         <style type="text/css">
             #mc_embed_signup{background:transparent; clear:left; font:14px Helvetica,Arial,sans-serif; margin-top: 50px; width: 250px; }
-                /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
-                   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+            /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+               We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
         </style>
         <div id="mc_embed_signup" style="">
             <form action="http://pupunzi.us6.list-manage2.com/subscribe/post?u=4346dc9633&amp;id=91a005172f" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>

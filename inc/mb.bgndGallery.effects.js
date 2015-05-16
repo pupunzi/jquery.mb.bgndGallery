@@ -63,22 +63,22 @@ $.mbBgndGallery.effects={
 	},
 	
 	zoom:{
-		enter:{transform:"scale("+(1+ Math.random()*5)+")",opacity:0},
-		exit:{transform:"scale("+(1 + Math.random()*5)+")",opacity:0},
+		enter:{scale:(1+ Math.random()*5), opacity:0},
+		exit:{scale:(1 + Math.random()*5), opacity:0},
 		enterTiming:"cubic-bezier(0.19, 1, 0.22, 1)",
 		exitTiming:"cubic-bezier(0.19, 1, 0.22, 1)"
 	},
 
 	zoomBlur:{ //the blur effect only works on webkit browsers.
-		enter:{opacity:0, filter:"blur(10px)", transform: "scale(2)"},
-		exit:{opacity:0, filter:"blur(10px)", transform: "scale(2)"},
+		enter:{opacity:0, blur:10, scale: 2},
+		exit:{opacity:0, blur:10, scale:2},
 		enterTiming:"cubic-bezier(0.19, 1, 0.22, 1)",
 		exitTiming:"cubic-bezier(0.19, 1, 0.22, 1)"
 	},
 
 	blur:{ //the blur effect only works on webkit browsers.
-		enter:{opacity:0, filter:"blur(10px)"},
-		exit:{opacity:0, filter:"blur(10px)"},
+		enter:{opacity:0, blur:10},
+		exit:{opacity:0, blur:10},
 		enterTiming:"cubic-bezier(0.19, 1, 0.22, 1)",
 		exitTiming:"cubic-bezier(0.19, 1, 0.22, 1)"
 	}

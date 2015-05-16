@@ -87,6 +87,39 @@
             line-height:130%;
         }
 
+        .controls div{
+            display:inline-block;
+            padding:5px;
+            margin:1px;
+            color:#fff;
+            border:1px solid #fff;
+            border-radius:4px;
+        }
+
+        .controls div:hover:not(.counter){
+            background:rgba(255,255,255,.9);
+            color:#000;
+        }
+
+        .controls div:not(.counter){
+            background: rgb(190, 41, 16);
+            cursor:pointer;
+        }
+
+        .controls.fullScreen_controls div:hover:not(.counter){
+            background:rgba(255,255,255,.9);
+            color:#000;
+        }
+
+        .controls.fullScreen_controls div:not(.counter){
+            background: rgba(0, 0, 0, 0.82);
+            cursor:pointer;
+        }
+
+        .controls div.sel{
+            background:rgba(255,255,255,.9);
+        }
+
 	</style>
     <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
     <link href='css/bgndGallery.css' rel='stylesheet' type='text/css'>
