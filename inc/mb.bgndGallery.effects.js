@@ -37,14 +37,14 @@ $.mbBgndGallery.effects={
 	},
 	
 	slideUp:{
-		enter:{top:"100%",opacity:1},
+		enter:{top:"100%",opacity:0},
 		exit:{top:0,opacity:0},
 		enterTiming:"ease-in",
 		exitTiming:"ease-in"
 	},
 	
 	slideDown:{
-		enter:{top:"-100%",opacity:1},
+		enter:{top:"-100%",opacity:0},
 		exit:{top:0,opacity:0},
 		enterTiming:"ease-in",
 		exitTiming:"ease-in"

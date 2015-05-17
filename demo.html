@@ -23,6 +23,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href='http://fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
     <title>mb.bgndGallery</title>
     <style type="text/css">
 
@@ -37,6 +38,27 @@
                     -webkit-backface-visibility: hidden;
             */
         }
+
+        h1{
+            text-align: center;
+            font-size: 50px;
+            font-family: 'Lobster', cursive;
+        }
+
+        h2{
+            font-family: "Open Sans", sans-serif;
+            font-size: 35px;
+            text-align: left;
+            line-height: 60px;
+        }
+
+        h1, h2{
+            font-family: 'Lobster', cursive;
+            text-shadow: 10px 10px 20px rgba(0, 0, 0, 0.30);
+            color: #000000;
+            font-weight: 200;
+        }
+
 
         button{
             display:inline-block;
@@ -145,6 +167,24 @@
             border: 3px solid white;
         }
 
+        #pageContent{
+        }
+
+
+        #pageContent h1{
+            position: absolute;
+            top:0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+
+            margin: auto;
+            color: #ffffff;
+            font-size: 80px;
+            width: auto;
+            height: 80px;
+        }
+
 
     </style>
 
@@ -182,21 +222,21 @@
 
             //Redefining the "zoom" effect
             $.mbBgndGallery.effects.zoom = {
-                enter:{scale:(1+ Math.random()*2),opacity:0},
-                exit:{scale:(1 + Math.random()*2),opacity:0},
+                enter:{scale:(1+ Math.random()*2),opacity:0, z: 100},
+                exit:{scale:(1 + Math.random()*2),opacity:0, z:100},
                 enterTiming:"ease-out",
                 exitTiming:"ease-in"
             };
 
             myGallery = new mbBgndGallery({
                 containment:"body",
-                timer:5000,
-                effTimer:6000,
+                timer:100,
+                effTimer:8000,
                 controls:"#controls",
                 grayScale:false,
                 shuffle:true,
                 preserveWidth:false,
-                filter: {grayscale: 100},
+//                filter: {grayscale: 100},
                 effect:"zoom",
                 thumbs:{folderPath:"thumbs/", placeholder:"#thumbnails"},
                 images:[
@@ -285,6 +325,10 @@
         <p style="font-size: 12px; line-height: 12px">All the Photos are right reserved. <br>© 2013 - ∞ Matteo Bicocchi</p>
     </div>
 
+</div>
+
+<div id="pageContent">
+    <h1>Mb Background Gallery</h1>
 </div>
 <div id="thumbnails"></div>
 
