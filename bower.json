@@ -1,0 +1,27 @@
+{
+	"name": "jquery.mb.bgndGallery",
+	"version": "1.9.1",
+	"homepage": "https://github.com/pupunzi/jquery.mb.CSSAnimate",
+	"authors": [
+		"pupunzi <matteo@open-lab.com>"
+	],
+	"description": "This plugin let you create an image gallery that runs on background (jQuery).",
+	"main": "inc/jquery.mb.bgndGallery.js",
+	"keywords": [
+		"jquery-plugin",
+		"animate",
+		"CSS3",
+		"html5",
+		"transition",
+		"gallery",
+		"background"
+	],
+	"license": "MIT",
+	"ignore": [
+		"**/.*",
+		"node_modules",
+		"bower_components",
+		"test",
+		"tests"
+	]
+}

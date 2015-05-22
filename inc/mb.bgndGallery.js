@@ -64,7 +64,7 @@ jQuery.browser.mobile = jQuery.browser.android || jQuery.browser.blackberry || j
 	jQuery.mbBgndGallery ={
 		name:"mb.bgndGallery",
 		author:"Matteo Bicocchi",
-		version:"1.9.0",
+		version:"1.9.1",
 
 		clear:false,
 
