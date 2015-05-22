@@ -146,6 +146,10 @@ jQuery.browser.mobile = jQuery.browser.android || jQuery.browser.blackberry || j
 
 			jQuery(containment).prepend(opt.gallery);
 
+			if(el.opt.folderPath && el.opt.images.length==0)
+				el.opt.images = jQuery.loadFromSystem(el.opt.folderPath) ;
+
+
 			if(el.opt.shuffle)
 				el.opt.images= jQuery.shuffle(el.opt.images);
 
@@ -798,6 +802,36 @@ jQuery.browser.mobile = jQuery.browser.android || jQuery.browser.blackberry || j
 	jQuery.fn.removeImages = jQuery.mbBgndGallery.removeImages;
 	jQuery.fn.applyFilter = jQuery.mbBgndGallery.applyFilter;
 
+	jQuery.loadFromSystem=function(folderPath, type){
+
+		// if directory listing is enabled on the remote server.
+		// if you run the page locally you need to run it under a local web server (Ex: http://localhost/yourPage)
+		// otherwise the directory listing is unavailable.
+
+		if(!folderPath)
+			return;
+		if(!type)
+			type= ["jpg","jpeg","png"];
+		var arr=[];
+		jQuery.ajax({
+			url:folderPath,
+			async:false,
+			success:function(response){
+				var tmp=jQuery(response);
+				var els= tmp.find("[href]");
+
+				els.each(function(){
+					for (var i in type){
+						if (jQuery(this).attr("href").indexOf(type[i])>=0)
+							arr.push(folderPath+jQuery(this).attr("href"));
+						arr = jQuery.unique(arr);
+					}
+				});
+				tmp.remove();
+			}
+		});
+		return arr.length != 0 ? arr : false;
+	};
 
 	jQuery.fn.greyScale = function(el) {
 		return this.each(function() {
