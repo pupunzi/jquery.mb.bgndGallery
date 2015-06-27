@@ -1,0 +1,367 @@
+<!doctype html>
+
+<!--
+  ~ /*******************************************************************************
+  ~  jquery.mb.components
+  ~  file: demo.html
+  ~
+  ~  Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi);
+  ~  Open lab srl, Firenze - Italy
+  ~  email: matteo@open-lab.com
+  ~  site: 	http://pupunzi.com
+  ~  blog:	http://pupunzi.open-lab.com
+  ~ 	http://open-lab.com
+  ~
+  ~  Licences: MIT, GPL
+  ~  http://www.opensource.org/licenses/mit-license.php
+  ~  http://www.gnu.org/licenses/gpl.html
+  ~
+  ~  last modified: 07/05/14 22.36
+  ~  ******************************************************************************/
+  -->
+
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link href='http://fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
+	<title>mb.bgndGallery</title>
+	<style type="text/css">
+	body {
+		background: #284352;
+		z-index: 0;
+		margin: 0;
+		padding: 0;
+		font: normal 16px/20px Lekton, sans-serif;
+	}
+	
+	h1 {
+		text-align: center;
+		font-size: 50px;
+		font-family: 'Lobster', cursive;
+	}
+	
+	h2 {
+		font-family: "Open Sans", sans-serif;
+		font-size: 35px;
+		text-align: left;
+		line-height: 60px;
+	}
+	
+	h1,
+	h2 {
+		font-family: 'Lobster', cursive;
+		text-shadow: 10px 10px 20px rgba(0, 0, 0, 0.30);
+		color: #000000;
+		font-weight: 200;
+	}
+	
+	button {
+		display: inline-block;
+		padding: 5px;
+		margin: 1px;
+		color: #fff;
+		border: 1px solid #fff;
+		border-radius: 4px;
+		background: rgba(0, 0, 0, 0.72);
+		cursor: pointer;
+	}
+	
+	button:hover {
+		background: rgba(255, 255, 255, .9);
+		color: #000;
+	}
+	
+	#wrapper {
+		position: absolute;
+		padding: 100px 50px;
+		width: 500px;
+		min-height: 100%;
+		margin-left: 0;
+		top: 0;
+		background: rgba(232, 232, 232, .9);
+		font: normal 16px/20px Lekton, sans-serif;
+		box-sizing: border-box;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+	}
+	
+	.text {
+		position: relative;
+		top: 40px;
+		padding-right: 50px;
+	}
+	
+	.text h1 {
+		font-weight: normal;
+		line-height: 130%;
+	}
+	
+	.text h2 {
+		font-weight: normal;
+		line-height: 130%;
+	}
+	
+	.controls div {
+		display: inline-block;
+		padding: 5px;
+		margin: 1px;
+		color: #fff;
+		border: 1px solid #fff;
+		border-radius: 4px;
+	}
+	
+	.controls div:hover:not(.counter) {
+		background: rgba(255, 255, 255, .9);
+		color: #000;
+	}
+	
+	.controls div:not(.counter) {
+		background: rgb(190, 41, 16);
+		cursor: pointer;
+	}
+	
+	.controls.fullScreen_controls div:hover:not(.counter) {
+		background: rgba(255, 255, 255, .9);
+		color: #000;
+	}
+	
+	.controls.fullScreen_controls div:not(.counter) {
+		background: rgba(0, 0, 0, 0.82);
+		cursor: pointer;
+	}
+	
+	.controls div.sel {
+		background: rgba(255, 255, 255, .9);
+	}
+	
+	#thumbnails {
+		position: fixed;
+		right: 0;
+		bottom: 0;
+		background: rgba(255, 255, 255, .4);
+		line-height: 0;
+		font-size: 0;
+		padding: 4px;
+	}
+	
+	#thumbnails img {
+		margin: 2px;
+		width: 40px;
+		height: auto;
+		cursor: pointer;
+		display: inline-block;
+		border: 3px solid transparent;
+	}
+	
+	#thumbnails img.sel {
+		margin: 2px;
+		width: 40px;
+		cursor: pointer;
+		display: inline-block;
+		border: 3px solid white;
+	}
+	
+	#pageContent {}
+	
+	#pageContent h1 {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		margin: auto;
+		color: #ffffff;
+		font-size: 80px;
+		width: auto;
+		height: 80px;
+	}
+	</style>
+
+	<link href='../dist/css/jquery.mb.bgndgallery.min.css?build=2445' rel='stylesheet' type='text/css'>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
+	<script type="text/javascript" src="../dist/jquery.mb.bgndGallery.js?build=2445"></script>
+
+	<script type="text/javascript">
+	var myGallery;
+
+	//Images used for the changeGallery example
+	var newGallery = [ "elements/8.jpg", "elements/10.jpg", "elements/12.jpg" ];
+
+	//Images used for the addImages example
+	var newImages = [ "elements/13.jpg", "elements/14.jpg", "elements/15.jpg" ];
+
+	$( function() {
+
+		/**
+		 *
+		 * Show the mb.ideas.repository logotype
+		 */
+		if ( self.location.href == top.location.href ) {
+			var logo = $( "<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:40px;left:50px;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>" );
+			$( "body" ).prepend( logo );
+			$( "#logo" ).fadeIn();
+		}
+
+		/**
+		 *
+		 * Manage the panel
+		 */
+		setTimeout( function() {
+			$( "#wrapper" ).CSSAnimate( {
+				marginLeft: -450,
+				background: "rgba(255, 192, 0, 0.8)"
+			}, 200 );
+			$( "body" ).css( {
+				overflow: "hidden"
+			} )
+		}, 3000 );
+
+		$( "#wrapper" ).on( "mouseenter", function() {
+			$( this ).CSSAnimate( {
+				marginLeft: 0,
+				background: "rgba(232, 232, 232, .9)"
+			}, 200 );
+			$( "body" ).css( {
+				overflow: "auto"
+			} )
+		} ).on( "mouseleave", function() {
+			$( this ).CSSAnimate( {
+				marginLeft: -450,
+				background: "rgba(255, 192, 0, 0.8)"
+			}, 200 );
+			$( "body" ).css( {
+				overflow: "hidden"
+			} )
+		} );
+
+		//Redefining the "zoom" effect
+		$.mbBgndGallery.effects.zoom = {
+			enter: {
+				scale: ( 1 + Math.random() * 2 ),
+				opacity: 0,
+				z: 100
+			},
+			exit: {
+				scale: ( 1 + Math.random() * 2 ),
+				opacity: 0,
+				z: 100
+			},
+			enterTiming: "ease-out",
+			exitTiming: "ease-in"
+		};
+
+		/**
+		 * Initialize the gallery
+		 * @type {mbBgndGallery}
+		 */
+		myGallery = new mbBgndGallery( {
+			containment: "body",
+			timer: 100,
+			effTimer: 8000,
+			controls: "#controls",
+			grayScale: false,
+			shuffle: true,
+			preserveWidth: false,
+			//                filter: {grayscale: 100},
+			effect: "zoom",
+			thumbs: {
+				folderPath: "thumbs/",
+				placeholder: "#thumbnails"
+			},
+			images: [
+				"elements/1.jpg",
+				"elements/2.jpg",
+				"elements/3.jpg",
+				"elements/4.jpg",
+				"elements/5.jpg",
+				"elements/6.jpg"
+			],
+
+			onStart: function() {},
+			onPause: function() {},
+			onPlay: function( opt ) {},
+			onChange: function( opt, idx ) {},
+			onNext: function( opt ) {},
+			onPrev: function( opt ) {}
+		} );
+
+	} );
+	</script>
+
+</head>
+
+<body>
+
+	<div id="wrapper">
+
+		<div class="text">
+			<h1>mb.bgndGallery demo</h1>
+
+			<p>
+				This background gallery is applied to the body
+				<br> and uses one of the default built in effect: "blur".
+				<br> You can create a custom transition as for example using the CSS3 transform: scale() property:
+				<br>
+				<br> effect:{enter:{transform:"scale("+(1+ Math.random()*2)+")",opacity:0},exit:{transform:"scale("+(Math.random()*2)+")",opacity:0}}
+				<br>
+				<br>
+				<br> As you can see, resizing the browser window the image will resize and center to always fit the screen.
+				<br> You can use the left/right arrow and the space bar (pause/play) keys to navigate the gallery.
+			</p>
+
+			<div id="controls">
+				<div class="pause">pause</div>
+				<div class="play">play</div>
+				<div class="prev">prev</div>
+				<div class="next">next</div>
+				<div class="counter"></div>
+				<div class="fullscreen">fullscreen</div>
+				<div class="changeGallery" onclick="myGallery.changeGallery(newGallery)">change gallery</div>
+				<div class="addImages" onclick=" myGallery.addImages(newImages, false, false); this.style.display='none'">add images</div>
+			</div>
+			<br>
+			<br>
+			<button onclick="$.mbBgndGallery.changeEffect('slideLeft')">effect slideLeft</button>
+			<button onclick="$.mbBgndGallery.changeEffect('blur')">effect blur</button>
+			<button onclick="$.mbBgndGallery.changeEffect('zoomBlur')">effect zoomBlur</button>
+			<div id="thumbs"></div>
+
+			<!-- Begin MailChimp Signup Form -->
+			<link href="http://cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+			<style type="text/css">
+			#mc_embed_signup {
+				background: transparent;
+				clear: left;
+				font: 14px Helvetica, Arial, sans-serif;
+				margin-top: 50px;
+				width: 250px;
+			}
+			/* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+               We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+			</style>
+			<div id="mc_embed_signup" style="">
+				<form action="http://pupunzi.us6.list-manage2.com/subscribe/post?u=4346dc9633&amp;id=91a005172f" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+					<label for="mce-EMAIL">Subscribe to my mailing list
+						<br>to stay in touch.</label>
+					<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+					<div class="clear">
+						<input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+					</div>
+				</form>
+			</div>
+			<!--End mc_embed_signup-->
+			<p style="font-size: 12px; line-height: 12px">All the Photos are right reserved.
+				<br>© 2013 - ∞ Matteo Bicocchi</p>
+		</div>
+
+	</div>
+
+	<div id="pageContent">
+		<h1>Mb Background Gallery</h1>
+	</div>
+	<div id="thumbnails"></div>
+
+</body>
+
+</html>

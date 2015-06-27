@@ -24,10 +24,11 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>mb.bgndGallery 1.0</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
     <style type="text/css">
 
         body{
-            margin:0px;
             background: #284352;
             z-index:0;
             margin:0;
@@ -35,15 +36,35 @@
             font:normal 16px/20px Lekton, sans-serif;
         }
 
+        h1{
+            position: relative;
+            text-align: center;
+            font-size: 50px;
+            line-height: 60px;
+            font-family: 'Lobster', cursive;
+        }
+
+        h2{
+            font-family: "Open Sans", sans-serif;
+            font-size: 35px;
+            text-align: left;
+            line-height: 60px;
+        }
+
+        h1, h2{
+            font-family: 'Lobster', cursive;
+            text-shadow: 10px 10px 20px rgba(0, 0, 0, 0.30);
+            color: #000000;
+            font-weight: 200;
+        }
+
+
         button{
             display:inline-block;
             padding:5px;
             margin:1px;
             color:#fff;
             border:1px solid #fff;
-            -moz-border-radius:4px;
-            -webkit-border-radius:4px;
-            -o-border-radius:4px;
             border-radius:4px;
             background: rgba(0, 0, 0, 0.72);
             cursor: pointer;
@@ -58,27 +79,20 @@
             position:absolute;
             padding:100px 50px;
             width:500px;
-            height: 100%;
-            margin-left: 0px;
+            min-height: 100%;
+            margin-left: 0;
             top:0;
             background: rgba(232, 232, 232, .9);
-
             font:normal 16px/20px Lekton, sans-serif;
-            -moz-box-sizing: border-box;
-            -webkit-box-sizing: border-box;
             box-sizing: border-box;
             box-shadow: 0 0 10px rgba(0,0,0,0.4);
 
         }
 
         .text{
-            position:absolute;
-            top:100px;
+            position: relative;
+            top:40px;
             padding-right: 50px;
-            width: 90%;
-            -moz-box-sizing: border-box;
-            -webkit-box-sizing: border-box;
-            box-sizing: border-box;
         }
 
         .text h1{
@@ -91,91 +105,162 @@
             line-height:130%;
         }
 
-        #gallery{
-            position:absolute;
-            width:100%;
-            height:700px;
-            top:0;
-            left:0;
-        }
-
-
-        .imgContainer{
-            width:100px;
-            height:100px;
-            overflow:hidden;
+        .controls div{
             display:inline-block;
+            padding:5px;
+            margin:1px;
+            color:#fff;
+            border:1px solid #fff;
+            border-radius:4px;
         }
 
-        .imgContainer img{
-            width:160px;
+        .controls div:hover:not(.counter){
+            background:rgba(255,255,255,.9);
+            color:#000;
+        }
+
+        .controls div:not(.counter){
+            background: rgb(190, 41, 16);
+            cursor:pointer;
+        }
+
+        .controls.fullScreen_controls div:hover:not(.counter){
+            background:rgba(255,255,255,.9);
+            color:#000;
+        }
+
+        .controls.fullScreen_controls div:not(.counter){
+            background: rgba(0, 0, 0, 0.82);
+            cursor:pointer;
+        }
+
+        .controls div.sel{
+            background:rgba(255,255,255,.9);
+        }
+
+
+        #thumbnails{
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,.4);
+            line-height: 0;
+            font-size: 0;
+            padding: 4px;
+        }
+
+        #thumbnails img{
+            margin: 2px;
+            width: 40px;
+            height:auto;
+            cursor: pointer;
+            display: inline-block;
+            border: 3px solid transparent;
+        }
+
+        #thumbnails img.sel{
+            margin: 2px;
+            width: 40px;
+            cursor: pointer;
+            display: inline-block;
+            border: 3px solid white;
+        }
+
+        #pageContent{
+        }
+
+
+        #pageContent h1{
+            position: absolute;
+            top:0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+
+            margin: auto;
+            color: #ffffff;
+            font-size: 80px;
+            width: auto;
+            height: 80px;
         }
 
     </style>
-    <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
-    <link href='css/bgndGallery.css' rel='stylesheet' type='text/css'>
 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <script type="text/javascript" src="inc/mb.bgndGallery.js"></script>
-    <script type="text/javascript" src="inc/mb.bgndGallery.effects.js"></script>
+    <link href='../dist/css/jquery.mb.bgndgallery.min.css' rel='stylesheet' type='text/css'>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
+    <script type="text/javascript" src="../dist/jquery.mb.bgndGallery.js"></script>
 
     <script type="text/javascript">
 
 
         $(function(){
+
+            /**
+             *
+             * Add mb.ideas.repository logotype
+             */
             if (self.location.href == top.location.href){
                 var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:40px;left:50px;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");
                 $("body").prepend(logo);
                 $("#logo").fadeIn();
             }
 
+            /**
+             *
+             * Manage the panel behavor
+             */
             setTimeout(function(){
                 $("#wrapper").CSSAnimate({marginLeft:-450, background:"rgba(255, 192, 0, 0.8)"},200)
-            },3000)
+            },3000);
 
             $("#wrapper").on("mouseenter",function(){
                 $(this).CSSAnimate({marginLeft:0, background:"rgba(232, 232, 232, .9)"},200)
             }).on("mouseleave",function(){
                         $(this).CSSAnimate({marginLeft:-450, background:"rgba(255, 192, 0, 0.8)"},200)
-                    })
+                    });
 
+            /**
+             *
+             * Initialize the gallery
+             */
             $.mbBgndGallery.buildGallery({
                 //containment:"#wrapper",
                 containment:"body",
-                timer:1000,
-                effTimer:8000,
+                timer:3000,
+                effTimer:1000,
                 controls:"#controls",
                 grayScale:false,
                 shuffle:false,
                 preserveWidth:false,
-                effect:"blur",
+                effect:"slideDown",
 
                 // If your server allow directory listing you can use:
                 // (however this doesn't work locally on your computer)
 
-                folderPath:"testImage/",
+                folderPath:"../elements/testImage/",
 
                 // else:
 
                  images:[
-                 "elements/1.jpg",
-                 "elements/2.jpg",
-                 "elements/3.jpg",
-                 "elements/4.jpg",
-                 "elements/5.jpg",
-                 "elements/6.jpg",
-                 "elements/7.jpg",
-                 "elements/8.jpg",
-                 "elements/9.jpg",
-                 "elements/10.jpg",
-                 "elements/11.jpg",
-                 "elements/12.jpg"
+                 "../elements/hr/1.jpg",
+                 "../elements/hr/2.jpg",
+                 "../elements/hr/3.jpg",
+                 "../elements/hr/4.jpg",
+                 "../elements/hr/5.jpg",
+                 "../elements/hr/6.jpg",
+                 "../elements/hr/7.jpg",
+                 "../elements/hr/8.jpg",
+                 "../elements/hr/9.jpg",
+                 "../elements/hr/10.jpg",
+                 "../elements/hr/11.jpg",
+                 "../elements/hr/12.jpg"
                  ],
 
                 onStart:function(){},
                 onPause:function(){},
                 onPlay:function(opt){},
-                onChange:function(opt,idx){
+                onChange:function(opt){
 
                     opt.images = jQuery.loadFromSystem(opt.folderPath) || opt.images;
 
@@ -222,6 +307,7 @@ onChange:function(opt,idx){
             </code></pre>
         <br> If you add an image into the folder, the gallery will include that image in the cycle without the need to reload the page.
         <br> <b>This page will work only if served by a web server.</b>
+
         </p>
 
         <div id="controls">

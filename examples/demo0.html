@@ -24,7 +24,10 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>mb.bgndGallery 1.0</title>
-	<style type="text/css">
+
+    <link href='http://fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
+
+    <style type="text/css">
         body{
             margin:0px;
             background: #284352;
@@ -121,32 +124,43 @@
         }
 
 	</style>
-    <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
-    <link href='css/bgndGallery.css' rel='stylesheet' type='text/css'>
 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-	<script type="text/javascript" src="inc/mb.bgndGallery.js"></script>
-    <script type="text/javascript" src="inc/mb.bgndGallery.effects.js"></script>
+    <link href='../dist/css/jquery.mb.bgndgallery.min.css' rel='stylesheet' type='text/css'>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
+    <script type="text/javascript" src="../dist/jquery.mb.bgndGallery.js"></script>
 
 	<script type="text/javascript">
 		$(function(){
+
+            /**
+             *
+             * Add mb.ideas.repository logotype
+             */
             if (self.location.href == top.location.href){
                 var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:40px;left:50px;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");
                 $("body").prepend(logo);
                 $("#logo").fadeIn();
             }
 
-
+            /**
+             *
+             * Manage the panel behavor
+             */
             setTimeout(function(){
                 $("#wrapper").CSSAnimate({marginLeft:-450, background:"rgba(255, 192, 0, 0.8)"},200)
-            },3000)
+            },3000);
 
             $("#wrapper").on("mouseenter",function(){
                 $(this).CSSAnimate({marginLeft:0, background:"rgba(232, 232, 232, .9)"},200)
             }).on("mouseleave",function(){
                         $(this).CSSAnimate({marginLeft:-450, background:"rgba(255, 192, 0, 0.8)"},200)
-                    })
+                    });
 
+            /**
+             *
+             * Initialize the gallery
+             */
 			$.mbBgndGallery.buildGallery({
 
 				containment:"#gallery",
@@ -155,18 +169,18 @@
 				effTimer:1500,
 				controls:"#controls",
 				images:[
-					"elements/1.jpg",
-					"elements/2.jpg",
-					"elements/3.jpg",
-					"elements/4.jpg",
-					"elements/5.jpg",
-					"elements/6.jpg",
-					"elements/7.jpg",
-					"elements/8.jpg",
-					"elements/9.jpg",
-					"elements/10.jpg",
-					"elements/11.jpg",
-					"elements/12.jpg"
+					"../elements/hr/1.jpg",
+					"../elements/hr/2.jpg",
+					"../elements/hr/3.jpg",
+					"../elements/hr/4.jpg",
+					"../elements/hr/5.jpg",
+					"../elements/hr/6.jpg",
+					"../elements/hr/7.jpg",
+					"../elements/hr/8.jpg",
+					"../elements/hr/9.jpg",
+					"../elements/hr/10.jpg",
+					"../elements/hr/11.jpg",
+					"../elements/hr/12.jpg"
 				],
 				autoStart:true,
 				onStart:function(){$("#controls .play").show();$("#controls .pause").hide();},
@@ -177,6 +191,7 @@
 			})
 
 		});
+
 	</script>
 </head>
 <body >

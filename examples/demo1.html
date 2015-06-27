@@ -125,15 +125,22 @@
 
     </style>
     <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
-    <link href='css/bgndGallery.css' rel='stylesheet' type='text/css'>
+    <link href='../dist/css/jquery.mb.bgndgallery.min.css' rel='stylesheet' type='text/css'>
 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
+    <script type="text/javascript" src="inc/flickr.api.js"></script>
     <script type="text/javascript" src="inc/jquery.mb.flickr.js"></script>
-    <script type="text/javascript" src="inc/mb.bgndGallery.js"></script>
-    <script type="text/javascript" src="inc/mb.bgndGallery.effects.js"></script>
+    <script type="text/javascript" src="../dist/jquery.mb.bgndGallery.js"></script>
 
     <script type="text/javascript">
+
         $(function(){
+
+            /**
+             *
+             * Add mb.ideas.repository logotype
+             */
+
             if (self.location.href == top.location.href){
                 var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:40px;left:50px;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");
                 $("body").prepend(logo);
@@ -142,19 +149,23 @@
 
             setTimeout(function(){
                 $("#wrapper").CSSAnimate({marginLeft:-450, background:"rgba(255, 192, 0, 0.8)"},200)
-            },3000)
+            },3000);
 
             $("#wrapper").on("mouseenter",function(){
                 $(this).CSSAnimate({marginLeft:0, background:"rgba(232, 232, 232, .9)"},200)
             }).on("mouseleave",function(){
                         $(this).CSSAnimate({marginLeft:-450, background:"rgba(255, 192, 0, 0.8)"},200)
-                    })
+                    });
 
-
+            /**
+             *
+             * Get images from Flickr
+             * @type {string}
+             */
             //USE YOUR OWN FLICKR API KEY
             //http://www.flickr.com/services/apps/create/apply/
 
-            $.mbFlickr.flickr_api_key="f40779ab07dd09e5890f48e3618296b3"; //this is my Flickr API key. Create your own
+            $.mbFlickr.flickr_api_key= flikrAPI;
             $.mbFlickr.defaults.size="surce"; //  medium / surce
             $.mbFlickr.defaults.per_page=100;
             $.mbFlickr.defaults.flickr_photoset_id='72157600884372818';
@@ -180,8 +191,12 @@
                     exit:{opacity:0, blur:30},
                     enterTiming:"cubic-bezier(0.19, 1, 0.22, 1)",
                     exitTiming:"cubic-bezier(0.19, 1, 0.22, 1)"
-                }
+                };
 
+                /**
+                 *
+                 * Initialize the gallery once the images from Flickr are loaded
+                 */
                 $.mbBgndGallery.buildGallery({
                     containment:"body",
                     controls:"#controls",
