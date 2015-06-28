@@ -169,7 +169,7 @@
 
 			var controls = el.opt.controls;
 			if( controls ) {
-				$( controls ).addClass( "controls" );
+				jQuery( controls ).addClass( "controls" );
 
 				var counter = jQuery( el.opt.controls ).find( ".counter" );
 				counter.html( el.opt.imageCounter + 1 + " / " + el.opt.images.length );
@@ -679,7 +679,7 @@
 
 				var pfx = [ "webkit", "moz", "ms", "o", "" ];
 				var p = 0,
-						m, t;
+					m, t;
 				while( p < pfx.length && !obj[ m ] ) {
 					m = method;
 					if( pfx[ p ] == "" ) {
@@ -737,7 +737,7 @@
 					} ).attr( "i", i ).css( {
 						opacity: 0
 					} ).on( "load", function() {
-						$( this ).fadeTo( 1000, 1 );
+						jQuery( this ).fadeTo( 1000, 1 );
 					} );
 
 					jQuery( el.opt.thumbs.placeholder ).append( img );

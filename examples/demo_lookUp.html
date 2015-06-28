@@ -301,9 +301,9 @@
             <br> The gallery updates on each "onChange" event the list of images in the folder:
             <br>
             <pre style="overflow: auto; width: 100%; background: #e8e8e8; font-size: 12px"><code>
-onChange:function(opt,idx){
-      opt.images = jQuery.loadFromSystem(opt.folderPath);
-}
+    onChange:function(opt,idx){
+          opt.images = jQuery.loadFromSystem(opt.folderPath);
+    }
             </code></pre>
         <br> If you add an image into the folder, the gallery will include that image in the cycle without the need to reload the page.
         <br> <b>This page will work only if served by a web server.</b>
