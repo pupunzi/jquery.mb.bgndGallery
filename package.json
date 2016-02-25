@@ -45,7 +45,7 @@
     "grunt-include-replace": "^3.0.0",
     "grunt-jsbeautifier": "^0.2.10"
   },
-  "main": "inc/mb.bgndGallery.js",
+  "main": "dist/jquery.mb.bgndGallery.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
