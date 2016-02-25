@@ -6,7 +6,7 @@
     "pupunzi <matteo@open-lab.com>"
   ],
   "description": "This plugin let you create an image gallery that runs on background (jQuery).",
-  "main": "inc/jquery.mb.bgndGallery.js",
+  "main": "dist/jquery.mb.bgndGallery.min.js",
   "keywords": [
     "jquery-plugin",
     "animate",
