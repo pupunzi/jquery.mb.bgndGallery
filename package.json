@@ -12,10 +12,11 @@
     "HTML5"
   ],
   "version": "1.9.2",
-  "author": "Pupunzi <matteo@open-lab.com> (Matteo Bicocchi)",
-  "maintainers": [
-    "Pupunzi <matteo@open-lab.com> (Matteo Bicocchi)"
-  ],
+  "author": {
+	  "name": "Pupunzi (Matteo Bicocchi)",
+	  "email": "matteo@open-lab.com"
+  },
+  "contributors": ["Matteo Bicocchi"],
   "licenses": [
     {
       "type": "MIT",
