@@ -24,8 +24,8 @@
 	jQuery.mbBgndGallery = {
 		name: "mb.bgndGallery",
 		author: "Matteo Bicocchi",
-		version: "1.9.3",
-		build: "2449",
+		version: "1.9.4",
+		build: "2450",
 
 		clear: false,
 		defaults: {

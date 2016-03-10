@@ -11,7 +11,7 @@
     "effects",
     "HTML5"
   ],
-  "version": "1.9.3",
+  "version": "1.9.4",
   "author": {
     "name": "Pupunzi (Matteo Bicocchi)",
     "email": "matteo@open-lab.com"
@@ -56,5 +56,5 @@
     "type": "git",
     "url": "https://github.com/pupunzi/jquery.mb.bgndGallery.git"
   },
-  "buildnum": "2449"
+  "buildnum": "2450"
 }
