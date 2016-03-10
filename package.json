@@ -14,10 +14,15 @@
   "version": "1.9.4",
   "author": {
     "name": "Pupunzi (Matteo Bicocchi)",
-    "email": "matteo@open-lab.com"
+    "email": "matteo@open-lab.com",
+	  "web": "http://pupunzi.open-lab.com"
   },
   "contributors": [
-    "Matteo Bicocchi"
+	  {
+		  "name": "Pupunzi (Matteo Bicocchi)",
+		  "email": "matteo@open-lab.com",
+		  "web": "http://pupunzi.open-lab.com"
+	  }
   ],
   "licenses": [
     {
