@@ -11,12 +11,14 @@
     "effects",
     "HTML5"
   ],
-  "version": "1.9.2",
+  "version": "1.9.3",
   "author": {
-	  "name": "Pupunzi (Matteo Bicocchi)",
-	  "email": "matteo@open-lab.com"
+    "name": "Pupunzi (Matteo Bicocchi)",
+    "email": "matteo@open-lab.com"
   },
-  "contributors": ["Matteo Bicocchi"],
+  "contributors": [
+    "Matteo Bicocchi"
+  ],
   "licenses": [
     {
       "type": "MIT",
@@ -54,5 +56,5 @@
     "type": "git",
     "url": "https://github.com/pupunzi/jquery.mb.bgndGallery.git"
   },
-  "buildnum": "2448"
+  "buildnum": "2449"
 }
