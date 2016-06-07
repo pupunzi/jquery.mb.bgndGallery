@@ -415,6 +415,7 @@
 				el.opt.onNext( el.opt );
 
 			jQuery.mbBgndGallery.pause( el );
+
 			if( el.opt.imageCounter == el.opt.images.length - 1 )
 				el.opt.imageCounter = -1;
 
@@ -457,7 +458,7 @@
 
 		keyboard: function( el ) {
 
-			jQuery( document ).on( "keydown.bgndGallery", function( e ) {
+			jQuery( document ).off( "keydown.bgndGallery" ).on( "keydown.bgndGallery", function( e ) {
 
 				if( jQuery( e.target ).is( "textarea" ) || jQuery( e.target ).is( "input" ) || jQuery( e.target ).is( "[contenteditable]" ) )
 					return;
@@ -480,13 +481,13 @@
 						e.preventDefault();
 						break;
 
-					case 39:
+					case 39: // NEXT
 
 						jQuery.mbBgndGallery.next( el );
 						e.preventDefault();
 						break;
 
-					case 37:
+					case 37: //PREV
 
 						jQuery.mbBgndGallery.prev( el );
 						e.preventDefault();
