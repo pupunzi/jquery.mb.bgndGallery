@@ -199,6 +199,7 @@
             /**
              *
              * Add mb.ideas.repository logotype
+             * Remove this on your page
              */
             if (self.location.href == top.location.href){
                 var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:40px;left:50px;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");
@@ -230,13 +231,13 @@
                 timer:3000,
                 effTimer:1000,
                 controls:"#controls",
-                grayScale:false,
+                grayScale:true,
                 shuffle:false,
                 preserveWidth:false,
                 effect:"slideDown",
 
                 // If your server allow directory listing you can use:
-                // (however this doesn't work locally on your computer)
+                // (however this doesn't work locally on your computer as file://)
 
                 folderPath:"../elements/testImage/",
 
