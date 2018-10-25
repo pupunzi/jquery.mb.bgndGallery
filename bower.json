@@ -3,7 +3,7 @@
   "version": "1.9.5",
   "homepage": "https://github.com/pupunzi/jquery.mb.CSSAnimate",
   "authors": [
-    "pupunzi <matteo@open-lab.com>"
+    "pupunzi <matbicoc@gmail.com>"
   ],
   "description": "This plugin let you create an image gallery that runs on background (jQuery).",
   "main": "dist/jquery.mb.bgndGallery.min.js",

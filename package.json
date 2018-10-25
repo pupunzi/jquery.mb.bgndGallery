@@ -12,9 +12,9 @@
     "HTML5"
   ],
   "version": "1.9.5",
-  "author": "Pupunzi <matteo@open-lab.com> (Matteo Bicocchi)",
+  "author": "Pupunzi <matbicoc@gmail.com> (Matteo Bicocchi)",
   "maintainers": [
-    "Pupunzi <matteo@open-lab.com> (Matteo Bicocchi)"
+    "Pupunzi <matbicoc@gmail.com> (Matteo Bicocchi)"
   ],
   "license": "MIT",
   "bugs": {
@@ -45,7 +45,7 @@
     "grunt-contrib-uglify": "^0.9.1",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-include-replace": "^3.0.0",
-    "grunt-jsbeautifier": "^0.2.10"
+    "grunt-jsbeautifier": "^0.2.13"
   },
   "buildnum": "2459"
 }
